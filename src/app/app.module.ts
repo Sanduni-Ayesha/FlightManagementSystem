@@ -19,8 +19,16 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+//Route table
+import{CreateRouteTableComponent} from "./create-route-table/create-route-table.component";
 @NgModule({
-  declarations: [AppComponent, FlightScreenComponent, AddRouteFormComponent],
+
+  declarations: [
+    AppComponent,
+    FlightScreenComponent,
+    AddRouteFormComponent,
+    CreateRouteTableComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,7 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],

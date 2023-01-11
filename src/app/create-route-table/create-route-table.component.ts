@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 const USER_DATA = [
-  {"Departure Airport": "Colombo", "Arrival Airport": "Dubai", "Mileage/Km": 36,"Duration/Hours":20},
-  {"Departure Airport": "Katunayaka", "Arrival Airport": "Dubai", "Mileage/Km": 28,"Duration/Hours":20}
+  {"departureAirport": "Colombo", "arrivalAirport": "Dubai", "mileage": 36,"duration":20},
+  {"departureAirport": "Katunayaka", "arrivalAirport": "Dubai", "mileage": 28,"duration":20}
 ];
 const COLUMNS_SCHEMA = [
   {
@@ -25,6 +25,12 @@ const COLUMNS_SCHEMA = [
     key: "duration",
     type: "number",
     label: "Duration/Hours"
+  }
+  ,
+  {
+    key: "isEdit",
+    type: "isEdit",
+    label: "Edit "
   }
 ]
 @Component({
