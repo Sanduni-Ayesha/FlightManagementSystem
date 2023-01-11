@@ -2,40 +2,85 @@
 <!--<p>{{departures}}</p>
 <p>{{arrivals}}</p>-->
 <div class="flight">
+  <a mat-raised-button routerLink="/">
+    <mat-icon>add</mat-icon>
+    Add flight
+  </a>
   <div class="flight_search">
     <form class="form">
+      <mat-icon>flight_takeoff</mat-icon>
+      <mat-form-field appearance="fill">
+        <mat-label>Departure Airport</mat-label>
         <input type="text"
-        aria-label="Departure Airport"
-        placeholder="Departure Airport"
-        matInput
-        [formControl]="myControl1"
-        [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let depart of departures" [value]="depart">
+               aria-label="Departure Airport"
+               placeholder="Pick Airport"
+               matInput
+               [formControl]="myControl1"
+               [matAutocomplete]="auto"
+        #departure>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let depart of filteredDepartures | async" [value]="depart">
             {{depart}}
           </mat-option>
         </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-icon>flight_land</mat-icon>
+      <mat-form-field>
+        <mat-label>Arrival Airport</mat-label>
       <input type="text"
+             id="arrive"
+             name="arrive"
              aria-label="Arrival Airport"
-             placeholder="Arrival Airport"
+             placeholder="Pick Airport"
              matInput
              [formControl]="myControl2"
-             [matAutocomplete]="autoTest">
-      <mat-autocomplete #autoTest="matAutocomplete">
-        <mat-option *ngFor="let arrives of arrivals" [value]="arrives">
+             [matAutocomplete]="autoTest"
+      #arrive>
+      <mat-autocomplete autoActiveFirstOption #autoTest="matAutocomplete">
+        <mat-option *ngFor="let arrives of filteredArrivals | async" [value]="arrives">
           {{arrives}}
         </mat-option>
       </mat-autocomplete>
+        </mat-form-field>
+        <button mat-raised-button
+        (click)="filter(departure.value, arrive.value)">
+          <mat-icon>search</mat-icon>
+          Search flight
+        </button>
     </form>
+
   </div>
   <div class="flight_table">
-    <table mat-table [dataSource]="dataSource">
-      <ng-container [matColumnDef]="col" *ngFor="let col of displayedColumns">
+    <table  mat-table [dataSource]="dataSource">
+      <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
         <th mat-header-cell *matHeaderCellDef>
-          {{col}}
+          {{col.label}}
         </th>
         <td mat-cell *matCellDef="let element">
-          {{element[col]}}
+          <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+            <div class="btn-edit" *ngSwitchCase="'isEdit'">
+              <button mat-button (click)="element.isEdit = !element.isEdit">Edit</button>
+            </div>
+            <span *ngSwitchDefault>
+              {{ element[col.key] }}
+            </span>
+          </div>
+          <div *ngIf="element.isEdit">
+            <div class="btn-edit" *ngIf="col.key === 'isEdit'; else dataField">
+              <button mat-button (click)="element.isEdit = !element.isEdit">Done</button>
+            </div>
+            <ng-template #dataField>
+              <mat-form-field>
+                <input
+                  [type]="col.type"
+                  matInput
+                  [(ngModel)]="element[col.key]"
+                />
+              </mat-form-field>
+            </ng-template>
+          </div>
+          <!--          {{element[col]}}-->
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

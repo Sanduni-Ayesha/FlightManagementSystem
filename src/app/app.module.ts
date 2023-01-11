@@ -6,10 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddRouteFormComponent } from './add-route-form/add-route-form.component';
 
-
-import {MatSelectModule} from '@angular/material/select';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 
 //Flight screen
 import { FlightScreenComponent } from './flight-screen/flight-screen.component';
@@ -17,14 +15,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {FormControl,ReactiveFormsModule} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FlightScreenComponent,
-    AddRouteFormComponent
-  ],
+  declarations: [AppComponent, FlightScreenComponent, AddRouteFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,13 +29,14 @@ import {FormControl,ReactiveFormsModule} from '@angular/forms';
     MatAutocompleteModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
     MatSelectModule,
     MatChipsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule,
+    MatIconModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
