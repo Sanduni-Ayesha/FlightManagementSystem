@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 const DATA = [
   {
+    id: 1,
     Departure_Airport: 'Sydney',
     Arrival_Airport: 'Katunayake',
     'Flight No': 'A001',
@@ -13,6 +14,7 @@ const DATA = [
     'Arrival Time': '10-01-2023 08.00.00',
   },
   {
+    id: 2,
     Departure_Airport: 'Singapore',
     Arrival_Airport: 'Tokyo',
     'Flight No': 'A001',
@@ -20,6 +22,7 @@ const DATA = [
     'Arrival Time': '10-01-2023 08.00.00',
   },
   {
+    id: 3,
     Departure_Airport: 'Delhi',
     Arrival_Airport: 'Dubai',
     'Flight No': 'A001',
@@ -27,6 +30,7 @@ const DATA = [
     'Arrival Time': '10-01-2023 08.00.00',
   },
   {
+    id: 4,
     Departure_Airport: 'Sydney',
     Arrival_Airport: 'Mumbai',
     'Flight No': 'A001',
@@ -66,11 +70,11 @@ const COLUMNS = [
     type: 'isEdit',
     label: '',
   },
-  /*{
-    key: 'Delete',
+  {
+    key: 'isDelete',
     type: 'isDelete',
     label: '',
-  },*/
+  },
 ];
 @Component({
   selector: 'app-flight-screen',
@@ -128,5 +132,9 @@ export class FlightScreenComponent implements OnInit {
     this.dataSource.filter = departure;
     this.dataSource.filter = arrive;
     console.log(this.dataSource.filteredData.length == 0);
+  }
+
+  removeRow(id: number) {
+    this.dataSource.data = this.dataSource.data.filter((u: any) => u.id != id);
   }
 }
