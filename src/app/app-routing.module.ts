@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FlightScreenComponent } from './flight-screen/flight-screen.component';
-import {CreateRouteTableComponent} from "./create-route-table/create-route-table.component";
-import {AddRouteFormComponent} from "./add-route-form/add-route-form.component";
+import { FlightScreenComponent } from './componet/Flight/flight-screen/flight-screen.component';
+import {CreateRouteTableComponent} from "./componet/Router/create-route-table/create-route-table.component";
+import {AddRouteFormComponent} from "./componet/Router/add-route-form/add-route-form.component";
 
 const routes: Routes = [
   {path: 'flight', component: FlightScreenComponent},

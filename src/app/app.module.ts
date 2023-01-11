@@ -4,13 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddRouteFormComponent } from './add-route-form/add-route-form.component';
+import { AddRouteFormComponent } from './componet/Router/add-route-form/add-route-form.component';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 
 //Flight screen
-import { FlightScreenComponent } from './flight-screen/flight-screen.component';
+import { FlightScreenComponent } from './componet/Flight/flight-screen/flight-screen.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 //Route table
-import{CreateRouteTableComponent} from "./create-route-table/create-route-table.component";
+import{CreateRouteTableComponent} from "./componet/Router/create-route-table/create-route-table.component";
 @NgModule({
 
   declarations: [
