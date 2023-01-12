@@ -1,1 +1,34 @@
-<p>add-flight-form works!</p>
+<div class = 'flight_form'>
+  <h3>Add new flight</h3>
+  <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
+    <label>
+      Departure Airport
+    </label>
+    <input id="DepartureAirport" type="text" formControlName="DepartureAirport">
+    <br><br>
+
+    <label>
+      Arrival Airport
+    </label>
+    <input id="ArrivalAirport" type="text" formControlName="ArrivalAirport">
+    <br><br>
+    <label>
+      Flight
+    </label>
+    <input id="FlightNo" type="text" formControlName="Flight">
+    <br><br>
+    <label>
+      Departure date and time
+    </label>
+    <input id="DepartDate" type="datetime-local" formControlName="DepartureDateTimeControl">
+    <br><br>
+    <label>
+      Arrival date and time
+    </label>
+    <input id="ArriveDate" type="datetime-local" formControlName="ArrivalDateTimeControl">
+    <br><br>
+    <button type="submit" [disabled]="!flightForm.valid">
+      Submit
+    </button>
+  </form>
+</div>
