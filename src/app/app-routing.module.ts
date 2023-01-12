@@ -7,7 +7,7 @@ import {AddRouteFormComponent} from "./component/Router/add-route-form/add-route
 const routes: Routes = [
   {path: 'flight', component: FlightScreenComponent},
   {path: 'route', component: CreateRouteTableComponent},
-  {path: 'route/addRoute', component: AddRouteFormComponent}
+  {path: 'route/flight', component: AddRouteFormComponent}
 ];
 
 @NgModule({

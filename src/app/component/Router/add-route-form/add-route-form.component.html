@@ -1,22 +1,38 @@
 
 <h1>Add new route</h1>
-<mat-form-field appearance="fill">
-  <mat-label>Departure Airport</mat-label>
-  <input matInput>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Arrival Airport</mat-label>
-  <input matInput>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Mileage</mat-label>
-  <input matInput>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Duration</mat-label>
-  <input matInput>
-</mat-form-field>
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Departure Airport</mat-label>-->
+<!--  <input matInput>-->
+<!--</mat-form-field>-->
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Arrival Airport</mat-label>-->
+<!--  <input matInput>-->
+<!--</mat-form-field>-->
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Mileage</mat-label>-->
+<!--  <input matInput>-->
+<!--</mat-form-field>-->
+<!--<mat-form-field appearance="fill">-->
+<!--  <mat-label>Duration</mat-label>-->
+<!--  <input matInput>-->
+<!--</mat-form-field>-->
+<form [formGroup]="routeInfo" (ngSubmit)="onSubmit()">
+  <label for="departure-Airport">Departure Airport: </label>
+  <input id="departure-Airport" type="text" formControlName="departureAirport_" required>
+  <br>
+  <label for="arrival-Airport">Arrival Airport: </label>
+  <input id="arrival-Airport" type="text" formControlName="arrivalAirport_" required>
+  <br>
+  <label for="mileage">Mileage: </label>
+  <input id="mileage" type="text" formControlName="mileage_" required>
+  <br>
+  <label for="Duration">Duration: </label>
+  <input id="Duration" type="text" formControlName="Duration_" required>
+  <br>
+  <button type="submit" >Submit</button>
+</form>
 
+<p>Form Value: {{ routeInfo.value | json }}</p>
 
 
 

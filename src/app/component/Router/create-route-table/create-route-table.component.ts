@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ɵElement, ɵValue} from "@angular/forms";
 
 const USER_DATA = [
   {"departureAirport": "Colombo", "arrivalAirport": "Dubai", "mileage": 36,"duration":20},
@@ -42,4 +43,18 @@ export class CreateRouteTableComponent {
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
   dataSource: any = USER_DATA;
   columnsSchema: any = COLUMNS_SCHEMA;
+
+  onUpdate(departureAirport: ɵValue<ɵElement<string, null>> | undefined,
+           arrivalAirport: ɵValue<ɵElement<string, null>> | undefined,
+           mileage: ɵValue<ɵElement<number, null>> | undefined,
+           duration: ɵValue<ɵElement<number, null>> | undefined) : void{
+    this.dataSource.push({
+      "departureAirport":departureAirport,
+      "arrivalAirport":arrivalAirport,
+      "mileage":mileage,
+      "duration":duration
+
+    });
+
+  }
 }
