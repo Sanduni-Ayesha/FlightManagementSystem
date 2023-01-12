@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 const DATA = [
   {
@@ -82,6 +84,7 @@ const COLUMNS = [
   styleUrls: ['./flight-screen.component.scss'],
 })
 export class FlightScreenComponent implements OnInit {
+  constructor(public dialog: MatDialog) {}
   // for table structure
   displayedColumns: string[] = COLUMNS.map((col) => col.key);
   dataSource: any = new MatTableDataSource(DATA);
@@ -136,5 +139,11 @@ export class FlightScreenComponent implements OnInit {
 
   removeRow(id: number) {
     this.dataSource.data = this.dataSource.data.filter((u: any) => u.id != id);
+  }
+
+  openForm(): void {
+    const formModal = this.dialog.open(AddFlightFormComponent, {
+      width: '640px',
+    });
   }
 }

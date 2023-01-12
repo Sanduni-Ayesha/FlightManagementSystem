@@ -18,16 +18,18 @@ import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 //Route table
-import{CreateRouteTableComponent} from "./component/Router/create-route-table/create-route-table.component";
+import { CreateRouteTableComponent } from './component/Router/create-route-table/create-route-table.component';
+import { AddFlightFormComponent } from './component/Flight/add-flight-form/add-flight-form.component';
 @NgModule({
-
   declarations: [
     AppComponent,
     FlightScreenComponent,
     AddRouteFormComponent,
-    CreateRouteTableComponent
+    CreateRouteTableComponent,
+    AddFlightFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,9 +44,15 @@ import{CreateRouteTableComponent} from "./component/Router/create-route-table/cr
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {},
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
