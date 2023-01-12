@@ -4,28 +4,28 @@
     <label>
       Departure Airport
     </label>
-    <input id="DepartureAirport" type="text" formControlName="DepartureAirport">
+    <input id="DepartureAirport" type="text" formControlName="Departure_Airport">
     <br><br>
 
     <label>
       Arrival Airport
     </label>
-    <input id="ArrivalAirport" type="text" formControlName="ArrivalAirport">
+    <input id="ArrivalAirport" type="text" formControlName="Arrival_Airport">
     <br><br>
     <label>
       Flight
     </label>
-    <input id="FlightNo" type="text" formControlName="Flight">
+    <input id="FlightNo" type="text" formControlName="Flight No">
     <br><br>
     <label>
       Departure date and time
     </label>
-    <input id="DepartDate" type="datetime-local" formControlName="DepartureDateTimeControl">
+    <input id="DepartDate" type="datetime-local" formControlName="Departure Time">
     <br><br>
     <label>
       Arrival date and time
     </label>
-    <input id="ArriveDate" type="datetime-local" formControlName="ArrivalDateTimeControl">
+    <input id="ArriveDate" type="datetime-local" formControlName="Arrival Time">
     <br><br>
     <button type="submit" [disabled]="!flightForm.valid">
       Submit
