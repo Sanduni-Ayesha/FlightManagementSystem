@@ -23,6 +23,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 //Route table
 import { CreateRouteTableComponent } from './component/Router/create-route-table/create-route-table.component';
 import { AddFlightFormComponent } from './component/Flight/add-flight-form/add-flight-form.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,8 @@ import { AddFlightFormComponent } from './component/Flight/add-flight-form/add-f
     FormsModule,
     MatIconModule,
     MatDialogModule,
+    MatToolbarModule,
+    MatTabsModule,
   ],
   providers: [
     {
