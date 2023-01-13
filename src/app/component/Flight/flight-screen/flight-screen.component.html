@@ -48,6 +48,11 @@
           <mat-icon>search</mat-icon>
           Search flight
         </button>
+      <button mat-raised-button
+              (click)="filter('', ''); departure.value=''; arrive.value=''">
+        <mat-icon>clear</mat-icon>
+        Clear Search
+      </button>
     </form>
 
   </div>

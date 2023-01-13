@@ -21,6 +21,7 @@ export class AddFlightFormComponent {
   /*@Output()
   detailsEmitter = new EventEmitter();*/
   flightForm = this.formBuilder.group({
+    id: [],
     Departure_Airport: ['', Validators.required],
     Arrival_Airport: ['', Validators.required],
     'Flight No': ['', Validators.required],
@@ -31,9 +32,11 @@ export class AddFlightFormComponent {
   onSubmit() {
     this.dialog.closeAll();
     //dynamically updates datasource by pushing the new data from the form
+    this.flightForm.value.id = this.data.ds.data.length + 1;
     this.data.ds.data.push(this.flightForm.value);
     //update the datasource with new data
     this.data.ds._updateChangeSubscription();
+    console.log(this.data.ds.data);
     //this.detailsEmitter.emit(this.flightForm.value);
     //console.log(this.data.ds.data);
     /*    console.log(this.data.ds.data[1]);

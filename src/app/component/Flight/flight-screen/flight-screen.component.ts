@@ -59,12 +59,12 @@ const COLUMNS = [
   },
   {
     key: 'Departure Time',
-    type: 'Date',
+    type: 'datetime-local',
     label: 'Departure Time',
   },
   {
     key: 'Arrival Time',
-    type: 'Date',
+    type: 'datetime-local',
     label: 'Arrival Time',
   },
   {
@@ -129,12 +129,24 @@ export class FlightScreenComponent implements OnInit {
   }
 
   filter(departure: string, arrive: string) {
-    /*departure = 'hello';
-    arrive = 'world';*/
-    //console.log(this.dataSource);
+    /*const dep = this.dataSource.data.filter(
+      (u: any) => u.Departure_Airport == departure
+    );
+    const arr = this.dataSource.data.filter(
+      (u: any) => u.Arrival_Airport == arrive
+    );
+    console.log(dep);
+    if (dep.length == 0) {
+      console.log('Departure not available');
+      return;
+    } else {*/
+    console.log(this.dataSource.data[0].Departure_Airport);
     this.dataSource.filter = departure;
     this.dataSource.filter = arrive;
-    console.log(this.dataSource.filteredData.length == 0);
+    /*}*/
+
+    //const arr = this.dataSource.data.map(({'Departure_Airport'}) => ('Departure_Airport'));
+    //console.log(this.dataSource.filteredData.length == 0);
   }
 
   removeRow(id: number) {
