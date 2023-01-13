@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import {ɵElement, ɵValue} from "@angular/forms";
 
+import {MatDialog} from "@angular/material/dialog";
+import {AddRouteFormComponent} from "../add-route-form/add-route-form.component";
+import {MatTableDataSource} from "@angular/material/table";
+
 const USER_DATA = [
-  {"departureAirport": "Colombo", "arrivalAirport": "Dubai", "mileage": 36,"duration":20},
-  {"departureAirport": "Katunayaka", "arrivalAirport": "Dubai", "mileage": 28,"duration":20}
+  {"departureAirport": "Colombo", "arrivalAirport": "Dubai", "mileage": "36","duration":"20"},
+  {"departureAirport": "Katunayaka", "arrivalAirport": "Dubai", "mileage": "28","duration":"20"}
 ];
 const COLUMNS_SCHEMA = [
   {
@@ -18,13 +22,13 @@ const COLUMNS_SCHEMA = [
   },
   {
     key: "mileage",
-    type: "number",
+    type: "text",
     label: "Mileage/Km"
   }
   ,
   {
     key: "duration",
-    type: "number",
+    type: "text",
     label: "Duration/Hours"
   }
   ,
@@ -41,20 +45,19 @@ const COLUMNS_SCHEMA = [
 })
 export class CreateRouteTableComponent {
   displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
-  dataSource: any = USER_DATA;
+  dataSource: any =  new MatTableDataSource(USER_DATA);
   columnsSchema: any = COLUMNS_SCHEMA;
 
-  onUpdate(departureAirport: ɵValue<ɵElement<string, null>> | undefined,
-           arrivalAirport: ɵValue<ɵElement<string, null>> | undefined,
-           mileage: ɵValue<ɵElement<number, null>> | undefined,
-           duration: ɵValue<ɵElement<number, null>> | undefined) : void{
-    this.dataSource.push({
-      "departureAirport":departureAirport,
-      "arrivalAirport":arrivalAirport,
-      "mileage":mileage,
-      "duration":duration
+  constructor(public dialog: MatDialog) {}
 
-    });
+ openForm() :void{
+   let dialogRef = this.dialog.open(AddRouteFormComponent, {
+     height: '400px',
+     width: '600px',
+     data: {
+       ds: this.dataSource,
+     },
 
-  }
+   });
+ }
 }

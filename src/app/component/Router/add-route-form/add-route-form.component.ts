@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {CreateRouteTableComponent} from "../create-route-table/create-route-table.component";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {DIALOG_DATA} from "@angular/cdk/dialog";
 
 @Component({
   selector: 'app-add-route-form',
@@ -9,20 +11,21 @@ import {CreateRouteTableComponent} from "../create-route-table/create-route-tabl
 })
 export class AddRouteFormComponent {
   routeInfo = this.fb.group({
-    departureAirport_ : '',
-    arrivalAirport_: '',
-    mileage_: 0,
-    Duration_: 0
+    departureAirport : [''],
+    arrivalAirport: [''],
+    mileage: [''],
+    duration: ['']
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private dialog:MatDialog,@Inject(DIALOG_DATA) public data: any) { }
 
   onSubmit() {
-    const routeArray = new CreateRouteTableComponent();
-    routeArray.onUpdate(this.routeInfo.value.departureAirport_,
-                        this.routeInfo.value.arrivalAirport_,
-                        this.routeInfo.value.mileage_,
-                        this.routeInfo.value.Duration_);
+    this.dialog.closeAll();
+    //dynamically updates datasource by pushing the new data from the form
+    this.data.ds.data.push(this.routeInfo.value);
+    //update the datasource with new data
+    this.data.ds._updateChangeSubscription();
+    //this.detailsEmitter.emit(this.flightForm.value);
   }
 
 }

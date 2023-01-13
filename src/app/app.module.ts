@@ -18,14 +18,15 @@ import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
-//Route table
-import { CreateRouteTableComponent } from './component/Router/create-route-table/create-route-table.component';
+
 import { AddFlightFormComponent } from './component/Flight/add-flight-form/add-flight-form.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
+
+import{CreateRouteTableComponent} from "./component/Router/create-route-table/create-route-table.component";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,7 @@ import { NavBarComponent } from './component/nav-bar/nav-bar.component';
       useValue: {},
     },
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
