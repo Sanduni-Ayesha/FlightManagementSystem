@@ -142,14 +142,12 @@ export class FlightScreenComponent implements OnInit {
   }
 
   openForm(): void {
-    //TODO get data here
-
+    //this.dataSource.data = new MatTableDataSource(DATA);
     const formModal = this.dialog.open(AddFlightFormComponent, {
       width: '640px',
       data: {
         ds: this.dataSource,
       },
     });
-    //formModal.afterClosed().subscribe();
   }
 }
