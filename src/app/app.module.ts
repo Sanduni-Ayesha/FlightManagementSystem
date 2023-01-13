@@ -25,6 +25,7 @@ import { CreateRouteTableComponent } from './component/Router/create-route-table
 import { AddFlightFormComponent } from './component/Flight/add-flight-form/add-flight-form.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     AddRouteFormComponent,
     CreateRouteTableComponent,
     AddFlightFormComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
