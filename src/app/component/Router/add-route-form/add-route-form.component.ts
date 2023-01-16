@@ -11,21 +11,23 @@ import {DIALOG_DATA} from "@angular/cdk/dialog";
 })
 export class AddRouteFormComponent {
   routeInfo = this.fb.group({
+    id : [''],
     departureAirport : [''],
     arrivalAirport: [''],
     mileage: [''],
     duration: ['']
   });
 
+
   constructor(private fb: FormBuilder,private dialog:MatDialog,@Inject(DIALOG_DATA) public data: any) { }
 
   onSubmit() {
     this.dialog.closeAll();
-    //dynamically updates datasource by pushing the new data from the form
+
+   this.routeInfo.controls.id = this.data.ds.data.length + 1;
     this.data.ds.data.push(this.routeInfo.value);
     //update the datasource with new data
     this.data.ds._updateChangeSubscription();
-    //this.detailsEmitter.emit(this.flightForm.value);
   }
 
 }

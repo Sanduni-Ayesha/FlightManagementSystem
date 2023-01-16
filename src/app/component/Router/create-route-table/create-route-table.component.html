@@ -1,4 +1,6 @@
 
+
+<br><br>
 <table>
   <thead>
   <tr>
@@ -8,13 +10,55 @@
         Add flight
       </a>
     </td>
-    <td></td>
+    <td>
+      <div>
+        <form class="example-form">
+          <mat-icon>flight_takeoff</mat-icon>
+          <mat-form-field class="" appearance="fill">
+            <mat-label>Departure Airport</mat-label>
+            <input type="text"
+                   placeholder="Pick one"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="DepartureControl"
+                   [matAutocomplete]="auto1" #departure_Airport>
+            <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+              <mat-option *ngFor="let option of DepartureFilteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-icon>flight_land</mat-icon>
+          <mat-form-field class="" appearance="fill">
+            <mat-label>Arrival Airport</mat-label>
+            <input type="text"
+                   placeholder="Pick one"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="ArrivalControl"
+                   [matAutocomplete]="auto2" #arrival_Airport>
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+              <mat-option *ngFor="let option of ArrivalFilteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <button mat-raised-button (click)="search()">
+            <mat-icon>search</mat-icon>
+            Search flight
+          </button>
+        </form>
+        <span>{{Error_message}}</span>
+      </div>
+    </td>
     <td></td>
     <td></td>
   </tr>
   </thead>
 </table>
-
+<br>
 
 
 <article>
@@ -28,9 +72,8 @@
           <div class="btn-edit" *ngSwitchCase="'isEdit'">
             <!--after clicking  element.isEdit = true -->
             <button mat-button (click)="element.isEdit = !element.isEdit">
-              Edit
+              <mat-icon>edit</mat-icon>
             </button>
-
           </div>
           <span *ngSwitchDefault>
           {{ element[col.key] }}
@@ -39,10 +82,11 @@
         <div *ngIf="element.isEdit">
           <div class="btn-edit" *ngIf="col.key === 'isEdit'; else dataField">
             <!-- element.isEdit = false -->
-            <button mat-button (click)="element.isEdit = !element.isEdit">Done</button>
+            <button mat-button (click)="element.isEdit = !element.isEdit"><mat-icon>done</mat-icon></button>
           </div>
           <ng-template #dataField>
-            <mat-form-field>
+
+            <mat-form-field *ngIf="col.key != 'isDelete'">
               <input
                 [type]="col.type"
                 matInput
@@ -51,7 +95,9 @@
             </mat-form-field>
           </ng-template>
         </div>
-
+        <div class="btn-edit" *ngIf="col.key === 'isDelete'">
+          <button mat-button (click)="removeRow(element.id)"><mat-icon>delete</mat-icon></button>
+        </div>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
