@@ -1,18 +1,23 @@
 <h1>Add new route</h1>
-<form [formGroup]="routeInfo" (ngSubmit)="onSubmit()">
+<form [formGroup]="routeInfo" >
   <label for="departure-Airport">Departure Airport: </label>
   <input id="departure-Airport" type="text" formControlName="departureAirport" required>
+  <br>
   <br>
   <label for="arrival-Airport">Arrival Airport: </label>
   <input id="arrival-Airport" type="text" formControlName="arrivalAirport" required>
   <br>
+  <br>
   <label for="mileage">Mileage: </label>
   <input id="mileage" type="text" formControlName="mileage" required>
+  <br>
   <br>
   <label for="Duration">Duration: </label>
   <input id="Duration" type="text" formControlName="duration" required>
   <br>
-  <button type="submit" >Submit</button>
+  <br>
+  <button type="submit" (click)="onSubmit()" >Submit</button>
+  <button type="submit" (click)="onCancel()" >cancel</button>
 </form>
 
 

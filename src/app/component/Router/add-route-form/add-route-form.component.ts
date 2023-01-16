@@ -29,5 +29,9 @@ export class AddRouteFormComponent {
     //update the datasource with new data
     this.data.ds._updateChangeSubscription();
   }
+  onCancel(){
+    this.dialog.closeAll();
+  }
+
 
 }
