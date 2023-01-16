@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { airportValidator } from '../../../shared/airport.validator';
+import { dateValidator } from '../../../shared/date.validator';
+import { futureDateValidator } from '../../../shared/futureDate.validator';
 
 @Component({
   selector: 'app-add-flight-form',
@@ -18,28 +21,36 @@ export class AddFlightFormComponent {
     @Inject(DIALOG_DATA) public data: any
   ) {}
 
-  /*@Output()
-  detailsEmitter = new EventEmitter();*/
-  flightForm = this.formBuilder.group({
-    id: [],
-    Departure_Airport: ['', Validators.required],
-    Arrival_Airport: ['', Validators.required],
-    'Flight No': ['', Validators.required],
-    'Departure Time': [''],
-    'Arrival Time': [''],
-  });
+  flightForm = new FormGroup(
+    {
+      id: new FormControl(''),
+      Departure_Airport: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]*$/),
+      ]),
+      Arrival_Airport: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]*$/),
+      ]),
+      'Flight No': new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
+      ]),
+      'Departure Time': new FormControl('', [Validators.required]),
+      'Arrival Time': new FormControl('', [Validators.required]),
+    },
+    { validators: [airportValidator, dateValidator, futureDateValidator] }
+  );
 
   onSubmit() {
+    //console.log(this.flightForm.get('Departure_Airport')?.touched);
     this.dialog.closeAll();
-    //dynamically updates datasource by pushing the new data from the form
     this.flightForm.value.id = this.data.ds.data.length + 1;
     this.data.ds.data.push(this.flightForm.value);
-    //update the datasource with new data
     this.data.ds._updateChangeSubscription();
-    console.log(this.data.ds.data);
-    //this.detailsEmitter.emit(this.flightForm.value);
-    //console.log(this.data.ds.data);
-    /*    console.log(this.data.ds.data[1]);
-    console.log(this.flightForm.value);*/
+  }
+
+  close() {
+    this.dialog.closeAll();
   }
 }

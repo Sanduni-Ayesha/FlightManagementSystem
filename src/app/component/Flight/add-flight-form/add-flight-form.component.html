@@ -1,32 +1,86 @@
 <div class = 'flight_form'>
   <h3>Add new flight</h3>
   <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
-    <label>
-      Departure Airport
-    </label>
-    <input id="DepartureAirport" type="text" formControlName="Departure_Airport">
-    <br><br>
+    <div>
+      <label>
+        Departure Airport
+      </label>
+      <input id="DepartureAirport" type="text" formControlName="Departure_Airport">
+      <div class="error_msg">
+        <small *ngIf="flightForm.get('Departure_Airport')?.errors?.['pattern'] != null && flightForm.get('Departure_Airport')?.touched">
+          Departure Airport cannot have numbers
+        </small>
+        <br>
+        <small *ngIf="flightForm.get('Departure_Airport')?.errors?.['required'] && flightForm.get('Departure_Airport')?.touched">
+          Departure Airport cannot be empty
+        </small>
+      </div>
+    </div>
+
+    <br>
 
     <label>
       Arrival Airport
     </label>
     <input id="ArrivalAirport" type="text" formControlName="Arrival_Airport">
-    <br><br>
+    <div class="error_msg">
+      <small *ngIf="flightForm.get('Arrival_Airport')?.errors?.['pattern'] != null && flightForm.get('Arrival_Airport')?.touched">
+        Arrival Airport cannot have numbers
+      </small>
+      <small *ngIf="flightForm.get('Arrival_Airport')?.errors?.['required'] && flightForm.get('Arrival_Airport')?.touched">
+        Arrival Airport cannot be empty
+      </small>
+      <br>
+      <small *ngIf="flightForm.errors?.['equalDestination']  && !flightForm.get('Arrival_Airport')?.untouched">
+        Departure and Arrival cannot be the same
+      </small>
+    </div>
+    <br>
     <label>
       Flight
     </label>
     <input id="FlightNo" type="text" formControlName="Flight No">
-    <br><br>
+    <div class="error_msg">
+      <small *ngIf="flightForm.get('Flight No')?.errors?.['required'] && flightForm.get('Flight No')?.touched">
+        Flight number should b
+      </small>
+      <br>
+      <small *ngIf="(flightForm.get('Flight No')?.errors?.['pattern'] &&  flightForm.get('Flight No')?.errors?.['pattern'] != null && flightForm.get('Flight No')?.touched)">
+        Flight number should be in the format of XXxxxx. X - Letters, x- numbers
+      </small>
+    </div>
+    <br>
     <label>
       Departure date and time
     </label>
     <input id="DepartDate" type="datetime-local" formControlName="Departure Time">
-    <br><br>
+    <div class="error_msg">
+      <small *ngIf="flightForm.get('Departure Time')?.errors?.['required'] && flightForm.get('Departure Time')?.touched">
+        Departure time required
+      </small>
+      <br>
+      <small *ngIf="flightForm.errors?.['dateMismatch'] && flightForm.get('Departure Time')?.touched">
+        Please fill with a future date
+      </small>
+    </div>
+    <br>
     <label>
       Arrival date and time
     </label>
     <input id="ArriveDate" type="datetime-local" formControlName="Arrival Time">
-    <br><br>
+    <div class="error_msg">
+      <small *ngIf="flightForm.get('Arrival Time')?.errors?.['required'] && flightForm.get('Arrival Time')?.touched">
+        Departure time required
+      </small>
+      <br>
+      <small *ngIf="flightForm.errors?.['durationError'] && flightForm.get('Arrival Time')?.touched">
+        Arrival date should be later than departure date
+      </small>
+    </div>
+    <br>
+    <button type="reset" (click)="close()">
+      Cancel
+    </button>
     <button type="submit" [disabled]="!flightForm.valid">
       Submit
     </button>
