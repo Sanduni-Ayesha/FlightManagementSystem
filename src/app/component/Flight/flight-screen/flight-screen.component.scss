@@ -1,6 +1,5 @@
 .form {
   min-width: 150px;
-  max-width: 500px;
   width: 100%;
 }
 
@@ -11,9 +10,14 @@
 .flight{
   width: 75%;
   align: "center";
-  padding: 30px;
+  padding: 20px;
 }
 
 .flight_search{
-  padding: 20px
+}
+
+.addFlight{
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
 }

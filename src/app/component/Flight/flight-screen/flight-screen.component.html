@@ -2,57 +2,55 @@
 <!--<p>{{departures}}</p>
 <p>{{arrivals}}</p>-->
 <div class="flight">
-  <a mat-raised-button (click)="openForm()">
-    <mat-icon>add</mat-icon>
-    Add flight
-  </a>
   <div class="flight_search">
     <form class="form">
-      <mat-icon>flight_takeoff</mat-icon>
-      <mat-form-field appearance="fill">
-        <mat-label>Departure Airport</mat-label>
-        <input type="text"
-               aria-label="Departure Airport"
-               placeholder="Pick Airport"
-               matInput
-               [formControl]="myControl1"
-               [matAutocomplete]="auto"
-        #departure>
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let depart of filteredDepartures | async" [value]="depart">
-            {{depart}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      <div>
+        <mat-icon>flight_takeoff</mat-icon>
+        <mat-form-field appearance="fill">
+          <mat-label>Departure Airport</mat-label>
+          <input type="text"
+                 aria-label="Departure Airport"
+                 placeholder="Pick Airport"
+                 matInput
+                 [formControl]="myControl1"
+                 [matAutocomplete]="auto"
+          #departure>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let depart of filteredDepartures | async" [value]="depart">
+              {{depart}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
-      <mat-icon>flight_land</mat-icon>
-      <mat-form-field>
-        <mat-label>Arrival Airport</mat-label>
-      <input type="text"
-             id="arrive"
-             name="arrive"
-             aria-label="Arrival Airport"
-             placeholder="Pick Airport"
-             matInput
-             [formControl]="myControl2"
-             [matAutocomplete]="autoTest"
-      #arrive>
-      <mat-autocomplete autoActiveFirstOption #autoTest="matAutocomplete">
-        <mat-option *ngFor="let arrives of filteredArrivals | async" [value]="arrives">
-          {{arrives}}
-        </mat-option>
-      </mat-autocomplete>
+        <mat-icon>flight_land</mat-icon>
+        <mat-form-field>
+          <mat-label>Arrival Airport</mat-label>
+          <input type="text"
+                 id="arrive"
+                 name="arrive"
+                 aria-label="Arrival Airport"
+                 placeholder="Pick Airport"
+                 matInput
+                 [formControl]="myControl2"
+                 [matAutocomplete]="autoTest"
+          #arrive>
+          <mat-autocomplete autoActiveFirstOption #autoTest="matAutocomplete">
+            <mat-option *ngFor="let arrives of filteredArrivals | async" [value]="arrives">
+              {{arrives}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <button mat-raised-button
-        (click)="filter(departure.value, arrive.value)">
-          <mat-icon>search</mat-icon>
-          Search flight
+          (click)="filter(departure.value, arrive.value)">
+            <mat-icon>search</mat-icon>
+            Search flight
         </button>
-      <button mat-raised-button
-              (click)="filter('', ''); departure.value=''; arrive.value=''">
-        <mat-icon>clear</mat-icon>
-        Clear Search
-      </button>
+        <button mat-raised-button
+                (click)="filter('', ''); departure.value=''; arrive.value=''">
+          <mat-icon>clear</mat-icon>
+          Clear Search
+        </button>
+      </div>
     </form>
 
   </div>
@@ -95,6 +93,12 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row;columns: displayedColumns;"></tr>
     </table>
+  </div>
+  <div class="addFlight">
+    <a mat-raised-button (click)="openForm()">
+      <mat-icon>add</mat-icon>
+      Add flight
+    </a>
   </div>
 </div>
 <!--<p>flight-screen works!</p>-->
