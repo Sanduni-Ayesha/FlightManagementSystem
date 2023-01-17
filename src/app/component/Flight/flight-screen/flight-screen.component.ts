@@ -11,33 +11,33 @@ const DATA = [
     id: 1,
     Departure_Airport: 'Sydney',
     Arrival_Airport: 'Katunayake',
-    'Flight No': 'A001',
-    'Departure Time': '10-01-2023 08.00.00',
-    'Arrival Time': '10-01-2023 08.00.00',
+    FlightNo: 'AB2001',
+    Departure_Time: '2023-01-20T12:12',
+    Arrival_Time: '2023-01-23T12:12',
   },
   {
     id: 2,
     Departure_Airport: 'Singapore',
     Arrival_Airport: 'Tokyo',
-    'Flight No': 'A001',
-    'Departure Time': '10-01-2023 08.00.00',
-    'Arrival Time': '10-01-2023 08.00.00',
+    FlightNo: 'A001',
+    Departure_Time: '10-01-2023 08.00.00',
+    Arrival_Time: '10-01-2023 08.00.00',
   },
   {
     id: 3,
     Departure_Airport: 'Delhi',
     Arrival_Airport: 'Dubai',
-    'Flight No': 'A001',
-    'Departure Time': '10-01-2023 08.00.00',
-    'Arrival Time': '10-01-2023 08.00.00',
+    FlightNo: 'A001',
+    Departure_Time: '10-01-2023 08.00.00',
+    Arrival_Time: '10-01-2023 08.00.00',
   },
   {
     id: 4,
     Departure_Airport: 'Sydney',
     Arrival_Airport: 'Mumbai',
-    'Flight No': 'A001',
-    'Departure Time': '10-01-2023 08.00.00',
-    'Arrival Time': '10-01-2023 08.00.00',
+    FlightNo: 'A001',
+    Departure_Time: '10-01-2023 08.00.00',
+    Arrival_Time: '10-01-2023 08.00.00',
   },
 ];
 
@@ -45,7 +45,7 @@ const COLUMNS = [
   {
     key: 'Departure_Airport',
     type: 'text',
-    label: 'Departure Airport',
+    label: 'Departure_Airport',
   },
   {
     key: 'Arrival_Airport',
@@ -53,19 +53,19 @@ const COLUMNS = [
     label: 'Arrival Airport',
   },
   {
-    key: 'Flight No',
+    key: 'FlightNo',
     type: 'text',
     label: 'FlightNo',
   },
   {
-    key: 'Departure Time',
+    key: 'Departure_Time',
     type: 'datetime-local',
-    label: 'Departure Time',
+    label: 'Departure_Time',
   },
   {
-    key: 'Arrival Time',
+    key: 'Arrival_Time',
     type: 'datetime-local',
-    label: 'Arrival Time',
+    label: 'Arrival_Time',
   },
   {
     key: 'isEdit',
@@ -87,7 +87,8 @@ export class FlightScreenComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
   // for table structure
   displayedColumns: string[] = COLUMNS.map((col) => col.key);
-  dataSource: any = new MatTableDataSource(DATA);
+  //dataSource: any = new MatTableDataSource(DATA);
+  dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
 
   // for dropdowns in search
@@ -129,20 +130,30 @@ export class FlightScreenComponent implements OnInit {
   }
 
   filter(departure: string, arrive: string) {
-    /*const dep = this.dataSource.data.filter(
-      (u: any) => u.Departure_Airport == departure
-    );
-    const arr = this.dataSource.data.filter(
-      (u: any) => u.Arrival_Airport == arrive
-    );
-    console.log(dep);
-    if (dep.length == 0) {
-      console.log('Departure not available');
-      return;
-    } else {*/
-    console.log(this.dataSource.data[0].Departure_Airport);
-    this.dataSource.filter = departure;
-    this.dataSource.filter = arrive;
+    if (departure != '' && arrive != '') {
+      /*const dep = this.dataSource.data.filter(
+          (u: any) => u.Departure_Airport == departure
+        );
+        const arr = this.dataSource.data.filter(
+          (u: any) => u.Arrival_Airport == arrive
+        );
+        console.log(dep);
+        if (dep.length == 0) {
+          console.log('Departure not available');
+          return;
+        } else {*/
+      //console.log(this.dataSource.data[0].Departure_Airport);
+      this.dataSource = this.dataSource.filter(
+        (u: any) => u.Departure_Airport == departure
+      );
+      this.dataSource = this.dataSource.filter(
+        (u: any) => u.Arrival_Airport == arrive
+      );
+    } else {
+      this.dataSource = DATA;
+    }
+
+    //this.dataSource = this.dataSource.filter = arrive;
     /*}*/
 
     //const arr = this.dataSource.data.map(({'Departure_Airport'}) => ('Departure_Airport'));
@@ -150,7 +161,19 @@ export class FlightScreenComponent implements OnInit {
   }
 
   removeRow(id: number) {
-    this.dataSource.data = this.dataSource.data.filter((u: any) => u.id != id);
+    this.dataSource = this.dataSource.filter((u: any) => u.id != id);
+  }
+
+  editRow(id: number) {
+    const formModal = this.dialog.open(AddFlightFormComponent, {
+      width: '640px',
+      disableClose: true,
+      data: {
+        id: id - 1,
+        ds: this.dataSource,
+        row: this.dataSource[id - 1],
+      },
+    });
   }
 
   openForm(): void {
@@ -159,7 +182,9 @@ export class FlightScreenComponent implements OnInit {
       width: '640px',
       disableClose: true,
       data: {
+        id: '',
         ds: this.dataSource,
+        row: '',
       },
     });
   }

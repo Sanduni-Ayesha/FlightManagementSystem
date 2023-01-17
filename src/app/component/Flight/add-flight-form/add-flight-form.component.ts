@@ -24,20 +24,24 @@ export class AddFlightFormComponent {
   flightForm = new FormGroup(
     {
       id: new FormControl(''),
-      Departure_Airport: new FormControl('', [
+      Departure_Airport: new FormControl(this.data.row.Departure_Airport, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]*$/),
       ]),
-      Arrival_Airport: new FormControl('', [
+      Arrival_Airport: new FormControl(this.data.row.Arrival_Airport, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]*$/),
       ]),
-      'Flight No': new FormControl('', [
+      FlightNo: new FormControl(this.data.row.FlightNo, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
       ]),
-      'Departure Time': new FormControl('', [Validators.required]),
-      'Arrival Time': new FormControl('', [Validators.required]),
+      Departure_Time: new FormControl(this.data.row.Departure_Time, [
+        Validators.required,
+      ]),
+      Arrival_Time: new FormControl(this.data.row.Arrival_Time, [
+        Validators.required,
+      ]),
     },
     { validators: [airportValidator, dateValidator, futureDateValidator] }
   );
@@ -45,12 +49,26 @@ export class AddFlightFormComponent {
   onSubmit() {
     //console.log(this.flightForm.get('Departure_Airport')?.touched);
     this.dialog.closeAll();
-    this.flightForm.value.id = this.data.ds.data.length + 1;
-    this.data.ds.data.push(this.flightForm.value);
-    this.data.ds._updateChangeSubscription();
+    this.flightForm.value.id = this.data.ds.length + 1;
+    this.data.ds.push(this.flightForm.value);
+    //this.data.ds._updateChangeSubscription();
   }
 
   close() {
+    this.dialog.closeAll();
+  }
+  reset() {
+    //TODO:reset form data with this.data.row
+    this.flightForm.value.Departure_Airport = this.data.row.Departure_Airport;
+    console.log(this.flightForm.value.Departure_Airport);
+  }
+
+  update() {
+    const updated_id = this.data.row.id || null;
+    if (updated_id != null) {
+      this.data.ds[updated_id - 1] = this.flightForm.value;
+    }
+    console.log(this.data.row);
     this.dialog.closeAll();
   }
 }
