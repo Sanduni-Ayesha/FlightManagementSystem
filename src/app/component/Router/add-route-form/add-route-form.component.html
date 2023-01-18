@@ -41,7 +41,7 @@
   <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['required'] && AddedDuration.touched">
     This field cannot be empty or invalid
   </em>
-  <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['required'] && AddedDuration.touched">
+  <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['pattern'] && AddedDuration.touched">
     Duration should be number
   </em>
   <br>
