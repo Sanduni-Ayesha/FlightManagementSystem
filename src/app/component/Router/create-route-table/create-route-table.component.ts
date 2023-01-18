@@ -93,6 +93,7 @@ export class CreateRouteTableComponent implements OnInit {
  openForm() :void{
    let dialogRef = this.dialog.open(AddRouteFormComponent, {
      height: '400px',
+     disableClose:true,
      width: '600px',
      data: {
        ds: this.dataSource,
