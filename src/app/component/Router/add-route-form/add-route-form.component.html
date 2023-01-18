@@ -1,24 +1,53 @@
+<div class="add_form">
 <h1>Add new route</h1>
+
 <form [formGroup]="routeInfo" >
   <label for="departure-Airport">Departure Airport: </label>
-  <input id="departure-Airport" type="text" formControlName="departureAirport" required>
+  <input id="departure-Airport" type="text" formControlName="departureAirport" >
   <br>
+  <em class="error" *ngIf="AddedDepartureAirport && AddedDepartureAirport?.errors?.['required'] && AddedDepartureAirport.touched">
+    This departure field cannot be empty
+  </em>
+  <em class="error" *ngIf=" AddedDepartureAirport && AddedDepartureAirport?.errors?.['pattern']  && AddedDepartureAirport.touched">
+    This departure field cannot be invalid
+  </em>
   <br>
   <label for="arrival-Airport">Arrival Airport: </label>
-  <input id="arrival-Airport" type="text" formControlName="arrivalAirport" required>
+  <input id="arrival-Airport" type="text" formControlName="arrivalAirport" >
   <br>
+  <em class="error" *ngIf="AddedArrivalAirport && AddedArrivalAirport.errors?.['required'] && AddedArrivalAirport.touched">
+    This arrival field cannot be empty
+  </em>
+  <em class="error" *ngIf=" AddedArrivalAirport && AddedArrivalAirport?.errors?.['pattern'] && AddedArrivalAirport.touched">
+    This arrival field cannot be invalid
+  </em>
+  <em class="error" *ngIf=" routeInfo.errors?.['equalAirport'] && routeInfo.touched">
+    This departure and arrival field cannot be same
+  </em>
   <br>
   <label for="mileage">Mileage: </label>
-  <input id="mileage" type="text" formControlName="mileage" required>
+  <input id="mileage" type="text" formControlName="mileage" >
   <br>
+  <em class="error" *ngIf=" AddedMileage && AddedMileage.errors?.['required'] && AddedMileage.touched">
+    This field cannot be empty
+  </em>
+  <em class="error" *ngIf="AddedMileage && AddedMileage.errors?.['pattern'] && AddedMileage.touched">
+    Mileage should be number
+  </em>
   <br>
   <label for="Duration">Duration: </label>
-  <input id="Duration" type="text" formControlName="duration" required>
+  <input id="Duration" type="text" formControlName="duration" >
   <br>
+  <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['required'] && AddedDuration.touched">
+    This field cannot be empty or invalid
+  </em>
+  <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['required'] && AddedDuration.touched">
+    Duration should be number
+  </em>
   <br>
-  <button type="submit" (click)="onSubmit()" >Submit</button>
-  <button type="submit" (click)="onCancel()" >cancel</button>
+  <button type="submit"  [disabled]="routeInfo.invalid" (click)="onSubmit()" >Submit</button>
+  <button type="reset" (click)="onCancel()" >cancel</button>
 </form>
-
+</div>
 
 
