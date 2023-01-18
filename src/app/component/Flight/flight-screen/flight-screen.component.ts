@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 
+//TODO: import airport names
 const DATA = [
   {
     id: 1,
@@ -83,7 +85,22 @@ const COLUMNS = [
   styleUrls: ['./flight-screen.component.scss'],
 })
 export class FlightScreenComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  public airports: string[] = [];
+
+  constructor(public dialog: MatDialog, private http: HttpClient) {
+    /*this.loadAirports().then((r) => (this.airports = r));*/
+  }
+
+  /*async loadAirports() {
+    await this.http
+      .get('/assets/airports.csv', { responseType: 'text' })
+      .subscribe((data) => {
+        this.airports = data.split('\n');
+        console.log('inside constructor', this.airports);
+      });
+    return this.airports;
+  }*/
+
   // for table structure
   dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
@@ -91,6 +108,8 @@ export class FlightScreenComponent implements OnInit {
   // for dropdowns in search
   myControl1 = new FormControl('');
   myControl2 = new FormControl('');
+
+  //TODO: map these arrays with CSV data
   departures: string[] = Array.from(
     new Set(DATA.map((col) => col.Departure_Airport))
   );
