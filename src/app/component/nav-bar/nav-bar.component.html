@@ -1,8 +1,8 @@
-<mat-toolbar>
-  <mat-icon>flight</mat-icon>
+<mat-toolbar class="mat-tab-nav-bar">
+  <mat-icon class="icon">flight</mat-icon>
   <span>Flight Management System</span>
   <span class="space"></span>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <nav class="tabs" mat-tab-nav-bar [tabPanel]="tabPanel">
     <a class ="tab" routerLink="/route">Routes</a>
     <a class ="tab" routerLink="/flight">Flights</a>
   </nav>

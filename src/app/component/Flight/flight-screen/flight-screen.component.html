@@ -1,8 +1,8 @@
 <div class="flight">
   <div class="flight_search">
     <form class="searchFilter">
-        <mat-icon>flight_takeoff</mat-icon>
-        <mat-form-field appearance="fill">
+      <div class="inputFields">
+        <mat-form-field class="departInput" appearance="fill">
           <mat-label>Departure Airport</mat-label>
           <input type="text"
                  aria-label="Departure Airport"
@@ -10,16 +10,18 @@
                  matInput
                  [formControl]="myControl1"
                  [matAutocomplete]="auto"
-          #departure>
+
+                 #departure>
+
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option *ngFor="let depart of filteredDepartures | async" [value]="depart">
               {{depart}}
             </mat-option>
           </mat-autocomplete>
+          <mat-icon matSuffix>flight_takeoff</mat-icon>
         </mat-form-field>
 
-        <mat-icon>flight_land</mat-icon>
-        <mat-form-field>
+        <mat-form-field class="arriveInput">
           <mat-label>Arrival Airport</mat-label>
           <input type="text"
                  id="arrive"
@@ -29,13 +31,16 @@
                  matInput
                  [formControl]="myControl2"
                  [matAutocomplete]="autoTest"
-          #arrive>
+                 #arrive>
           <mat-autocomplete autoActiveFirstOption #autoTest="matAutocomplete">
             <mat-option *ngFor="let arrives of filteredArrivals | async" [value]="arrives">
               {{arrives}}
             </mat-option>
           </mat-autocomplete>
+          <mat-icon matSuffix>flight_land</mat-icon>
         </mat-form-field>
+      </div>
+
       <div class="searchBtn">
         <button mat-raised-button
                 (click)="filter(departure.value, arrive.value)">
@@ -50,10 +55,9 @@
       </div>
     </form>
   </div>
-
   <div class="flight_table">
-    <table>
-      <tr >
+    <table class="flight_table">
+      <tr>
         <th *ngFor="let col of columnsSchema">
           {{col.label}}
         </th>
@@ -79,4 +83,5 @@
       Add flight
     </a>
   </div>
+
 </div>
