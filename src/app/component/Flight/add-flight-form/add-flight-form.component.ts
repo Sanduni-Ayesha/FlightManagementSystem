@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
@@ -14,9 +13,7 @@ import { futureDateValidator } from '../../../shared/futureDate.validator';
   styleUrls: ['./add-flight-form.component.scss'],
 })
 export class AddFlightFormComponent {
-  //inject the formBuilder service
   constructor(
-    private formBuilder: FormBuilder,
     public dialog: MatDialog,
     @Inject(DIALOG_DATA) public data: any
   ) {}
@@ -57,10 +54,20 @@ export class AddFlightFormComponent {
   close() {
     this.dialog.closeAll();
   }
-  reset() {
-    //TODO:reset form data with this.data.row
-    this.flightForm.value.Departure_Airport = this.data.row.Departure_Airport;
-    console.log(this.flightForm.value.Departure_Airport);
+  resetRow() {
+    this.flightForm.controls['Departure_Airport'].setValue(
+      this.data.row.Departure_Airport
+    );
+    this.flightForm.controls['Arrival_Airport'].setValue(
+      this.data.row.Arrival_Airport
+    );
+    this.flightForm.controls['FlightNo'].setValue(this.data.row.FlightNo);
+    this.flightForm.controls['Departure_Time'].setValue(
+      this.data.row.Departure_Time
+    );
+    this.flightForm.controls['Arrival_Time'].setValue(
+      this.data.row.Arrival_Time
+    );
   }
 
   update() {

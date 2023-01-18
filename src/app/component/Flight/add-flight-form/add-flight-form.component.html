@@ -82,7 +82,7 @@
     <button type="reset" (click)="close()">
       Cancel
     </button>
-    <button type="reset" (click)="reset()">
+    <button type="button" (click)="resetRow()">
       Reset
     </button>
     <button *ngIf="this.data.row ==''" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
