@@ -9,7 +9,9 @@ import {map, startWith} from "rxjs/operators";
 
 const USER_DATA = [
   {id:1,departureAirport: "Colombo", arrivalAirport: "Dubai", mileage: "36",duration:"20"},
-  {id:2,departureAirport: "Katunayaka", arrivalAirport: "Dubai", mileage: "28",duration:"20"}
+  {id:2,departureAirport: "London", arrivalAirport: "Colombo", mileage: "280",duration:"20"},
+  {id:3,departureAirport: "Katunayaka", arrivalAirport: "Tokyo", mileage: "287",duration:"220"},
+  {id:4,departureAirport: "Singapore", arrivalAirport: "Doha", mileage: "283",duration:"260"}
 ];
 const COLUMNS_SCHEMA = [
   {
@@ -55,9 +57,12 @@ const COLUMNS_SCHEMA = [
 })
 export class CreateRouteTableComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
-  displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
-  dataSource: any =  new MatTableDataSource(USER_DATA);
+  // displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
+  // dataSource: any =  new MatTableDataSource(USER_DATA);
   columnsSchema: any = COLUMNS_SCHEMA;
+  Data_Source:any = USER_DATA
+  temporary_Data_Source:any =USER_DATA;
+  temporary_Set = new Set();
   ArrivalControl = new FormControl('');
   DepartureControl = new FormControl('');
   ArrivalFilteredOptions: Observable<string[]> | undefined;
@@ -96,7 +101,9 @@ export class CreateRouteTableComponent implements OnInit {
      disableClose:true,
      width: '600px',
      data: {
-       ds: this.dataSource,
+       ds: this.Data_Source,
+       id:'',
+       rowData:'',
      },
 
    });
@@ -104,18 +111,46 @@ export class CreateRouteTableComponent implements OnInit {
 
   removeRow(id:number){
     //find the index that need to be deleted
-    const index = this.dataSource.filteredData.findIndex((value :any) => value.id === id);
-    this.dataSource.filteredData.splice(index, 1);
-    this.dataSource._updateChangeSubscription()
+    // const index = this.dataSource.filteredData.findIndex((value :any) => value.id === id);
+    // this.dataSource.filteredData.splice(index, 1);
+    // this.dataSource._updateChangeSubscription()
+    //====
+    const index = this.Data_Source.findIndex((value :any) => value.id === id);
+    this.Data_Source.splice(index, 1);
+
   }
 
   search(){
-    if (this.dataSource.filteredData.find((obj:any) => (obj.departureAirport === this.DepartureControl.value) || (obj.arrivalAirport === this.ArrivalControl.value))){
-    this.dataSource.filter = this.DepartureControl.value
-    this.dataSource.filter = this.ArrivalControl.value}
+    if (this.Data_Source.find((obj:any) => (obj.departureAirport === this.DepartureControl.value) ||
+      (obj.arrivalAirport === this.ArrivalControl.value))){
+      this.temporary_Data_Source = this.Data_Source;
+      const FilterAirport = this.Data_Source.filter((obj:any) => {
+        return obj.departureAirport === this.DepartureControl.value || obj.arrivalAirport === this.ArrivalControl.value ;
+      });
+    this.Data_Source=FilterAirport
+    }
     else{
       this.Error_message = "The Searching route not available in the system!!!"
     }
+  }
+  clearSearch(){
+    console.log(this.temporary_Data_Source)
+    this.Data_Source = this.temporary_Data_Source;
+  }
+
+  Editdata(id: number){
+    let dialogRef = this.dialog.open(AddRouteFormComponent, {
+      height: '400px',
+      disableClose:true,
+      width: '600px',
+      data: {
+        ds: this.Data_Source,
+        id: id,
+        rowData:this.Data_Source[id-1],
+      },
+
+    });
+
   }
 
 }

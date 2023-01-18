@@ -45,8 +45,14 @@
     Duration should be number
   </em>
   <br>
-  <button type="submit"  [disabled]="routeInfo.invalid" (click)="onSubmit()" >Submit</button>
   <button type="reset" (click)="onCancel()" >cancel</button>
+
+  <div *ngIf="this.data.id === ''">
+  <button type="submit"  [disabled]="routeInfo.invalid" (click)="onSubmit()" >Submit</button>
+  </div>
+  <div *ngIf="this.data.id!= ''">
+  <button type="submit" (click)="onUpdate()" [disabled]="routeInfo.invalid">update</button>
+  </div>
 </form>
 </div>
 
