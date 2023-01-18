@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatTableDataSource } from '@angular/material/table';
 import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 const DATA = [
   {
@@ -45,7 +44,7 @@ const COLUMNS = [
   {
     key: 'Departure_Airport',
     type: 'text',
-    label: 'Departure_Airport',
+    label: 'Departure Airport',
   },
   {
     key: 'Arrival_Airport',
@@ -55,17 +54,17 @@ const COLUMNS = [
   {
     key: 'FlightNo',
     type: 'text',
-    label: 'FlightNo',
+    label: 'Flight No',
   },
   {
     key: 'Departure_Time',
     type: 'datetime-local',
-    label: 'Departure_Time',
+    label: 'Departure Time',
   },
   {
     key: 'Arrival_Time',
     type: 'datetime-local',
-    label: 'Arrival_Time',
+    label: 'Arrival Time',
   },
   {
     key: 'isEdit',
@@ -86,8 +85,6 @@ const COLUMNS = [
 export class FlightScreenComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
   // for table structure
-  displayedColumns: string[] = COLUMNS.map((col) => col.key);
-  //dataSource: any = new MatTableDataSource(DATA);
   dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
 
@@ -131,18 +128,6 @@ export class FlightScreenComponent implements OnInit {
 
   filter(departure: string, arrive: string) {
     if (departure != '' && arrive != '') {
-      /*const dep = this.dataSource.data.filter(
-          (u: any) => u.Departure_Airport == departure
-        );
-        const arr = this.dataSource.data.filter(
-          (u: any) => u.Arrival_Airport == arrive
-        );
-        console.log(dep);
-        if (dep.length == 0) {
-          console.log('Departure not available');
-          return;
-        } else {*/
-      //console.log(this.dataSource.data[0].Departure_Airport);
       this.dataSource = this.dataSource.filter(
         (u: any) => u.Departure_Airport == departure
       );
@@ -152,12 +137,6 @@ export class FlightScreenComponent implements OnInit {
     } else {
       this.dataSource = DATA;
     }
-
-    //this.dataSource = this.dataSource.filter = arrive;
-    /*}*/
-
-    //const arr = this.dataSource.data.map(({'Departure_Airport'}) => ('Departure_Airport'));
-    //console.log(this.dataSource.filteredData.length == 0);
   }
 
   removeRow(id: number) {
@@ -165,7 +144,7 @@ export class FlightScreenComponent implements OnInit {
   }
 
   editRow(id: number) {
-    const formModal = this.dialog.open(AddFlightFormComponent, {
+    this.dialog.open(AddFlightFormComponent, {
       width: '640px',
       disableClose: true,
       data: {
@@ -177,8 +156,7 @@ export class FlightScreenComponent implements OnInit {
   }
 
   openForm(): void {
-    //this.dataSource.data = new MatTableDataSource(DATA);
-    const formModal = this.dialog.open(AddFlightFormComponent, {
+    this.dialog.open(AddFlightFormComponent, {
       width: '640px',
       disableClose: true,
       data: {

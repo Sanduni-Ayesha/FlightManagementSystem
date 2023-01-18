@@ -44,11 +44,9 @@ export class AddFlightFormComponent {
   );
 
   onSubmit() {
-    //console.log(this.flightForm.get('Departure_Airport')?.touched);
     this.dialog.closeAll();
     this.flightForm.value.id = this.data.ds.length + 1;
     this.data.ds.push(this.flightForm.value);
-    //this.data.ds._updateChangeSubscription();
   }
 
   close() {

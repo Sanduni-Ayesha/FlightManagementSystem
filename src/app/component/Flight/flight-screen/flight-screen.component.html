@@ -1,10 +1,6 @@
-<!--<p>flight-screen works!</p>-->
-<!--<p>{{departures}}</p>
-<p>{{arrivals}}</p>-->
 <div class="flight">
   <div class="flight_search">
-    <form class="form">
-      <div>
+    <form class="searchFilter">
         <mat-icon>flight_takeoff</mat-icon>
         <mat-form-field appearance="fill">
           <mat-label>Departure Airport</mat-label>
@@ -40,10 +36,11 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+      <div class="searchBtn">
         <button mat-raised-button
-          (click)="filter(departure.value, arrive.value)">
-            <mat-icon>search</mat-icon>
-            Search flight
+                (click)="filter(departure.value, arrive.value)">
+          <mat-icon>search</mat-icon>
+          Search flight
         </button>
         <button mat-raised-button
                 (click)="filter('', ''); departure.value=''; arrive.value=''">
@@ -55,68 +52,26 @@
   </div>
 
   <div class="flight_table">
-
     <table>
       <tr >
         <th *ngFor="let col of columnsSchema">
           {{col.label}}
         </th>
       </tr>
-
+      <div *ngIf="dataSource.length==0" class="noFlights">
+        <h4>Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
+      </div>
       <tr *ngFor="let row of dataSource">
         <td *ngFor="let col of columnsSchema">
           {{ row[col.key] }}
           <div class="btn-edit" *ngIf="col.key === 'isEdit'">
             <button mat-button (click)="editRow(row.id)"><mat-icon>edit</mat-icon></button>
           </div>
-          <div class="btn-edit" *ngIf="col.key === 'isDelete'">
+          <div class="btn-delete" *ngIf="col.key === 'isDelete'">
             <button mat-button (click)="removeRow(row.id)"><mat-icon>delete</mat-icon></button>
           </div>
       </tr>
     </table>
-<!--
-
-
-    <table  mat-table [dataSource]="dataSource">
-      <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-        <th mat-header-cell *matHeaderCellDef>
-          {{col.label}}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <div [ngSwitch]="col.key" *ngIf="!element.isEdit">
-            <div class="btn-edit" *ngSwitchCase="'isEdit' || 'isDelete' || 'Departure_Airport' || 'Arrival Airport'">
-              <button mat-button (click)="element.isEdit = !element.isEdit"><mat-icon>edit</mat-icon></button>
-
-            </div>
-            <span *ngSwitchDefault>
-              {{ element[col.key] }}
-            </span>
-          </div>
-          <div *ngIf="element.isEdit">
-            <div class="btn-flex" *ngIf="col.key === 'isEdit'; else dataField">
-              <button mat-button matTooltip="Done" (click)="element.isEdit = !element.isEdit"><mat-icon>done</mat-icon></button>
-              <button mat-button  matTooltip="Cancel edit" (click)="element.isEdit = !element.isEdit && reset(element.id)"><mat-icon>cancel</mat-icon></button>
-              <button mat-button matTooltip="Reset edit" (click)="reset(element.id)"><mat-icon>restore</mat-icon></button>
-            </div>
-            <ng-template #dataField>
-              <mat-form-field *ngIf="col.key != 'isDelete'">
-                <input
-                  [type]="col.type"
-                  matInput
-                  [(ngModel)]="element[col.key]"
-                />
-              </mat-form-field>
-            </ng-template>
-          </div>
-          <div class="btn-edit" *ngIf="col.key === 'isDelete'">
-            <button mat-button (click)="removeRow(element.id)"><mat-icon>delete</mat-icon></button>
-          </div>
-          &lt;!&ndash;          {{element[col]}}&ndash;&gt;
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row;columns: displayedColumns;"></tr>
-    </table>-->
   </div>
   <div class="addFlight">
     <a mat-raised-button (click)="openForm()">
@@ -125,4 +80,3 @@
     </a>
   </div>
 </div>
-<!--<p>flight-screen works!</p>-->
