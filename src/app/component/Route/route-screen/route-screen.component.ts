@@ -119,7 +119,7 @@ export class RouteScreenComponent implements OnInit {
       });
       this.dataSet = filterAirportData
     } else {
-      this.errorMessage = "The Searching route not available in the system!!!"
+      this.errorMessage = "The Searching route is not available in the system!!!"
     }
   }
 

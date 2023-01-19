@@ -21,11 +21,11 @@ export class AddRouteFormComponent {
         validators: [airportEquality]}
   )
 
+
   constructor(private fb: FormBuilder,private dialog:MatDialog,@Inject(DIALOG_DATA) public data: any) { }
 
   onSubmit() {
     this.dialog.closeAll();
-    // add value to the id
     this.routeInfo.value.id = this.data.ds.length + 1;
     this.data.ds.push(this.routeInfo.value);
   }
@@ -39,6 +39,16 @@ export class AddRouteFormComponent {
   onCancel(){
     this.dialog.closeAll();
   }
+  onReset(){
+
+      this.routeInfo.controls.id.setValue( this.data.ds[this.data.id-1].id)
+      this.routeInfo.controls.departureAirport.setValue( this.data.ds[this.data.id-1].departureAirport)
+      this.routeInfo.controls.arrivalAirport.setValue( this.data.ds[this.data.id-1].arrivalAirport)
+      this.routeInfo.controls.mileage.setValue( this.data.ds[this.data.id-1].mileage)
+      this.routeInfo.controls.duration.setValue( this.data.ds[this.data.id-1].duration)
+
+  }
+
   get addedDepartureAirport(){
     return this.routeInfo.get('departureAirport')
   }

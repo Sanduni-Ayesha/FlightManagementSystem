@@ -51,7 +51,8 @@
   <button type="submit"  [disabled]="routeInfo.invalid" (click)="onSubmit()" >Submit</button>
   </div>
   <div *ngIf="this.data.id!= ''">
-  <button type="submit" (click)="onUpdate()" [disabled]="routeInfo.invalid">update</button>
+  <button type="button" (click)="onReset()" >reset</button>
+    <button type="submit" (click)="onUpdate()" [disabled]="routeInfo.invalid">update</button>
   </div>
 </form>
 </div>
