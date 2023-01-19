@@ -90,11 +90,18 @@ export class FlightScreenComponent implements OnInit {
     this.loadAirports();
   }
   ngOnInit() {
-    this.filteredAirports = this.myControl.valueChanges.pipe(
+    this.filteredAirports = this.filterControl.valueChanges.pipe(
       startWith(''),
       map((value) => this.filterAirports(value || ''))
     );
   }
+
+  dataSource: any = DATA;
+  columnsSchema: any = COLUMNS;
+
+  filterControl = new FormControl('');
+
+  filteredAirports: Observable<string[]> | undefined;
 
   loadAirports() {
     this.http
@@ -103,14 +110,6 @@ export class FlightScreenComponent implements OnInit {
         this.airports = data.split('\n');
       });
   }
-
-  dataSource: any = DATA;
-  columnsSchema: any = COLUMNS;
-
-  myControl = new FormControl('');
-
-  filteredAirports: Observable<string[]> | undefined;
-
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
     if (this.airports) {

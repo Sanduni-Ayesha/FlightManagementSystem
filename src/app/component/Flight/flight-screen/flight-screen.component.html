@@ -8,7 +8,7 @@
                  aria-label="Departure Airport"
                  placeholder="Pick Airport"
                  matInput
-                 [formControl]="myControl"
+                 [formControl]="filterControl"
                  [matAutocomplete]="auto"
 
                  #departure>
@@ -29,7 +29,7 @@
                  aria-label="Arrival Airport"
                  placeholder="Pick Airport"
                  matInput
-                 [formControl]="myControl"
+                 [formControl]="filterControl"
                  [matAutocomplete]="autoTest"
                  #arrive>
           <mat-autocomplete autoActiveFirstOption #autoTest="matAutocomplete">
