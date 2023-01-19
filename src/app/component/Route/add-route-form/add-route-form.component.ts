@@ -7,7 +7,7 @@ import {airportValidator} from "../../../shared/airport.validator";
 @Component({
   selector: 'app-add-route-form',
   templateUrl: './add-route-form.component.html',
-  styleUrls: ['./add-route-form.component.scss']
+  styleUrls: ['../../../styles/form-overlay.scss']
 })
 export class AddRouteFormComponent {
 

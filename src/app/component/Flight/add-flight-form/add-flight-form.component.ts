@@ -10,7 +10,7 @@ import { futureDateValidator } from '../../../shared/futureDate.validator';
 @Component({
   selector: 'app-add-flight-form',
   templateUrl: './add-flight-form.component.html',
-  styleUrls: ['./add-flight-form.component.scss'],
+  styleUrls: ['../../../styles/form-overlay.scss']
 })
 export class AddFlightFormComponent {
   constructor(

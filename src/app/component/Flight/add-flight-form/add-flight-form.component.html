@@ -1,5 +1,5 @@
-<div class = 'flightForm'>
-  <h3>Add new flight</h3>
+<div class = 'overlay'>
+  <h1>Add new flight</h1>
   <form [formGroup]="flightForm">
     <div class="departAirport">
       <label>
@@ -94,16 +94,16 @@
     <br>
 
     <div class="btn-group">
-      <button type="reset" (click)="close()">
+      <button mat-button type="reset" (click)="close()">
         Cancel
       </button>
-      <button type="button" (click)="resetRow()">
+      <button mat-button type="button" (click)="resetRow()">
         Reset
       </button>
-      <button *ngIf="this.data['row'] ==''" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'] ==''" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
         Submit
       </button>
-      <button  *ngIf="this.data['row'] !=''" type="submit" (click)="update()" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'] !=''" type="submit" (click)="update()" [disabled]="!flightForm.valid">
         Update
       </button>
     </div>
