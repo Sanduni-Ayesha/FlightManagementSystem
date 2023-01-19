@@ -77,14 +77,14 @@ export class RouteScreenComponent implements OnInit {
     );
 
     this.filteredArrivalAirport = this.arrivalControl.valueChanges.pipe(startWith(''),
-      map(value => this._filter(value || '', this.arrivalAirportArray)),
+      map(value => this.filterAirport(value || '', this.arrivalAirportArray)),
     );
     this.filteredDepartureAirport = this.departureControl.valueChanges.pipe(startWith(''),
-      map(value => this._filter(value || '', this.departureAirportArray)),
+      map(value => this.filterAirport(value || '', this.departureAirportArray)),
     );
   }
 
-  private _filter(value: string, ArrayData: any): string[] {
+  private filterAirport(value: string, ArrayData: any): string[] {
     const filterValue = value.toLowerCase();
     return ArrayData.filter((option: any) => option.toLowerCase().includes(filterValue));
   }
