@@ -97,13 +97,17 @@ export class FlightScreenComponent implements OnInit {
   constructor(public dialog: MatDialog, private http: HttpClient) {}
   ngOnInit() {
     this.loadAirports();
-    this.filteredDepartures = this.filterDepart.valueChanges.pipe(
-      map((value) => this.filterAirports(value || ''))
-    );
+    this.filterDepart.valueChanges
+      .pipe(map((value) => this.filterAirports(value || '')))
+      .subscribe((departures) => {
+        this.filteredDepartures = departures;
+      });
 
-    this.filteredArrivals = this.filterArrive.valueChanges.pipe(
-      map((value) => this.filterAirports(value || ''))
-    );
+    this.filterArrive.valueChanges
+      .pipe(map((value) => this.filterAirports(value || '')))
+      .subscribe((arrivals) => {
+        this.filteredArrivals = arrivals;
+      });
   }
 
   dataSource: any = DATA;
@@ -112,8 +116,8 @@ export class FlightScreenComponent implements OnInit {
   filterDepart = new FormControl('');
   filterArrive = new FormControl('');
 
-  filteredDepartures: Observable<string[]> | undefined;
-  filteredArrivals: Observable<string[]> | undefined;
+  filteredDepartures: string[] | undefined;
+  filteredArrivals: string[] | undefined;
 
   loadAirports() {
     this.http
