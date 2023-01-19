@@ -5,13 +5,13 @@ import {AddRouteFormComponent} from "../add-route-form/add-route-form.component"
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 
-const USER_DATA = [
+const userData = [
   {id: 1, departureAirport: "Colombo", arrivalAirport: "Dubai", mileage: "36", duration: "20"},
   {id: 2, departureAirport: "London", arrivalAirport: "Colombo", mileage: "280", duration: "20"},
   {id: 3, departureAirport: "Katunayaka", arrivalAirport: "Tokyo", mileage: "287", duration: "220"},
   {id: 4, departureAirport: "Singapore", arrivalAirport: "Doha", mileage: "283", duration: "260"}
 ];
-const COLUMNS_SCHEMA = [
+const columnSchema = [
   {
     key: "departureAirport",
     type: "text",
@@ -56,23 +56,24 @@ export class CreateRouteTableComponent implements OnInit {
   constructor(public dialog: MatDialog) {
   }
 
-  columnsSchema: any = COLUMNS_SCHEMA;
-  dataSet: any = USER_DATA
-  temporaryDataSet: any = USER_DATA;
+  columnsSchema: any = columnSchema;
+  dataSet: any = userData
+  temporaryDataSet: any = userData;
+
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
   filteredArrivalAirport: Observable<string[]> | undefined;
   filteredDepartureAirport: Observable<string[]> | undefined;
   private arrivalAirportArray: string[] | undefined;
   private departureAirportArray: string[] | undefined;
-  Error_message: string | undefined;
+  errorMessage: string | undefined;
 
   ngOnInit() {
     this.arrivalAirportArray = Array.from(
-      new Set(USER_DATA.map((col) => col.arrivalAirport))
+      new Set(userData.map((col) => col.arrivalAirport))
     );
     this.departureAirportArray = Array.from(
-      new Set(USER_DATA.map((col) => col.departureAirport))
+      new Set(userData.map((col) => col.departureAirport))
     );
 
     this.filteredArrivalAirport = this.arrivalControl.valueChanges.pipe(startWith(''),
@@ -113,12 +114,12 @@ export class CreateRouteTableComponent implements OnInit {
     if (this.dataSet.find((obj: any) => (obj.departureAirport === this.departureControl.value) ||
       (obj.arrivalAirport === this.arrivalControl.value))) {
       this.temporaryDataSet = this.dataSet;
-      const FilterAirport = this.dataSet.filter((obj: any) => {
+      const filterAirportData = this.dataSet.filter((obj: any) => {
         return obj.departureAirport === this.departureControl.value || obj.arrivalAirport === this.arrivalControl.value;
       });
-      this.dataSet = FilterAirport
+      this.dataSet = filterAirportData
     } else {
-      this.Error_message = "The Searching route not available in the system!!!"
+      this.errorMessage = "The Searching route not available in the system!!!"
     }
   }
 
@@ -127,7 +128,7 @@ export class CreateRouteTableComponent implements OnInit {
     this.dataSet = this.temporaryDataSet;
   }
 
-  Editdata(id: number) {
+  editData(id: number) {
     let dialogRef = this.dialog.open(AddRouteFormComponent, {
       height: '400px',
       disableClose: true,

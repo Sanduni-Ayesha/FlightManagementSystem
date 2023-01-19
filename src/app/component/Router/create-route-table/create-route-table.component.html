@@ -51,7 +51,7 @@
             Clear search
           </button>
         </form>
-        <span>{{Error_message}}</span>
+        <span>{{errorMessage}}</span>
       </div>
     </td>
     <td></td>
@@ -74,7 +74,7 @@
           {{row[columnData.key]}}
         </div>
         <div *ngIf="columnData.key==='isEdit'">
-          <button mat-button (click)="Editdata(row.id)">
+          <button mat-button (click)="editData(row.id)">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
