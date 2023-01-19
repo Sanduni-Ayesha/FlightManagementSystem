@@ -10,61 +10,61 @@ import { HttpClient } from '@angular/common/http';
 const DATA = [
   {
     id: 1,
-    Departure_Airport: 'Sydney',
-    Arrival_Airport: 'Katunayake',
-    FlightNo: 'AB2001',
-    Departure_Time: '2023-01-20T12:12',
-    Arrival_Time: '2023-01-23T12:12',
+    departureAirport: 'Sydney',
+    arrivalAirport: 'Katunayake',
+    flightNo: 'AB2001',
+    departureTime: '2023-01-20T12:12',
+    arrivalTime: '2023-01-23T12:12',
   },
   {
     id: 2,
-    Departure_Airport: 'Singapore',
-    Arrival_Airport: 'Tokyo',
-    FlightNo: 'A001',
-    Departure_Time: '10-01-2023 08.00.00',
-    Arrival_Time: '10-01-2023 08.00.00',
+    departureAirport: 'Singapore',
+    arrivalAirport: 'Tokyo',
+    flightNo: 'A001',
+    departureTime: '10-01-2023 08.00.00',
+    arrivalTime: '10-01-2023 08.00.00',
   },
   {
     id: 3,
-    Departure_Airport: 'Delhi',
-    Arrival_Airport: 'Dubai',
-    FlightNo: 'A001',
-    Departure_Time: '10-01-2023 08.00.00',
-    Arrival_Time: '10-01-2023 08.00.00',
+    departureAirport: 'Delhi',
+    arrivalAirport: 'Dubai',
+    flightNo: 'A001',
+    departureTime: '10-01-2023 08.00.00',
+    arrivalTime: '10-01-2023 08.00.00',
   },
   {
     id: 4,
-    Departure_Airport: 'Sydney',
-    Arrival_Airport: 'Mumbai',
-    FlightNo: 'A001',
-    Departure_Time: '10-01-2023 08.00.00',
-    Arrival_Time: '10-01-2023 08.00.00',
+    departureAirport: 'Sydney',
+    arrivalAirport: 'Mumbai',
+    flightNo: 'A001',
+    departureTime: '10-01-2023 08.00.00',
+    arrivalTime: '10-01-2023 08.00.00',
   },
 ];
 
 const COLUMNS = [
   {
-    key: 'Departure_Airport',
+    key: 'departureAirport',
     type: 'text',
     label: 'Departure Airport',
   },
   {
-    key: 'Arrival_Airport',
+    key: 'arrivalAirport',
     type: 'text',
     label: 'Arrival Airport',
   },
   {
-    key: 'FlightNo',
+    key: 'flightNo',
     type: 'text',
     label: 'Flight No',
   },
   {
-    key: 'Departure_Time',
+    key: 'departureTime',
     type: 'datetime-local',
     label: 'Departure Time',
   },
   {
-    key: 'Arrival_Time',
+    key: 'arrivalTime',
     type: 'datetime-local',
     label: 'Arrival Time',
   },
@@ -132,10 +132,10 @@ export class FlightScreenComponent implements OnInit {
   filter(departure: string, arrive: string) {
     if (departure != '' && arrive != '') {
       this.dataSource = this.dataSource.filter(
-        (u: any) => u.Departure_Airport == departure
+        (u: any) => u.departureAirport == departure
       );
       this.dataSource = this.dataSource.filter(
-        (u: any) => u.Arrival_Airport == arrive
+        (u: any) => u.arrivalAirport == arrive
       );
     } else {
       this.dataSource = DATA;

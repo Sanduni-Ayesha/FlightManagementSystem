@@ -21,22 +21,22 @@ export class AddFlightFormComponent {
   flightForm = new FormGroup(
     {
       id: new FormControl(''),
-      Departure_Airport: new FormControl(this.data.row.Departure_Airport, [
+      departureAirport: new FormControl(this.data.row.departureAirport, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]*$/),
       ]),
-      Arrival_Airport: new FormControl(this.data.row.Arrival_Airport, [
+      arrivalAirport: new FormControl(this.data.row.arrivalAirport, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]*$/),
       ]),
-      FlightNo: new FormControl(this.data.row.FlightNo, [
+      flightNo: new FormControl(this.data.row.flightNo, [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
       ]),
-      Departure_Time: new FormControl(this.data.row.Departure_Time, [
+      departureTime: new FormControl(this.data.row.departureTime, [
         Validators.required,
       ]),
-      Arrival_Time: new FormControl(this.data.row.Arrival_Time, [
+      arrivalTime: new FormControl(this.data.row.arrivalTime, [
         Validators.required,
       ]),
     },
@@ -53,25 +53,23 @@ export class AddFlightFormComponent {
     this.dialog.closeAll();
   }
   resetRow() {
-    this.flightForm.controls['Departure_Airport'].setValue(
-      this.data.row.Departure_Airport
+    this.flightForm.controls['departureAirport'].setValue(
+      this.data.row.departureAirport
     );
-    this.flightForm.controls['Arrival_Airport'].setValue(
-      this.data.row.Arrival_Airport
+    this.flightForm.controls['arrivalAirport'].setValue(
+      this.data.row.arrivalAirport
     );
-    this.flightForm.controls['FlightNo'].setValue(this.data.row.FlightNo);
-    this.flightForm.controls['Departure_Time'].setValue(
-      this.data.row.Departure_Time
+    this.flightForm.controls['flightNo'].setValue(this.data.row.flightNo);
+    this.flightForm.controls['departureTime'].setValue(
+      this.data.row.departureTime
     );
-    this.flightForm.controls['Arrival_Time'].setValue(
-      this.data.row.Arrival_Time
-    );
+    this.flightForm.controls['arrivalTime'].setValue(this.data.row.arrivalTime);
   }
 
   update() {
-    const updated_id = this.data.row.id || null;
-    if (updated_id != null) {
-      this.data.ds[updated_id - 1] = this.flightForm.value;
+    const updatedId = this.data.row.id || null;
+    if (updatedId != null) {
+      this.data.ds[updatedId - 1] = this.flightForm.value;
     }
     console.log(this.data.row);
     this.dialog.closeAll();
