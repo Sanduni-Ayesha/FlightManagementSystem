@@ -124,7 +124,6 @@ export class CreateRouteTableComponent implements OnInit {
   }
 
   clearSearch() {
-    console.log(this.temporaryDataSet)
     this.dataSet = this.temporaryDataSet;
   }
 
