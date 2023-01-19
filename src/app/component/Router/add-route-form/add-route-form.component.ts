@@ -1,9 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CreateRouteTableComponent} from "../create-route-table/create-route-table.component";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {AbstractControl} from "@angular/forms";
 import {AirportEquality} from "../../../shared/airport.validator";
 
 @Component({
@@ -13,13 +11,12 @@ import {AirportEquality} from "../../../shared/airport.validator";
 })
 export class AddRouteFormComponent {
 
-  // Dep_Error_message:any|undefined;
   routeInfo =new FormGroup({
-    id: new FormControl(''),
-    departureAirport : new FormControl(this.data.rowData.departureAirport,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+      id: new FormControl(''),
+      departureAirport : new FormControl(this.data.rowData.departureAirport,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
       arrivalAirport : new FormControl(this.data.rowData.arrivalAirport,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-        mileage : new FormControl(this.data.rowData.mileage,[Validators.required,Validators.pattern('[0-9 ]*')]),
-        duration : new FormControl(this.data.rowData.duration,[Validators.required,Validators.pattern('[0-9 ]*')])
+      mileage : new FormControl(this.data.rowData.mileage,[Validators.required,Validators.pattern('[0-9 ]*')]),
+      duration : new FormControl(this.data.rowData.duration,[Validators.required,Validators.pattern('[0-9 ]*')])
   }, {
         validators: [AirportEquality]}
   )
@@ -28,19 +25,13 @@ export class AddRouteFormComponent {
 
   onSubmit() {
     this.dialog.closeAll();
-    // add values to the id
-   // this.routeInfo.value.id = this.data.ds.data.length + 1;
-   //  this.data.ds.data.push(this.routeInfo.value);
+    // add value to the id
     this.routeInfo.value.id = this.data.ds.length + 1;
     this.data.ds.push(this.routeInfo.value);
-    //update the datasource with new data
-    // this.data.ds._updateChangeSubscription();
   }
 
   onUpdate(){
     this.dialog.closeAll();
-    // this.routeInfo.value = this.data.rowData
-    // console.log(this.data.rowData)
     this.data.ds[this.data.id-1] = this.routeInfo.value
 
 
@@ -48,17 +39,17 @@ export class AddRouteFormComponent {
   onCancel(){
     this.dialog.closeAll();
   }
-  get AddedDepartureAirport(){
+  get addedDepartureAirport(){
     return this.routeInfo.get('departureAirport')
   }
 
-  get AddedArrivalAirport(){
+  get addedArrivalAirport(){
     return this.routeInfo.get('arrivalAirport')
   }
-  get AddedMileage(){
+  get addedMileage(){
     return this.routeInfo.get('mileage')
   }
-  get AddedDuration(){
+  get addedDuration(){
     return this.routeInfo.get('duration')
   }
 

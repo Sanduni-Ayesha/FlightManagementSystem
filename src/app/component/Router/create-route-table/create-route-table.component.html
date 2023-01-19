@@ -1,6 +1,3 @@
-
-
-<br><br>
 <table>
   <thead>
   <tr>
@@ -20,10 +17,10 @@
                    placeholder="Pick one"
                    aria-label="Number"
                    matInput
-                   [formControl]="DepartureControl"
+                   [formControl]="departureControl"
                    [matAutocomplete]="auto1" #departure_Airport>
             <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
-              <mat-option *ngFor="let option of DepartureFilteredOptions | async" [value]="option">
+              <mat-option *ngFor="let option of filteredDepartureAirport | async" [value]="option">
                 {{option}}
               </mat-option>
             </mat-autocomplete>
@@ -36,10 +33,10 @@
                    placeholder="Pick one"
                    aria-label="Number"
                    matInput
-                   [formControl]="ArrivalControl"
+                   [formControl]="arrivalControl"
                    [matAutocomplete]="auto2" #arrival_Airport>
             <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
-              <mat-option *ngFor="let option of ArrivalFilteredOptions | async" [value]="option">
+              <mat-option *ngFor="let option of filteredArrivalAirport | async" [value]="option">
                 {{option}}
               </mat-option>
             </mat-autocomplete>
@@ -54,7 +51,7 @@
             Clear Search
           </button>
         </form>
-        <span >{{Error_message}}</span>
+        <span>{{Error_message}}</span>
       </div>
     </td>
     <td></td>
@@ -63,76 +60,31 @@
   </thead>
 </table>
 <br>
-
-
-<!--<article>-->
-<!--  <table mat-table [dataSource]="dataSource">-->
-<!--    <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">-->
-<!--      <th mat-header-cell *matHeaderCellDef>-->
-<!--        {{col.label}}-->
-<!--      </th>-->
-<!--      <td mat-cell *matCellDef="let element">-->
-<!--        <div [ngSwitch]="col.type" *ngIf="!element.isEdit">-->
-<!--          <div class="btn-edit" *ngSwitchCase="'isEdit'">-->
-<!--            &lt;!&ndash;after clicking  element.isEdit = true &ndash;&gt;-->
-<!--            <button mat-button (click)="element.isEdit = !element.isEdit">-->
-<!--              <mat-icon>edit</mat-icon>-->
-<!--            </button>-->
-<!--          </div>-->
-<!--          <span *ngSwitchDefault>-->
-<!--          {{ element[col.key] }}-->
-<!--        </span>-->
-<!--        </div>-->
-<!--        <div *ngIf="element.isEdit">-->
-<!--          <div class="btn-edit" *ngIf="col.key === 'isEdit'; else dataField">-->
-<!--            &lt;!&ndash; element.isEdit = false &ndash;&gt;-->
-<!--            <button mat-button (click)="element.isEdit = !element.isEdit"><mat-icon>done</mat-icon></button>-->
-<!--          </div>-->
-<!--          <ng-template #dataField>-->
-
-<!--            <mat-form-field *ngIf="col.key != 'isDelete'">-->
-<!--              <input-->
-<!--                [type]="col.type"-->
-<!--                matInput-->
-<!--                [(ngModel)]="element[col.key]"-->
-<!--              />-->
-<!--            </mat-form-field>-->
-<!--          </ng-template>-->
-<!--        </div>-->
-<!--        <div class="btn-edit" *ngIf="col.key === 'isDelete'">-->
-<!--          <button mat-button (click)="removeRow(element.id)"><mat-icon>delete</mat-icon></button>-->
-<!--        </div>-->
-<!--      </td>-->
-<!--    </ng-container>-->
-<!--    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-<!--  </table>-->
-<!--</article>-->
 <div class="route_table">
-<table class="route_tabel">
-  <thead>
-  <tr>
-     <th *ngFor="let column of columnsSchema "> {{column.label}}</th>
-  </tr>
-
-  </thead>
-  <tbody>
-  <tr *ngFor="let row of Data_Source">
-    <td *ngFor="let columnData of columnsSchema">
-      <div *ngIf="columnData.key!='isEdit' && columnData.key!='isDelete'">
-      {{row[columnData.key]}}
-      </div>
-      <div *ngIf="columnData.key==='isEdit'">
-        <button mat-button (click)="Editdata(row.id)" >
-          <mat-icon>edit</mat-icon>
-        </button>
-      </div>
-      <div *ngIf="columnData.key==='isDelete'">
-        <button mat-button (click)="removeRow(row.id)"><mat-icon>delete</mat-icon></button>
-      </div>
-    </td>
-  </tr>
-
-  </tbody>
-</table>
+  <table class="route_tabel">
+    <thead>
+    <tr>
+      <th *ngFor="let column of columnsSchema "> {{column.label}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of dataSet">
+      <td *ngFor="let columnData of columnsSchema">
+        <div *ngIf="columnData.key!='isEdit' && columnData.key!='isDelete'">
+          {{row[columnData.key]}}
+        </div>
+        <div *ngIf="columnData.key==='isEdit'">
+          <button mat-button (click)="Editdata(row.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="columnData.key==='isDelete'">
+          <button mat-button (click)="removeRow(row.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

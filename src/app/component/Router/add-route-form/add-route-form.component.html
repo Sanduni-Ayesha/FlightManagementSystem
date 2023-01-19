@@ -5,20 +5,20 @@
   <label for="departure-Airport">Departure Airport: </label>
   <input id="departure-Airport" type="text" formControlName="departureAirport" >
   <br>
-  <em class="error" *ngIf="AddedDepartureAirport && AddedDepartureAirport?.errors?.['required'] && AddedDepartureAirport.touched">
+  <em class="error" *ngIf="addedDepartureAirport && addedDepartureAirport?.errors?.['required'] && addedDepartureAirport.touched">
     This departure field cannot be empty
   </em>
-  <em class="error" *ngIf=" AddedDepartureAirport && AddedDepartureAirport?.errors?.['pattern']  && AddedDepartureAirport.touched">
+  <em class="error" *ngIf=" addedDepartureAirport && addedDepartureAirport?.errors?.['pattern']  && addedDepartureAirport.touched">
     This departure field cannot be invalid
   </em>
   <br>
   <label for="arrival-Airport">Arrival Airport: </label>
   <input id="arrival-Airport" type="text" formControlName="arrivalAirport" >
   <br>
-  <em class="error" *ngIf="AddedArrivalAirport && AddedArrivalAirport.errors?.['required'] && AddedArrivalAirport.touched">
+  <em class="error" *ngIf="addedArrivalAirport && addedArrivalAirport.errors?.['required'] && addedArrivalAirport.touched">
     This arrival field cannot be empty
   </em>
-  <em class="error" *ngIf=" AddedArrivalAirport && AddedArrivalAirport?.errors?.['pattern'] && AddedArrivalAirport.touched">
+  <em class="error" *ngIf=" addedArrivalAirport && addedArrivalAirport?.errors?.['pattern'] && addedArrivalAirport.touched">
     This arrival field cannot be invalid
   </em>
   <em class="error" *ngIf=" routeInfo.errors?.['equalAirport'] && routeInfo.touched">
@@ -28,20 +28,20 @@
   <label for="mileage">Mileage: </label>
   <input id="mileage" type="text" formControlName="mileage" >
   <br>
-  <em class="error" *ngIf=" AddedMileage && AddedMileage.errors?.['required'] && AddedMileage.touched">
+  <em class="error" *ngIf=" addedMileage && addedMileage.errors?.['required'] && addedMileage.touched">
     This field cannot be empty
   </em>
-  <em class="error" *ngIf="AddedMileage && AddedMileage.errors?.['pattern'] && AddedMileage.touched">
+  <em class="error" *ngIf="addedMileage && addedMileage.errors?.['pattern'] && addedMileage.touched">
     Mileage should be number
   </em>
   <br>
   <label for="Duration">Duration: </label>
   <input id="Duration" type="text" formControlName="duration" >
   <br>
-  <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['required'] && AddedDuration.touched">
+  <em class="error" *ngIf="addedDuration && addedDuration.errors?.['required'] && addedDuration.touched">
     This field cannot be empty or invalid
   </em>
-  <em class="error" *ngIf="AddedDuration && AddedDuration.errors?.['pattern'] && AddedDuration.touched">
+  <em class="error" *ngIf="addedDuration && addedDuration.errors?.['pattern'] && addedDuration.touched">
     Duration should be number
   </em>
   <br>
