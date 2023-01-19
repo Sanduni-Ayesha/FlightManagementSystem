@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateRouteTableComponent } from './create-route-table.component';
+import { RouteScreenComponent } from './route-screen.component';
 
 describe('CreateRouteTableComponent', () => {
-  let component: CreateRouteTableComponent;
-  let fixture: ComponentFixture<CreateRouteTableComponent>;
+  let component: RouteScreenComponent;
+  let fixture: ComponentFixture<RouteScreenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateRouteTableComponent ]
+      declarations: [ RouteScreenComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreateRouteTableComponent);
+    fixture = TestBed.createComponent(RouteScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

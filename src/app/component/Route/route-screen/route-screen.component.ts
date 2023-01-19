@@ -48,11 +48,11 @@ const columnSchema = [
 
 
 @Component({
-  selector: 'app-create-route-table',
-  templateUrl: './create-route-table.component.html',
-  styleUrls: ['./create-route-table.component.scss']
+  selector: 'app-route-screen',
+  templateUrl: './route-screen.component.html',
+  styleUrls: ['./route-screen.component.scss']
 })
-export class CreateRouteTableComponent implements OnInit {
+export class RouteScreenComponent implements OnInit {
   constructor(public dialog: MatDialog) {
   }
 
