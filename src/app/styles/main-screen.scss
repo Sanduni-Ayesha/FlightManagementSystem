@@ -1,0 +1,67 @@
+.flight{
+  width: 95%;
+  align: "center";
+  padding: 20px;
+}
+
+.space{
+  flex: auto;
+}
+.searchFilter {
+  min-width: 100px;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.inputFields{
+  max-width: 400px;
+}
+
+.searchBtn{
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.searchBtn .buttons, .addFlight .buttons{
+  background-color: darkblue;
+  color: white;
+}
+
+.search, .clear{
+  padding: 5px;
+}
+
+.departInput, .arriveInput{
+  padding-right: 20px;
+  width: 25%;
+  min-width: 180px;
+  max-width: 300px;
+}
+
+.flight_table{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th{
+  height: 50px;
+  color: darkblue;
+}
+
+tr:nth-child(even){
+  background-color: #6363ff;
+}
+
+tr td{
+  padding: 5px;
+  text-align: center;
+}
+
+.addFlight{
+  padding: 20px 20px 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+}

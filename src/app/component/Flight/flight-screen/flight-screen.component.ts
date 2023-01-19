@@ -81,7 +81,7 @@ const COLUMNS = [
 @Component({
   selector: 'app-flight-screen',
   templateUrl: './flight-screen.component.html',
-  styleUrls: ['./flight-screen.component.scss'],
+  styleUrls: ['../../../styles/main-screen.scss'],
 })
 export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
