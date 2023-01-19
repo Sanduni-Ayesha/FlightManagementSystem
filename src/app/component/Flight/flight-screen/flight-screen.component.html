@@ -75,7 +75,7 @@
         <td *ngFor="let col of columnsSchema">
           {{ row[col.key] }}
           <div class="btn-edit" *ngIf="col.key === 'isEdit'">
-            <button mat-button (click)="editRow(row.id)"><mat-icon>edit</mat-icon></button>
+            <button mat-button (click)="openForm(row.id)"><mat-icon>edit</mat-icon></button>
           </div>
           <div class="btn-delete" *ngIf="col.key === 'isDelete'">
             <button mat-button (click)="removeRow(row.id)"><mat-icon>delete</mat-icon></button>
@@ -84,7 +84,7 @@
     </table>
   </div>
   <div class="addFlight">
-    <a mat-raised-button class="buttons" (click)="openForm()">
+    <a mat-raised-button class="buttons" (click)="openForm(-1)">
       <mat-icon>add</mat-icon>
       Add flight
     </a>

@@ -6,7 +6,6 @@ import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.compo
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 
-//TODO: import airport names
 const DATA = [
   {
     id: 1,
@@ -90,6 +89,12 @@ export class FlightScreenComponent implements OnInit {
   constructor(public dialog: MatDialog, private http: HttpClient) {
     this.loadAirports();
   }
+  ngOnInit() {
+    this.filteredAirports = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this.filterAirports(value || ''))
+    );
+  }
 
   loadAirports() {
     this.http
@@ -97,26 +102,14 @@ export class FlightScreenComponent implements OnInit {
       .subscribe((data) => {
         this.airports = data.split('\n');
       });
-    return this.airports;
   }
 
-  // for table structure
   dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
 
-  // for dropdowns in search
   myControl = new FormControl('');
 
-  //functions for search option
   filteredAirports: Observable<string[]> | undefined;
-
-  ngOnInit() {
-    this.loadAirports();
-    this.filteredAirports = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this.filterAirports(value || ''))
-    );
-  }
 
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -146,26 +139,23 @@ export class FlightScreenComponent implements OnInit {
     this.dataSource = this.dataSource.filter((u: any) => u.id != id);
   }
 
-  editRow(id: number) {
+  openForm(id: number) {
+    let rowData: string;
+    let ID: string | number;
+    if (id == -1) {
+      ID = '';
+      rowData = '';
+    } else {
+      ID = id - 1;
+      rowData = this.dataSource[id - 1];
+    }
     this.dialog.open(AddFlightFormComponent, {
       width: '640px',
       disableClose: true,
       data: {
-        id: id - 1,
+        id: ID,
         ds: this.dataSource,
-        row: this.dataSource[id - 1],
-      },
-    });
-  }
-
-  openForm(): void {
-    this.dialog.open(AddFlightFormComponent, {
-      width: '640px',
-      disableClose: true,
-      data: {
-        id: '',
-        ds: this.dataSource,
-        row: '',
+        row: rowData,
       },
     });
   }
