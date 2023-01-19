@@ -1,5 +1,5 @@
 
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 export function airportValidator(
   control: AbstractControl
@@ -11,12 +11,3 @@ export function airportValidator(
     : { equalDestination: true };
 }
 
-export const airportEquality: ValidatorFn = (control: AbstractControl): ValidationErrors| null => {
-
-  const Departure = control.get('departureAirport');
-  const arrival = control.get('arrivalAirport');
-
-  return Departure && arrival && Departure.value != arrival.value
-    ? null
-    : { equalAirport: true };
-};
