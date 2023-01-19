@@ -1,23 +1,26 @@
-<div class="add_form">
+<div class="route">
   <h1>Add new route</h1>
-
   <form [formGroup]="routeInfo">
+    <div class="departAirport">
     <label for="departure-Airport">Departure Airport: </label>
     <input id="departure-Airport" type="text" formControlName="departureAirport">
     <br>
-    <em class="error"
-        *ngIf="addedDepartureAirport && addedDepartureAirport?.errors?.['required'] && addedDepartureAirport.touched">
+    <div class="error">
+    <em *ngIf="addedDepartureAirport && addedDepartureAirport?.errors?.['required'] && addedDepartureAirport.touched">
       This departure field cannot be empty
     </em>
-    <em class="error"
-        *ngIf=" addedDepartureAirport && addedDepartureAirport?.errors?.['pattern']  && addedDepartureAirport.touched">
+    <em *ngIf=" addedDepartureAirport && addedDepartureAirport?.errors?.['pattern']  && addedDepartureAirport.touched">
       This departure field cannot be invalid
     </em>
+    </div>
+    </div>
     <br>
-    <label for="arrival-Airport">Arrival Airport: </label>
-    <input id="arrival-Airport" type="text" formControlName="arrivalAirport">
+      <div class="arrivalAirport">
+          <label for="arrival-Airport">Arrival Airport: </label>
+          <input id="arrival-Airport" type="text" formControlName="arrivalAirport">
     <br>
-    <em class="error"
+      <div class="error">
+    <em
         *ngIf="addedArrivalAirport && addedArrivalAirport.errors?.['required'] && addedArrivalAirport.touched">
       This arrival field cannot be empty
     </em>
@@ -28,6 +31,8 @@
     <em class="error" *ngIf=" routeInfo.errors?.['equalDestination'] && routeInfo.touched">
       This departure and arrival field cannot be same
     </em>
+      </div>
+    </div>
     <br>
     <label for="mileage">Mileage: </label>
     <input id="mileage" type="text" formControlName="mileage">
