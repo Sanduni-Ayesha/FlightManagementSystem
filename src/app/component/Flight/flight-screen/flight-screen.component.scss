@@ -4,11 +4,18 @@
   padding: 20px;
 }
 
+.space{
+  flex: auto;
+}
 .searchFilter {
   min-width: 100px;
   width: 100%;
   display: flex;
   flex-flow: row wrap;
+}
+
+.inputFields{
+  max-width: 400px;
 }
 
 .searchBtn{
