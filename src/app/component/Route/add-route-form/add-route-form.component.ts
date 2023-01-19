@@ -11,18 +11,20 @@ import {airportEquality} from "../../../shared/airport.validator";
 })
 export class AddRouteFormComponent {
 
-  routeInfo =new FormGroup({
+  routeInfo = new FormGroup({
       id: new FormControl(''),
-      departureAirport : new FormControl(this.data.rowData.departureAirport,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-      arrivalAirport : new FormControl(this.data.rowData.arrivalAirport,[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
-      mileage : new FormControl(this.data.rowData.mileage,[Validators.required,Validators.pattern('[0-9 ]*')]),
-      duration : new FormControl(this.data.rowData.duration,[Validators.required,Validators.pattern('[0-9 ]*')])
-  }, {
-        validators: [airportEquality]}
+      departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      arrivalAirport: new FormControl(this.data.rowData.arrivalAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      mileage: new FormControl(this.data.rowData.mileage, [Validators.required, Validators.pattern('[0-9 ]*')]),
+      duration: new FormControl(this.data.rowData.duration, [Validators.required, Validators.pattern('[0-9 ]*')])
+    }, {
+      validators: [airportEquality]
+    }
   )
 
 
-  constructor(private fb: FormBuilder,private dialog:MatDialog,@Inject(DIALOG_DATA) public data: any) { }
+  constructor(private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
+  }
 
   onSubmit() {
     this.dialog.closeAll();
@@ -30,39 +32,42 @@ export class AddRouteFormComponent {
     this.data.ds.push(this.routeInfo.value);
   }
 
-  onUpdate(){
+  onUpdate() {
     this.dialog.closeAll();
-    this.data.ds[this.data.id-1] = this.routeInfo.value
+    this.data.ds[this.data.id - 1] = this.routeInfo.value
 
 
   }
-  onCancel(){
+
+  onCancel() {
     this.dialog.closeAll();
   }
-  onReset(){
 
-      this.routeInfo.controls.id.setValue( this.data.ds[this.data.id-1].id)
-      this.routeInfo.controls.departureAirport.setValue( this.data.ds[this.data.id-1].departureAirport)
-      this.routeInfo.controls.arrivalAirport.setValue( this.data.ds[this.data.id-1].arrivalAirport)
-      this.routeInfo.controls.mileage.setValue( this.data.ds[this.data.id-1].mileage)
-      this.routeInfo.controls.duration.setValue( this.data.ds[this.data.id-1].duration)
+  onReset() {
+
+    this.routeInfo.controls.id.setValue(this.data.ds[this.data.id - 1].id)
+    this.routeInfo.controls.departureAirport.setValue(this.data.ds[this.data.id - 1].departureAirport)
+    this.routeInfo.controls.arrivalAirport.setValue(this.data.ds[this.data.id - 1].arrivalAirport)
+    this.routeInfo.controls.mileage.setValue(this.data.ds[this.data.id - 1].mileage)
+    this.routeInfo.controls.duration.setValue(this.data.ds[this.data.id - 1].duration)
 
   }
 
-  get addedDepartureAirport(){
+  get addedDepartureAirport() {
     return this.routeInfo.get('departureAirport')
   }
 
-  get addedArrivalAirport(){
+  get addedArrivalAirport() {
     return this.routeInfo.get('arrivalAirport')
   }
-  get addedMileage(){
+
+  get addedMileage() {
     return this.routeInfo.get('mileage')
   }
-  get addedDuration(){
+
+  get addedDuration() {
     return this.routeInfo.get('duration')
   }
-
 
 
 }

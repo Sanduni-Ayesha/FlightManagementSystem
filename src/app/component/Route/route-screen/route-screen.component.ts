@@ -53,9 +53,6 @@ const columnSchema = [
   styleUrls: ['./route-screen.component.scss']
 })
 export class RouteScreenComponent implements OnInit {
-  constructor(public dialog: MatDialog) {
-  }
-
   columnsSchema: any = columnSchema;
   dataSet: any = userData
   temporaryDataSet: any = userData;
@@ -67,6 +64,9 @@ export class RouteScreenComponent implements OnInit {
   private arrivalAirportArray: string[] | undefined;
   private departureAirportArray: string[] | undefined;
   errorMessage: string | undefined;
+
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.arrivalAirportArray = Array.from(
