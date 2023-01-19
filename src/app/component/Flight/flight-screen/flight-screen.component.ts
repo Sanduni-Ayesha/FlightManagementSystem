@@ -88,62 +88,47 @@ export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
 
   constructor(public dialog: MatDialog, private http: HttpClient) {
-    /*this.loadAirports().then((r) => (this.airports = r));*/
+    this.loadAirports()
   }
 
-  /*async loadAirports() {
-    await this.http
+   loadAirports() {
+     this.http
       .get('/assets/airports.csv', { responseType: 'text' })
       .subscribe((data) => {
         this.airports = data.split('\n');
-        console.log('inside constructor', this.airports);
       });
     return this.airports;
-  }*/
+  }
 
   // for table structure
   dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
 
   // for dropdowns in search
-  myControl1 = new FormControl('');
-  myControl2 = new FormControl('');
-
-  //TODO: map these arrays with CSV data
-  departures: string[] = Array.from(
-    new Set(DATA.map((col) => col.Departure_Airport))
-  );
-  arrivals: string[] = Array.from(
-    new Set(DATA.map((col) => col.Arrival_Airport))
-  );
+  myControl = new FormControl('');
 
   //functions for search option
-  filteredDepartures: Observable<string[]> | undefined;
-  filteredArrivals: Observable<string[]> | undefined;
+  filteredAirports: Observable<string[]> | undefined;
 
   ngOnInit() {
-    this.filteredDepartures = this.myControl1.valueChanges.pipe(
+    this.loadAirports();
+    this.filteredAirports = this.myControl.valueChanges.pipe(
       startWith(''),
-      map((value) => this.filterDeparture(value || ''))
-    );
-    this.filteredArrivals = this.myControl2.valueChanges.pipe(
-      startWith(''),
-      map((value) => this.filterArrivals(value || ''))
+      map((value) => this.filterAirports(value || ''))
     );
   }
 
-  private filterDeparture(value: string): string[] {
+  private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.departures.filter((option) =>
+    if(this.airports){
+      return this.airports.filter((option) =>
       option.toLowerCase().includes(filterValue)
-    );
+    )
+    
+  }else{
+    return []
   }
-  private filterArrivals(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.arrivals.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
-  }
+}
 
   filter(departure: string, arrive: string) {
     if (departure != '' && arrive != '') {

@@ -8,13 +8,13 @@
                  aria-label="Departure Airport"
                  placeholder="Pick Airport"
                  matInput
-                 [formControl]="myControl1"
+                 [formControl]="myControl"
                  [matAutocomplete]="auto"
 
                  #departure>
 
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let depart of filteredDepartures | async" [value]="depart">
+            <mat-option *ngFor="let depart of filteredAirports | async" [value]="depart">
               {{depart}}
             </mat-option>
           </mat-autocomplete>
@@ -29,11 +29,11 @@
                  aria-label="Arrival Airport"
                  placeholder="Pick Airport"
                  matInput
-                 [formControl]="myControl2"
+                 [formControl]="myControl"
                  [matAutocomplete]="autoTest"
                  #arrive>
           <mat-autocomplete autoActiveFirstOption #autoTest="matAutocomplete">
-            <mat-option *ngFor="let arrives of filteredArrivals | async" [value]="arrives">
+            <mat-option *ngFor="let arrives of filteredAirports | async" [value]="arrives">
               {{arrives}}
             </mat-option>
           </mat-autocomplete>
