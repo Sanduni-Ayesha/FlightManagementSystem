@@ -32,7 +32,7 @@
           Arrival Airport cannot be empty
         </small>
         <br>
-        <small *ngIf="flightForm.errors?.['equalDestination']  && !flightForm.get('arrivalAirport')?.untouched">
+        <small *ngIf="flightForm.errors?.['equalDestination']  && flightForm.get('arrivalAirport')?.touched">
           Departure and Arrival cannot be the same
         </small>
       </div>
@@ -46,7 +46,7 @@
       <input id="flightNo" type="text" formControlName="flightNo">
       <div class="error_msg">
         <small *ngIf="flightForm.get('flightNo')?.errors?.['required'] && flightForm.get('flightNo')?.touched">
-          Flight number should b
+          Flight number cannot be empty
         </small>
         <br>
         <small *ngIf="(flightForm.get('flightNo')?.errors?.['pattern'] &&  flightForm.get('flightNo')?.errors?.['pattern'] != null && flightForm.get('flightNo')?.touched)">
@@ -64,7 +64,7 @@
       <input id="DepartDate" type="datetime-local" formControlName="departureTime">
       <div class="error_msg">
         <small *ngIf="flightForm.get('departureTime')?.errors?.['required'] && flightForm.get('departureTime')?.touched">
-          Departure_time required
+          Departure time required
         </small>
         <br>
         <small *ngIf="flightForm.errors?.['dateMismatch'] && flightForm.get('departureTime')?.touched">
@@ -82,7 +82,7 @@
       <input id="ArriveDate" type="datetime-local" formControlName="arrivalTime">
       <div class="error_msg">
         <small *ngIf="flightForm.get('arrivalTime')?.errors?.['required'] && flightForm.get('arrivalTime')?.touched">
-          Departure_time required
+          Departure time required
         </small>
         <br>
         <small *ngIf="flightForm.errors?.['durationError'] && flightForm.get('arrivalTime')?.touched">
