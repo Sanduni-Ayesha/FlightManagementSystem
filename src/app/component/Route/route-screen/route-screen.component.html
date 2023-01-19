@@ -45,7 +45,7 @@
           </button>
             </div>
             <div class="clear">
-          <button mat-raised-button class="buttons" (click)="clearSearch()">
+          <button mat-raised-button (click)="clearSearch();departureControl.setValue('');arrivalControl.setValue('')">
             <mat-icon>clear</mat-icon>
             Clear search
           </button>
