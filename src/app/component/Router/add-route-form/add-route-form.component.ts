@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
-import {AirportEquality} from "../../../shared/airport.validator";
+import {airportEquality} from "../../../shared/airport.validator";
 
 @Component({
   selector: 'app-add-route-form',
@@ -18,7 +18,7 @@ export class AddRouteFormComponent {
       mileage : new FormControl(this.data.rowData.mileage,[Validators.required,Validators.pattern('[0-9 ]*')]),
       duration : new FormControl(this.data.rowData.duration,[Validators.required,Validators.pattern('[0-9 ]*')])
   }, {
-        validators: [AirportEquality]}
+        validators: [airportEquality]}
   )
 
   constructor(private fb: FormBuilder,private dialog:MatDialog,@Inject(DIALOG_DATA) public data: any) { }

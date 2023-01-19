@@ -9,9 +9,9 @@ export function airportValidator(
     ? null
     : { equalDestination: true };
 }
-export const AirportEquality: ValidatorFn = (
-  control: AbstractControl
-): ValidationErrors | null => {
+
+export const airportEquality: ValidatorFn = (control: AbstractControl): ValidationErrors| null => {
+
   const Departure = control.get('departureAirport');
   const arrival = control.get('arrivalAirport');
 
