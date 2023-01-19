@@ -71,12 +71,12 @@ const COLUMNS = [
   {
     key: 'isEdit',
     type: 'isEdit',
-    label: '',
+    label: 'Edit',
   },
   {
     key: 'isDelete',
     type: 'isDelete',
-    label: '',
+    label: 'Delete',
   },
 ];
 @Component({
@@ -88,11 +88,11 @@ export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
 
   constructor(public dialog: MatDialog, private http: HttpClient) {
-    this.loadAirports()
+    this.loadAirports();
   }
 
-   loadAirports() {
-     this.http
+  loadAirports() {
+    this.http
       .get('/assets/airports.csv', { responseType: 'text' })
       .subscribe((data) => {
         this.airports = data.split('\n');
@@ -120,15 +120,14 @@ export class FlightScreenComponent implements OnInit {
 
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
-    if(this.airports){
+    if (this.airports) {
       return this.airports.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    )
-    
-  }else{
-    return []
+        option.toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
   }
-}
 
   filter(departure: string, arrive: string) {
     if (departure != '' && arrive != '') {

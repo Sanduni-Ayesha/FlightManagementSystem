@@ -1,9 +1,9 @@
 .flight{
-  width: 100%;
+  width: 95%;
   align: "center";
   padding: 20px;
 }
-/*form*/
+
 .searchFilter {
   min-width: 100px;
   width: 100%;
@@ -12,9 +12,18 @@
 }
 
 .searchBtn{
-  padding: 20px;
+  padding: 10px;
   display: flex;
   justify-content: flex-end;
+}
+
+.searchBtn .buttons, .addFlight .buttons{
+  background-color: darkblue;
+  color: white;
+}
+
+.search, .clear{
+  padding: 5px;
 }
 
 .departInput, .arriveInput{
@@ -24,21 +33,28 @@
   max-width: 300px;
 }
 
+.flight_table{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 th{
   height: 50px;
   color: darkblue;
 }
 
-.full-width {
-  width: 100%;
+tr:nth-child(even){
+  background-color: #6363ff;
 }
 
-.flight_table{
-  width: 100%;
+tr td{
+  padding: 5px;
+  text-align: center;
 }
 
 .addFlight{
-  padding: 20px;
+  padding: 20px 20px 20px 20px;
   display: flex;
   justify-content: flex-end;
 }

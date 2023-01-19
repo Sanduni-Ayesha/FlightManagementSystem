@@ -42,16 +42,22 @@
       </div>
 
       <div class="searchBtn">
-        <button mat-raised-button
-                (click)="filter(departure.value, arrive.value)">
-          <mat-icon>search</mat-icon>
-          Search flight
-        </button>
-        <button mat-raised-button
-                (click)="filter('', ''); departure.value=''; arrive.value=''">
-          <mat-icon>clear</mat-icon>
-          Clear Search
-        </button>
+        <div class="search">
+          <button mat-raised-button class="buttons"
+                  (click)="filter(departure.value, arrive.value)">
+            <mat-icon>search</mat-icon>
+            Search flight
+          </button>
+        </div>
+
+        <div class="clear">
+          <button mat-raised-button class="buttons"
+                  (click)="filter('', ''); departure.value=''; arrive.value=''">
+            <mat-icon>clear</mat-icon>
+            Clear Search
+          </button>
+        </div>
+
       </div>
     </form>
   </div>
@@ -78,7 +84,7 @@
     </table>
   </div>
   <div class="addFlight">
-    <a mat-raised-button (click)="openForm()">
+    <a mat-raised-button class="buttons" (click)="openForm()">
       <mat-icon>add</mat-icon>
       Add flight
     </a>
