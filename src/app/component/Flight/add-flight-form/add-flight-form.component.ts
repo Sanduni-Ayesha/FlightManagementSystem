@@ -71,7 +71,6 @@ export class AddFlightFormComponent {
     if (updatedId != null) {
       this.data.ds[updatedId - 1] = this.flightForm.value;
     }
-    console.log(this.data.row);
     this.dialog.closeAll();
   }
 }

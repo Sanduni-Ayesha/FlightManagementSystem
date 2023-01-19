@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
@@ -38,6 +38,14 @@ const DATA = [
     flightNo: 'A001',
     departureTime: '10-01-2023 08.00.00',
     arrivalTime: '10-01-2023 08.00.00',
+  },
+  {
+    id: 5,
+    departureAirport: 'Bandaranaike International Colombo Airport',
+    arrivalAirport: 'Sydney Kingsford Smith International Airport',
+    flightNo: 'SD1290',
+    departureTime: '2023-01-20T12:12',
+    arrivalTime: '2023-01-23T12:12',
   },
 ];
 
@@ -86,12 +94,14 @@ const COLUMNS = [
 export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
 
-  constructor(public dialog: MatDialog, private http: HttpClient) {
-    this.loadAirports();
-  }
+  constructor(public dialog: MatDialog, private http: HttpClient) {}
   ngOnInit() {
-    this.filteredAirports = this.filterControl.valueChanges.pipe(
-      startWith(''),
+    this.loadAirports();
+    this.filteredDepartures = this.filterDepart.valueChanges.pipe(
+      map((value) => this.filterAirports(value || ''))
+    );
+
+    this.filteredArrivals = this.filterArrive.valueChanges.pipe(
       map((value) => this.filterAirports(value || ''))
     );
   }
@@ -99,15 +109,17 @@ export class FlightScreenComponent implements OnInit {
   dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
 
-  filterControl = new FormControl('');
+  filterDepart = new FormControl('');
+  filterArrive = new FormControl('');
 
-  filteredAirports: Observable<string[]> | undefined;
+  filteredDepartures: Observable<string[]> | undefined;
+  filteredArrivals: Observable<string[]> | undefined;
 
   loadAirports() {
     this.http
       .get('/assets/airports.csv', { responseType: 'text' })
-      .subscribe((data) => {
-        this.airports = data.split('\n');
+      .subscribe((airportList) => {
+        this.airports = airportList.split('\n');
       });
   }
   private filterAirports(value: string): string[] {
@@ -124,10 +136,10 @@ export class FlightScreenComponent implements OnInit {
   filter(departure: string, arrive: string) {
     if (departure != '' && arrive != '') {
       this.dataSource = this.dataSource.filter(
-        (u: any) => u.departureAirport == departure
+        (data: any) => data.departureAirport == departure
       );
       this.dataSource = this.dataSource.filter(
-        (u: any) => u.arrivalAirport == arrive
+        (data: any) => data.arrivalAirport == arrive
       );
     } else {
       this.dataSource = DATA;
@@ -135,7 +147,7 @@ export class FlightScreenComponent implements OnInit {
   }
 
   removeRow(id: number) {
-    this.dataSource = this.dataSource.filter((u: any) => u.id != id);
+    this.dataSource = this.dataSource.filter((data: any) => data.id != id);
   }
 
   openForm(id: number) {
@@ -149,7 +161,6 @@ export class FlightScreenComponent implements OnInit {
       rowData = this.dataSource[id - 1];
     }
     this.dialog.open(AddFlightFormComponent, {
-      width: '640px',
       disableClose: true,
       data: {
         id: ID,
