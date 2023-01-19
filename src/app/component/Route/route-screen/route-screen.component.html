@@ -46,7 +46,7 @@
             <mat-icon>search</mat-icon>
             Search flight
           </button>
-          <button mat-raised-button (click)="clearSearch()">
+          <button mat-raised-button (click)="clearSearch();departureControl.setValue('');arrivalControl.setValue('')">
             <mat-icon>clear</mat-icon>
             Clear search
           </button>
