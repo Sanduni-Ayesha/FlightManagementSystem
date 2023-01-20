@@ -10,7 +10,7 @@ import { futureDateValidator } from '../../../shared/futureDate.validator';
 @Component({
   selector: 'app-add-flight-form',
   templateUrl: './add-flight-form.component.html',
-  styleUrls: ['../../../styles/form-overlay.scss']
+  styleUrls: ['../../../styles/form-overlay.scss'],
 })
 export class AddFlightFormComponent {
   constructor(
@@ -23,11 +23,11 @@ export class AddFlightFormComponent {
       id: new FormControl(''),
       departureAirport: new FormControl(this.data.row.departureAirport, [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]*$/),
+        Validators.pattern(/^[a-zA-Z_ ]*$/),
       ]),
       arrivalAirport: new FormControl(this.data.row.arrivalAirport, [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]*$/),
+        Validators.pattern(/^[a-zA-Z_ ]*$/),
       ]),
       flightNo: new FormControl(this.data.row.flightNo, [
         Validators.required,

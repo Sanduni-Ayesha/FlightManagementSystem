@@ -66,8 +66,18 @@
         <h4>Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
       </div>
       <tr *ngFor="let row of dataSource">
-        <td *ngFor="let col of columnsSchema">
-          {{ row[col.key] }}
+
+        <td *ngFor="let col of columnsSchema" >
+          <div *ngIf="col.key != 'departureTime' && col.key != 'arrivalTime'">
+            {{ row[col.key] }}
+          </div>
+          <div *ngIf="col.key == 'departureTime'">
+            {{ row[col.key] | date: 'long' }}
+          </div>
+          <div *ngIf="col.key == 'arrivalTime'">
+            {{ row[col.key] | date: 'long' }}
+          </div>
+
           <div class="btn-edit" *ngIf="col.key === 'isEdit'">
             <button mat-button (click)="openForm(row.id)"><mat-icon>edit</mat-icon></button>
           </div>
