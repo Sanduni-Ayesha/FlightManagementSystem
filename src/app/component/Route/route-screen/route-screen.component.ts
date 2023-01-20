@@ -76,7 +76,7 @@ const columnSchema = [
 export class RouteScreenComponent implements OnInit {
   columnsSchema: any = columnSchema;
   dataSet: any = userData;
-  temporaryDataSet: any = userData;
+  temporaryDataSet: any = '';
 
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
