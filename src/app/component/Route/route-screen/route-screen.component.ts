@@ -171,16 +171,4 @@ export class RouteScreenComponent implements OnInit {
     this.dataSet = this.temporaryDataSet;
   }
 
-  editData(id: number) {
-    this.dialog.open(AddRouteFormComponent, {
-      height: '520px',
-      disableClose: true,
-      width: '600px',
-      data: {
-        ds: this.dataSet,
-        id: id,
-        rowData: this.dataSet[id - 1],
-      },
-    });
-  }
 }
