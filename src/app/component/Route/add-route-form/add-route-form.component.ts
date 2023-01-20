@@ -38,7 +38,6 @@ export class AddRouteFormComponent {
   }
 
   onCancel() {
-    console.log(this.routeInfo.value)
     this.dialog.closeAll();
   }
 
