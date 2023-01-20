@@ -76,7 +76,7 @@ const columnSchema = [
 export class RouteScreenComponent implements OnInit {
   columnsSchema: any = columnSchema;
   dataSet: any = userData;
-  temporaryDataSet: any = '';
+  temporaryDataSet: any = [];
 
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
@@ -163,6 +163,7 @@ export class RouteScreenComponent implements OnInit {
           obj.arrivalAirport === this.arrivalControl.value
         );
       });
+      this.errorMessage = '';
       this.dataSet = filterAirportData;
     } else {
       this.errorMessage =
@@ -171,7 +172,10 @@ export class RouteScreenComponent implements OnInit {
   }
 
   clearSearch() {
-    this.dataSet = this.temporaryDataSet;
+    if (this.temporaryDataSet.length)
+    {
+      this.dataSet = this.temporaryDataSet;
+    }
   }
 
 }
