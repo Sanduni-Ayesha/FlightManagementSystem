@@ -116,7 +116,7 @@ export class RouteScreenComponent implements OnInit {
   }
 
   openForm(): void {
-    let dialogRef = this.dialog.open(AddRouteFormComponent, {
+    this.dialog.open(AddRouteFormComponent, {
       height: '520px',
       disableClose: true,
       width: '600px',
@@ -161,7 +161,7 @@ export class RouteScreenComponent implements OnInit {
   }
 
   editData(id: number) {
-    let dialogRef = this.dialog.open(AddRouteFormComponent, {
+    this.dialog.open(AddRouteFormComponent, {
       height: '520px',
       disableClose: true,
       width: '600px',
