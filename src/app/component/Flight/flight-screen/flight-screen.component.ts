@@ -151,7 +151,9 @@ export class FlightScreenComponent implements OnInit {
   }
 
   removeRow(id: number) {
-    this.dataSource = this.dataSource.filter((data: any) => data.id != id);
+    if (confirm('Please confirm deleting') == true) {
+      this.dataSource = this.dataSource.filter((data: any) => data.id != id);
+    }
   }
 
   openForm(id: number) {

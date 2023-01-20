@@ -46,30 +46,40 @@ export class AddFlightFormComponent {
   onSubmit() {
     this.dialog.closeAll();
     this.flightForm.value.id = this.data.ds.length + 1;
-    this.data.ds.push(this.flightForm.value);
+    if (confirm('Please confirm data adding') == true) {
+      this.data.ds.push(this.flightForm.value);
+    }
   }
 
   close() {
-    this.dialog.closeAll();
+    if (confirm('Are you sure you want to cancel?') == true) {
+      this.dialog.closeAll();
+    }
   }
   resetRow() {
-    this.flightForm.controls['departureAirport'].setValue(
-      this.data.row.departureAirport
-    );
-    this.flightForm.controls['arrivalAirport'].setValue(
-      this.data.row.arrivalAirport
-    );
-    this.flightForm.controls['flightNo'].setValue(this.data.row.flightNo);
-    this.flightForm.controls['departureTime'].setValue(
-      this.data.row.departureTime
-    );
-    this.flightForm.controls['arrivalTime'].setValue(this.data.row.arrivalTime);
+    if (confirm('Please confirm resetting') == true) {
+      this.flightForm.controls['departureAirport'].setValue(
+        this.data.row.departureAirport
+      );
+      this.flightForm.controls['arrivalAirport'].setValue(
+        this.data.row.arrivalAirport
+      );
+      this.flightForm.controls['flightNo'].setValue(this.data.row.flightNo);
+      this.flightForm.controls['departureTime'].setValue(
+        this.data.row.departureTime
+      );
+      this.flightForm.controls['arrivalTime'].setValue(
+        this.data.row.arrivalTime
+      );
+    }
   }
 
   update() {
     const updatedId = this.data.row.id || null;
-    if (updatedId != null) {
-      this.data.ds[updatedId - 1] = this.flightForm.value;
+    if (confirm('Are you sure you want to update row') == true) {
+      if (updatedId != null) {
+        this.data.ds[updatedId - 1] = this.flightForm.value;
+      }
     }
     this.dialog.closeAll();
   }
