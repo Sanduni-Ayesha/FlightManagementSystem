@@ -36,7 +36,7 @@
               <mat-icon matSuffix>flight_land</mat-icon>
             </mat-form-field>
           </div>
-          <span class="space"></span>
+
           <div class="searchBtn">
             <div class="search">
           <button mat-raised-button class="buttons" (click)="search()">
@@ -46,11 +46,18 @@
 
             </div>
             <div class="clear">
-          <button mat-raised-button (click)="clearSearch();departureControl.setValue('');arrivalControl.setValue('')">
+          <button mat-raised-button class="buttons" (click)="clearSearch();departureControl.setValue('');arrivalControl.setValue('')">
             <mat-icon>clear</mat-icon>
             Clear search
           </button>
             </div>
+          </div>
+          <span class="space"></span>
+          <div class="addRoute">
+            <a mat-raised-button class="buttons"  (click)="openForm()">
+              <mat-icon>add</mat-icon>
+              Add route
+            </a>
           </div>
         </form>
         <span>{{errorMessage}}</span>
@@ -83,10 +90,5 @@
     </tbody>
   </table>
 </div>
-  <div class="addRoute">
-    <a mat-raised-button class="buttons"  (click)="openForm()">
-      <mat-icon>add</mat-icon>
-      Add route
-    </a>
-  </div>
+
 </div>

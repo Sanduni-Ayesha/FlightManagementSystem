@@ -34,7 +34,8 @@
           <mat-icon matSuffix>flight_land</mat-icon>
         </mat-form-field>
       </div>
-<span class="space"></span>
+
+
       <div class="searchBtn">
         <div class="search">
           <button mat-raised-button class="buttons"
@@ -53,6 +54,15 @@
         </div>
 
       </div>
+      <span class="space"></span>
+      <div class="addFlight">
+        <a mat-raised-button class="buttons" (click)="openForm(-1)">
+          <mat-icon>add</mat-icon>
+          Add flight
+        </a>
+      </div>
+
+
     </form>
   </div>
   <div class="flight_table">
@@ -87,11 +97,5 @@
         </td>
       </tr>
     </table>
-  </div>
-  <div class="addFlight">
-    <a mat-raised-button class="buttons" (click)="openForm(-1)">
-      <mat-icon>add</mat-icon>
-      Add flight
-    </a>
   </div>
 </div>
