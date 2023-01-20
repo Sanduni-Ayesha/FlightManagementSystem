@@ -69,7 +69,7 @@
           {{row[columnData.key]}}
         </div>
         <div class="btn-edit" *ngIf="columnData.key==='isEdit'">
-          <button mat-button (click)="editData(row.id)">
+          <button mat-button (click)="openForm(row.id)">
             <mat-icon>edit</mat-icon>
           </button>
         </div>

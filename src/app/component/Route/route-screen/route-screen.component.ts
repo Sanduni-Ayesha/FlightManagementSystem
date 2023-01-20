@@ -115,15 +115,26 @@ export class RouteScreenComponent implements OnInit {
     );
   }
 
-  openForm(): void {
+  openForm(_id=-1): void {
+    let row:Array<object>|'';
+    let id:number|'';
+    if(_id != -1){
+      id = _id;
+      row = this.dataSet[_id-1];
+    }
+    else{
+      id = ''
+      row = ''
+    }
+
     this.dialog.open(AddRouteFormComponent, {
       height: '520px',
       disableClose: true,
       width: '600px',
       data: {
         ds: this.dataSet,
-        id: '',
-        rowData: '',
+        id: id,
+        rowData: row,
       },
     });
   }
