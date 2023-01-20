@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -151,7 +150,7 @@ export class FlightScreenComponent implements OnInit {
   }
 
   removeRow(id: number) {
-    if (confirm('Please confirm deleting') == true) {
+    if (confirm('Please confirm deleting')) {
       this.dataSource = this.dataSource.filter((data: any) => data.id != id);
     }
   }
