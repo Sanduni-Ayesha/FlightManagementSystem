@@ -140,7 +140,6 @@ export class RouteScreenComponent implements OnInit {
   }
 
   removeRow(id: number) {
-    //find the index that need to be deleted
     if (confirm("Press Ok to confirm the deletion !!!") == true) {
       const index = this.dataSet.findIndex((value: any) => value.id === id);
       this.dataSet.splice(index, 1);
