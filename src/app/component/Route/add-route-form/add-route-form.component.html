@@ -1,5 +1,6 @@
 <div class="overlay">
-  <h1>Add new route</h1>
+  <h1 *ngIf="this.data.id === ''">Add new route</h1>
+  <h1 *ngIf="this.data.id != ''">Update route</h1>
   <form [formGroup]="routeInfo">
     <div class="departAirport">
       <label for="departure-Airport">Departure Airport: </label>
