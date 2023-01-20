@@ -1,5 +1,6 @@
 <div class = 'overlay'>
-  <h1>Add new flight</h1>
+  <h1 *ngIf="this.data.id==''">Add new flight</h1>
+  <h1 *ngIf="this.data.id!=''">Update flight</h1>
   <form [formGroup]="flightForm">
     <div class="departAirport">
       <label>
