@@ -11,6 +11,9 @@ import {airportValidator} from "../../../shared/airport.validator";
 })
 export class AddRouteFormComponent {
 
+  constructor(private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
+  }
+
   routeInfo = new FormGroup({
       id: new FormControl(''),
       departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -21,11 +24,6 @@ export class AddRouteFormComponent {
       validators: [airportValidator]
     }
   )
-
-
-  constructor(private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
-  }
-
   onSubmit() {
     this.dialog.closeAll();
     this.routeInfo.value.id = this.data.ds.length + 1;
@@ -40,6 +38,7 @@ export class AddRouteFormComponent {
   }
 
   onCancel() {
+    console.log(this.routeInfo.value)
     this.dialog.closeAll();
   }
 
