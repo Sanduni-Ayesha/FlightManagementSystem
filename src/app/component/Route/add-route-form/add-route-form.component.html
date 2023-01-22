@@ -29,7 +29,7 @@
         <small *ngIf=" addedArrivalAirport && addedArrivalAirport.errors?.['pattern'] && addedArrivalAirport.touched">
           This arrival field cannot be invalid
         </small>
-        <small *ngIf=" addedArrivalAirport && addedSameAirport.errors?.['equalDestination'] && addedArrivalAirport.touched">
+        <small *ngIf=" addedArrivalAirport && routeInfo.errors?.['equalDestination'] && addedArrivalAirport.touched">
           This departure and arrival field cannot be same
         </small>
       </div>

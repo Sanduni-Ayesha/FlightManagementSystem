@@ -67,7 +67,4 @@ export class AddRouteFormComponent {
     return this.routeInfo.get('duration')
   }
 
-  get addedSameAirport(){
-    return this.routeInfo
-  }
 }
