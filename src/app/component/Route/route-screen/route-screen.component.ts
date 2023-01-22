@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddRouteFormComponent } from '../add-route-form/add-route-form.component';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import {HttpClient} from "@angular/common/http";
 
 const userData = [
   {
@@ -77,42 +78,41 @@ export class RouteScreenComponent implements OnInit {
   columnsSchema: any = columnSchema;
   dataSet: any = userData;
   temporaryDataSet: any = [];
-
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
-  filteredArrivalAirport: Observable<string[]> | undefined;
-  filteredDepartureAirport: Observable<string[]> | undefined;
-  private arrivalAirportArray: string[] | undefined;
-  private departureAirportArray: string[] | undefined;
+  filteredArrivalAirport: string[] | undefined;
+  filteredDepartureAirport: string[] | undefined;
   errorMessage: string | undefined;
-
-  constructor(public dialog: MatDialog) {}
+ public airport: string[] =[];
+  constructor(public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
-    this.arrivalAirportArray = Array.from(
-      new Set(userData.map((col) => col.arrivalAirport))
-    );
-    this.departureAirportArray = Array.from(
-      new Set(userData.map((col) => col.departureAirport))
-    );
+    this.loadAirports()
 
-    this.filteredArrivalAirport = this.arrivalControl.valueChanges.pipe(
+    this.arrivalControl.valueChanges.pipe(
       startWith(''),
-      map((value) => this.filterAirport(value || '', this.arrivalAirportArray))
-    );
-    this.filteredDepartureAirport = this.departureControl.valueChanges.pipe(
+      map((value) => this.filterAirport(value || '')))
+      .subscribe((arrivals) => {
+        this.filteredArrivalAirport = arrivals;
+      });
+    ;
+    this.departureControl.valueChanges.pipe(
       startWith(''),
       map((value) =>
-        this.filterAirport(value || '', this.departureAirportArray)
-      )
-    );
+        this.filterAirport(value || ''))).subscribe((departures) => {
+        this.filteredDepartureAirport = departures;
+      });
   }
 
-  private filterAirport(value: string, ArrayData: any): string[] {
+  private filterAirport(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return ArrayData.filter((option: any) =>
-      option.toLowerCase().includes(filterValue)
-    );
+    if (this.airport) {
+      return this.airport.filter((option) =>
+        option.toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
   }
 
   openForm(_id=-1): void {
@@ -175,6 +175,14 @@ export class RouteScreenComponent implements OnInit {
     {
       this.dataSet = this.temporaryDataSet;
     }
+  }
+
+  loadAirports() {
+    this.http
+      .get('/assets/airports.csv', { responseType: 'text' })
+      .subscribe((airportList) => {
+        this.airport = airportList.split('\n');
+      });
   }
 
 }
