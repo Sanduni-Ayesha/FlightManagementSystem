@@ -26,10 +26,10 @@
         <small *ngIf="addedArrivalAirport && addedArrivalAirport.errors?.['required'] && addedArrivalAirport.touched">
           This arrival field cannot be empty
         </small>
-        <small *ngIf=" addedArrivalAirport && addedArrivalAirport?.errors?.['pattern'] && addedArrivalAirport.touched">
+        <small *ngIf=" addedArrivalAirport && addedArrivalAirport.errors?.['pattern'] && addedArrivalAirport.touched">
           This arrival field cannot be invalid
         </small>
-        <small *ngIf=" routeInfo.errors?.['equalDestination'] && routeInfo.touched">
+        <small *ngIf=" addedArrivalAirport && addedSameAirport.errors?.['equalDestination'] && addedArrivalAirport.touched">
           This departure and arrival field cannot be same
         </small>
       </div>
