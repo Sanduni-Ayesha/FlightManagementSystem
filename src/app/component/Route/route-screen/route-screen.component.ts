@@ -171,10 +171,11 @@ export class RouteScreenComponent implements OnInit {
   }
 
   clearSearch() {
+    if (confirm("Press Ok to confirm the cancel !!!") == true) {
     if (this.temporaryDataSet.length)
     {
       this.dataSet = this.temporaryDataSet;
-    }
+    }}
   }
 
   loadAirports() {
