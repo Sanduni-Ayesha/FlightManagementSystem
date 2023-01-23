@@ -82,10 +82,10 @@
             {{ row[col.key] }}
           </div>
           <div *ngIf="col.key == 'departureTime'">
-            {{ row[col.key] | date: 'long' }}
+            {{ row[col.key] | date: 'M/d/y, h:mm a, z' }}
           </div>
           <div *ngIf="col.key == 'arrivalTime'">
-            {{ row[col.key] | date: 'long' }}
+            {{ row[col.key] | date: 'M/d/y, h:mm a, z' }}
           </div>
 
           <div class="btn-edit" *ngIf="col.key === 'isEdit'">

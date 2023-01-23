@@ -82,9 +82,7 @@ export class AddFlightFormComponent implements OnInit {
   onSubmit() {
     this.dialog.closeAll();
     this.flightForm.value.id = this.data.ds.length + 1;
-    if (confirm('Please confirm data adding')) {
-      this.data.ds.push(this.flightForm.value);
-    }
+    this.data.ds.push(this.flightForm.value);
   }
 
   close() {
