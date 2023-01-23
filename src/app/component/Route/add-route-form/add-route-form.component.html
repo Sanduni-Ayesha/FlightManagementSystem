@@ -65,9 +65,9 @@
     <br>
     <div class="btn-group">
       <button mat-button type="reset"  (click)="onCancel()" >cancel</button>
-      <button mat-button type="submit"  *ngIf="this.data.id === ''" [disabled]="routeInfo.invalid" (click)="onSubmit()">submit</button>
-      <button mat-button type="reset"  *ngIf="this.data.id === ''"  >reset</button>
+      <button mat-button type="reset" style="background-color: gray" *ngIf="this.data.id === ''"  >reset</button>
       <button mat-button type="button"  *ngIf="this.data.id!= ''"  (click)="onReset()">reset</button>
+      <button mat-button type="submit"  *ngIf="this.data.id === ''" [disabled]="routeInfo.invalid" (click)="onSubmit()">submit</button>
       <button mat-button type="submit"  *ngIf="this.data.id!= ''"  (click)="onUpdate()" [disabled]="routeInfo.invalid">update</button>
     </div>
   </form>
