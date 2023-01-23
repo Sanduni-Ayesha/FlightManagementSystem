@@ -117,6 +117,7 @@ export class FlightScreenComponent implements OnInit {
 
   filteredDepartures: string[] | undefined;
   filteredArrivals: string[] | undefined;
+  private newFlight: number =-1;
 
   loadAirports() {
     this.http
@@ -158,7 +159,7 @@ export class FlightScreenComponent implements OnInit {
   openForm(id: number) {
     let rowData: string;
     let ID: string | number;
-    if (id == -1) {
+    if (id == this.newFlight) {
       ID = '';
       rowData = '';
     } else {

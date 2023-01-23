@@ -2,16 +2,22 @@
   <h1 *ngIf="this.data.id==''">Add new flight</h1>
   <h1 *ngIf="this.data.id!=''">Update flight</h1>
   <form [formGroup]="flightForm">
-    <div class="departAirport">
+      <div class="departAirport">
       <label>
         Departure Airport
       </label>
-      <input id="departureAirport" type="text" formControlName="departureAirport">
+        <input type="text"
+               placeholder="Pick Airport"
+               matInput
+               [formControl]="flightForm.controls['departureAirport']"
+               [matAutocomplete]="departures"
+               #departure>
+        <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
+          <mat-option *ngFor="let depart of filteredDepartures" [value]="depart">
+            {{depart}}
+          </mat-option>
+        </mat-autocomplete>
       <div class="error_msg">
-        <small *ngIf="flightForm.get('departureAirport')?.errors?.['pattern'] != null && flightForm.get('departureAirport')?.touched">
-          Departure Airport cannot have numbers
-        </small>
-        <br>
         <small *ngIf="flightForm.get('departureAirport')?.errors?.['required'] && flightForm.get('departureAirport')?.touched">
           Departure Airport cannot be empty
         </small>
@@ -24,11 +30,18 @@
       <label>
         Arrival Airport
       </label>
-      <input id="ArrivalAirport" type="text" formControlName="arrivalAirport">
+      <input type="text"
+             placeholder="Pick Airport"
+             matInput
+             [formControl]="flightForm.controls['arrivalAirport']"
+             [matAutocomplete]="arrivals"
+             #arrive>
+      <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
+        <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives">
+          {{arrives}}
+        </mat-option>
+      </mat-autocomplete>
       <div class="error_msg">
-        <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['pattern'] != null && flightForm.get('arrivalAirport')?.touched">
-          Arrival Airport cannot have numbers
-        </small>
         <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['required'] && flightForm.get('arrivalAirport')?.touched">
           Arrival Airport cannot be empty
         </small>

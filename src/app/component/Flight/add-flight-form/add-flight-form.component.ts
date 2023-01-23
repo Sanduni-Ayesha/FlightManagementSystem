@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,28 +6,64 @@ import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { airportValidator } from '../../../shared/airport.validator';
 import { dateValidator } from '../../../shared/date.validator';
 import { futureDateValidator } from '../../../shared/futureDate.validator';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-flight-form',
   templateUrl: './add-flight-form.component.html',
   styleUrls: ['../../../styles/form-overlay.scss'],
 })
-export class AddFlightFormComponent {
+export class AddFlightFormComponent implements OnInit {
+  public airports: string[] = [];
   constructor(
     public dialog: MatDialog,
-    @Inject(DIALOG_DATA) public data: any
+    @Inject(DIALOG_DATA) public data: any,
+    private http: HttpClient
   ) {}
+  ngOnInit() {
+    this.loadAirports();
+    this.flightForm.controls['departureAirport'].valueChanges
+      .pipe(map((value) => this.filterAirports(value || '')))
+      .subscribe((departures) => {
+        this.filteredDepartures = departures;
+      });
 
+    this.flightForm.controls['arrivalAirport'].valueChanges
+      .pipe(map((value) => this.filterAirports(value || '')))
+      .subscribe((arrivals) => {
+        this.filteredArrivals = arrivals;
+      });
+  }
+
+  filteredDepartures: string[] | undefined;
+  filteredArrivals: string[] | undefined;
+
+  loadAirports() {
+    this.http
+      .get('/assets/airports.csv', { responseType: 'text' })
+      .subscribe((airportList) => {
+        this.airports = airportList.split('\n');
+      });
+  }
+  private filterAirports(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    if (this.airports) {
+      return this.airports.filter((option) =>
+        option.toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
+  }
   flightForm = new FormGroup(
     {
       id: new FormControl(''),
       departureAirport: new FormControl(this.data.row.departureAirport, [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z_ ]*$/),
       ]),
       arrivalAirport: new FormControl(this.data.row.arrivalAirport, [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z_ ]*$/),
       ]),
       flightNo: new FormControl(this.data.row.flightNo, [
         Validators.required,
