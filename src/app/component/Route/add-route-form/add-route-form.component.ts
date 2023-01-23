@@ -38,7 +38,23 @@ export class AddRouteFormComponent {
   }
 
   onCancel() {
-    this.dialog.closeAll();
+    if (this.routeInfo.controls.departureAirport.value != null ||
+      this.routeInfo.controls.arrivalAirport.value != null ||
+      this.routeInfo.controls.mileage.value != null ||
+      this.routeInfo.controls.duration.value != null) {
+      if (confirm(`Are you sure to cancel!!! \n
+      Departure Airport :${this.routeInfo.controls.departureAirport.value}\n
+      Arrival Airport   :${this.routeInfo.controls.arrivalAirport.value}\n
+      Mileage:${this.routeInfo.controls.mileage.value}\n
+      Duration:${this.routeInfo.controls.duration.value}\n
+      press OK button to cancel
+    `) == true) {
+        this.dialog.closeAll();
+      }
+    } else {
+      this.dialog.closeAll();
+    }
+
   }
 
   onReset() {
