@@ -58,13 +58,19 @@ export class AddRouteFormComponent {
   }
 
   onReset() {
-
-    this.routeInfo.controls.id.setValue(this.data.ds[this.data.id - 1].id)
-    this.routeInfo.controls.departureAirport.setValue(this.data.ds[this.data.id - 1].departureAirport)
-    this.routeInfo.controls.arrivalAirport.setValue(this.data.ds[this.data.id - 1].arrivalAirport)
-    this.routeInfo.controls.mileage.setValue(this.data.ds[this.data.id - 1].mileage)
-    this.routeInfo.controls.duration.setValue(this.data.ds[this.data.id - 1].duration)
-
+    if(this.routeInfo.controls.id.value != '' ) {
+      this.routeInfo.controls.id.setValue(this.data.ds[this.data.id - 1].id)
+      this.routeInfo.controls.departureAirport.setValue(this.data.ds[this.data.id - 1].departureAirport)
+      this.routeInfo.controls.arrivalAirport.setValue(this.data.ds[this.data.id - 1].arrivalAirport)
+      this.routeInfo.controls.mileage.setValue(this.data.ds[this.data.id - 1].mileage)
+      this.routeInfo.controls.duration.setValue(this.data.ds[this.data.id - 1].duration)
+    }
+    else{
+      this.routeInfo.controls.departureAirport.setValue('')
+      this.routeInfo.controls.arrivalAirport.setValue('')
+      this.routeInfo.controls.mileage.setValue('')
+      this.routeInfo.controls.duration.setValue('')
+    }
   }
 
   get addedDepartureAirport() {
