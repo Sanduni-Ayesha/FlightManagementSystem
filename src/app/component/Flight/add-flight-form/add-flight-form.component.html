@@ -46,6 +46,7 @@
           Arrival Airport cannot be empty
         </small>
         <br>
+        <br>
         <small *ngIf="flightForm.errors?.['equalDestination']  && flightForm.get('arrivalAirport')?.touched">
           Departure and Arrival cannot be the same
         </small>

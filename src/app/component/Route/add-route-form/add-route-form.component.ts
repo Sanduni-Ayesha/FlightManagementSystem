@@ -39,13 +39,7 @@ export class AddRouteFormComponent {
 
   onCancel() {
     if (this.routeInfo.dirty) {
-      if (confirm(`Are you sure to cancel!!! \n
-      Departure Airport :${this.routeInfo.controls.departureAirport.value}\n
-      Arrival Airport   :${this.routeInfo.controls.arrivalAirport.value}\n
-      Mileage:${this.routeInfo.controls.mileage.value}\n
-      Duration:${this.routeInfo.controls.duration.value}\n
-      press OK button to cancel
-    `) == true) {
+      if (confirm('Are you sure you want to cancel?') == true) {
         this.dialog.closeAll();
       }
     } else {
