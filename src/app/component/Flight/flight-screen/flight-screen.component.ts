@@ -117,7 +117,7 @@ export class FlightScreenComponent implements OnInit {
 
   filteredDepartures: string[] | undefined;
   filteredArrivals: string[] | undefined;
-  private newFlight: number =-1;
+  private newFlight: number = -1;
 
   loadAirports() {
     this.http
@@ -138,14 +138,19 @@ export class FlightScreenComponent implements OnInit {
   }
 
   filter(departure: string, arrive: string) {
-    if (departure != '' && arrive != '') {
+    if (departure != '') {
       this.dataSource = this.dataSource.filter(
         (data: any) => data.departureAirport == departure
       );
+      console.log(this.dataSource);
+    }
+    if (arrive != '') {
       this.dataSource = this.dataSource.filter(
         (data: any) => data.arrivalAirport == arrive
       );
-    } else {
+      console.log(this.dataSource);
+    }
+    if (arrive == '' && departure == '') {
       this.dataSource = DATA;
     }
   }

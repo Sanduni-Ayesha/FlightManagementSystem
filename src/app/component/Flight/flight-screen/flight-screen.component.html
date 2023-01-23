@@ -6,6 +6,7 @@
           <mat-label>Departure Airport</mat-label>
           <input type="text"
                  placeholder="Pick Airport"
+                 value=""
                  matInput
                  [formControl]="filterDepart"
                  [matAutocomplete]="departures"
@@ -22,6 +23,7 @@
           <mat-label>Arrival Airport</mat-label>
           <input type="text"
                  placeholder="Pick Airport"
+                 value=""
                  matInput
                  [formControl]="filterArrive"
                  [matAutocomplete]="arrivals"
@@ -73,7 +75,7 @@
         </th>
       </tr>
       <div *ngIf="dataSource.length==0" class="noFlights">
-        <h4>Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
+        <h4 class="noFlightError">Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
       </div>
       <tr *ngFor="let row of dataSource">
 

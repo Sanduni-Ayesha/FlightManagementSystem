@@ -41,6 +41,11 @@
   max-width: 300px;
 }
 
+.noFlightError{
+  color: red;
+  font-style: italic;
+}
+
 .flight_table, .route_table{
   width: 100%;
   margin-left: auto;
