@@ -85,13 +85,15 @@ export class AddFlightFormComponent implements OnInit {
     this.data.ds.push(this.flightForm.value);
   }
 
-  close() {
-    if (confirm('Are you sure you want to cancel?')) {
+  close(dirty: boolean) {
+    if (!dirty) {
+      this.dialog.closeAll();
+    } else if (confirm('Are you sure you want to cancel?')) {
       this.dialog.closeAll();
     }
   }
   resetRow() {
-    if (confirm('Please confirm resetting')) {
+    if (confirm('Are you sure you want to reset?')) {
       this.flightForm.controls['departureAirport'].setValue(
         this.data.row.departureAirport
       );
@@ -108,11 +110,13 @@ export class AddFlightFormComponent implements OnInit {
     }
   }
 
-  update() {
+  update(dirty: boolean) {
     const updatedId = this.data.row.id || null;
-    if (confirm('Are you sure you want to update row')) {
-      if (updatedId != null) {
-        this.data.ds[updatedId - 1] = this.flightForm.value;
+    if (dirty) {
+      if (confirm('Are you sure you want to update data?')) {
+        if (updatedId != null) {
+          this.data.ds[updatedId - 1] = this.flightForm.value;
+        }
       }
     }
     this.dialog.closeAll();

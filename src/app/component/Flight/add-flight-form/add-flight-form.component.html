@@ -108,7 +108,7 @@
     <br>
 
     <div class="btn-group">
-      <button mat-button type="reset" (click)="close()">
+      <button mat-button type="reset" (click)="close(flightForm.dirty)">
         Cancel
       </button>
       <button mat-button type="button" (click)="resetRow()">
@@ -117,7 +117,7 @@
       <button mat-button *ngIf="this.data['row'] ==''" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
         Submit
       </button>
-      <button mat-button *ngIf="this.data['row'] !=''" type="submit" (click)="update()" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'] !=''" type="submit" (click)="update(flightForm.dirty)" [disabled]="!flightForm.valid">
         Update
       </button>
     </div>
