@@ -38,10 +38,7 @@ export class AddRouteFormComponent {
   }
 
   onCancel() {
-    if (this.routeInfo.controls.departureAirport.value != null ||
-      this.routeInfo.controls.arrivalAirport.value != null ||
-      this.routeInfo.controls.mileage.value != null ||
-      this.routeInfo.controls.duration.value != null) {
+    if (this.routeInfo.dirty) {
       if (confirm(`Are you sure to cancel!!! \n
       Departure Airport :${this.routeInfo.controls.departureAirport.value}\n
       Arrival Airport   :${this.routeInfo.controls.arrivalAirport.value}\n
