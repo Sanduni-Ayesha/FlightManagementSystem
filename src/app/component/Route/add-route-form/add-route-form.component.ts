@@ -15,8 +15,8 @@ export class AddRouteFormComponent {
       id: new FormControl(''),
       departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       arrivalAirport: new FormControl(this.data.rowData.arrivalAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      mileage: new FormControl(this.data.rowData.mileage, [Validators.required, Validators.pattern('[0-9 ]*')]),
-      duration: new FormControl(this.data.rowData.duration, [Validators.required, Validators.pattern('[0-9 ]*')])
+      mileage: new FormControl(this.data.rowData.mileage, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')]),
+      duration: new FormControl(this.data.rowData.duration, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')])
     }, {
       validators: [airportValidator]
     }
