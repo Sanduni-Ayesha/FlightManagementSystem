@@ -31,10 +31,11 @@ export class AddRouteFormComponent {
   }
 
   onUpdate() {
+    if (this.routeInfo.dirty) {
+    if (confirm('Are you sure you want to update the data?') == true) {
+      this.data.ds[this.data.id - 1] = this.routeInfo.value
+    }}
     this.dialog.closeAll();
-    this.data.ds[this.data.id - 1] = this.routeInfo.value
-
-
   }
 
   onCancel() {
