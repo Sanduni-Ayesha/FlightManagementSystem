@@ -16,7 +16,7 @@ public class RouteController {
     private RouteService routeService;
 
     @GetMapping("/get_route")
-    public List<Route> getAllRoute(){
+    public List<Route> findAllRoute(){
         return routeService.getRoutes();
     }
 }
