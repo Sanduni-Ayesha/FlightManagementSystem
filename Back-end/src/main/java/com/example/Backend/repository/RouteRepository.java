@@ -18,4 +18,8 @@ public class RouteRepository {
                 new Route(4,"Indianapolis International Airport","Turin Airport",290,35)
         );
     }
+    public List<Route> getAllRoutes(){
+        return routes;
+    }
+
 }
