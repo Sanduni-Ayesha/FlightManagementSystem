@@ -1,4 +1,4 @@
-package com.example.Backend.repository;
+package com.example.Backend.repositories;
 
 import com.example.Backend.models.Route;
 import org.springframework.stereotype.Repository;
