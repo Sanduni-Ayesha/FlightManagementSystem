@@ -5,6 +5,8 @@ import { AddRouteFormComponent } from '../add-route-form/add-route-form.componen
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {HttpClient} from "@angular/common/http";
+import {Route} from "../../../model/Route";
+import {RouteService} from "../../../services/route/route.service";
 
 const userData = [
   {
@@ -84,7 +86,8 @@ export class RouteScreenComponent implements OnInit {
   filteredDepartureAirport: string[] | undefined;
   errorMessage: string | undefined;
  public airport: string[] =[];
-  constructor(public dialog: MatDialog , private http:HttpClient) {}
+ public routeDetails:Route[] = [];
+  constructor(private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
     this.loadAirports()
@@ -102,6 +105,10 @@ export class RouteScreenComponent implements OnInit {
         this.filterAirport(value || ''))).subscribe((departures) => {
         this.filteredDepartureAirport = departures;
       });
+    this.routeService.getAllRoutes().subscribe((route)=>{
+      this.routeDetails=route;
+    })
+
   }
 
   private filterAirport(value: string): string[] {
