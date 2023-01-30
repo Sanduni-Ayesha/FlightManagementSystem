@@ -38,38 +38,7 @@ const userData = [
     duration: '260',
   },
 ];
-const columnSchema = [
-  {
-    key: 'departureAirport',
-    type: 'text',
-    label: 'Departure Airport',
-  },
-  {
-    key: 'arrivalAirport',
-    type: 'text',
-    label: 'Arrival Airport',
-  },
-  {
-    key: 'mileage',
-    type: 'text',
-    label: 'Mileage/Km',
-  },
-  {
-    key: 'duration',
-    type: 'text',
-    label: 'Duration/Hours',
-  },
-  {
-    key: 'isEdit',
-    type: 'isEdit',
-    label: '',
-  },
-  {
-    key: 'isDelete',
-    type: 'isDelete',
-    label: '',
-  },
-];
+const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Duration/Hours']
 
 @Component({
   selector: 'app-route-screen',
@@ -77,7 +46,7 @@ const columnSchema = [
   styleUrls: ['../../../styles/main-screen.scss'],
 })
 export class RouteScreenComponent implements OnInit {
-  columnsSchema: any = columnSchema;
+  routeTableHeading: any = TableHeading;
 
   temporaryDataSet: any = [];
   arrivalControl = new FormControl('');
