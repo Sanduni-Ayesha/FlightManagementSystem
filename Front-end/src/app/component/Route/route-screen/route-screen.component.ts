@@ -8,36 +8,7 @@ import {HttpClient} from "@angular/common/http";
 import {Route} from "../../../model/Route";
 import {RouteService} from "../../../services/route/route.service";
 
-const userData = [
-  {
-    id: 1,
-    departureAirport: 'Sofia Airport',
-    arrivalAirport: 'Varna Airport',
-    mileage: '36',
-    duration: '20',
-  },
-  {
-    id: 2,
-    departureAirport: 'Bandaranaike International Colombo Airport',
-    arrivalAirport: 'London Luton Airport',
-    mileage: '280',
-    duration: '20',
-  },
-  {
-    id: 3,
-    departureAirport: 'Honiara International Airport',
-    arrivalAirport: 'Tokyo Haneda International Airport',
-    mileage: '287',
-    duration: '220',
-  },
-  {
-    id: 4,
-    departureAirport: 'Indianapolis International Airport',
-    arrivalAirport: 'Turin Airport',
-    mileage: '283',
-    duration: '260',
-  },
-];
+
 const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Duration/Hours']
 
 @Component({
