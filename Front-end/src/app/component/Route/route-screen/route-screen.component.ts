@@ -78,15 +78,16 @@ const columnSchema = [
 })
 export class RouteScreenComponent implements OnInit {
   columnsSchema: any = columnSchema;
-  dataSet: any = userData;
+
   temporaryDataSet: any = [];
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
   filteredArrivalAirport: string[] | undefined;
   filteredDepartureAirport: string[] | undefined;
   errorMessage: string | undefined;
- public airport: string[] =[];
+ public airport: string[] =[]
  public routeDetails:Route[] = [];
+  public allRouteDetails: any;
   constructor(private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
@@ -108,6 +109,8 @@ export class RouteScreenComponent implements OnInit {
     this.routeService.getAllRoutes().subscribe((route)=>{
       this.routeDetails=route;
     })
+    this.allRouteDetails = this.routeDetails;
+
 
   }
 
@@ -127,7 +130,7 @@ export class RouteScreenComponent implements OnInit {
     let id:number|'';
     if(_id != -1){
       id = _id;
-      row = this.dataSet[_id-1];
+      row = this.allRouteDetails[_id-1];
     }
     else{
       id = ''
@@ -139,7 +142,7 @@ export class RouteScreenComponent implements OnInit {
       disableClose: true,
       width: '600px',
       data: {
-        ds: this.dataSet,
+        ds: this.allRouteDetails,
         id: id,
         rowData: row,
       },
@@ -148,29 +151,29 @@ export class RouteScreenComponent implements OnInit {
 
   removeRow(id: number) {
     if (confirm("Press Ok to confirm the deletion !!!") == true) {
-      const index = this.dataSet.findIndex((value: any) => value.id === id);
-      this.dataSet.splice(index, 1);
+      const index = this.allRouteDetails.findIndex((value: any) => value.id === id);
+      this.allRouteDetails.splice(index, 1);
     }
 
   }
 
   search() {
     if (
-      this.dataSet.find(
+      this.allRouteDetails.find(
         (obj: any) =>
           obj.departureAirport === this.departureControl.value ||
           obj.arrivalAirport === this.arrivalControl.value
       )
     ) {
-      this.temporaryDataSet = this.dataSet;
-      const filterAirportData = this.dataSet.filter((obj: any) => {
+      this.temporaryDataSet = this.allRouteDetails;
+      const filterAirportData = this.allRouteDetails.filter((obj: any) => {
         return (
           obj.departureAirport === this.departureControl.value ||
           obj.arrivalAirport === this.arrivalControl.value
         );
       });
       this.errorMessage = '';
-      this.dataSet = filterAirportData;
+      this.allRouteDetails = filterAirportData;
     } else {
       this.errorMessage =
         'The Searching route is not available in the system!!!';
@@ -181,7 +184,7 @@ export class RouteScreenComponent implements OnInit {
 
     if (this.temporaryDataSet.length)
     {
-      this.dataSet = this.temporaryDataSet;
+      this.allRouteDetails = this.temporaryDataSet;
     }
   }
 
