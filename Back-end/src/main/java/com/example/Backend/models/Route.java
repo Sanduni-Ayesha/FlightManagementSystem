@@ -2,7 +2,6 @@ package com.example.Backend.models;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class Route {
     private long id ;
     private String arrivalAirport;
