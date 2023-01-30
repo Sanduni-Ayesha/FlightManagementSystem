@@ -1,94 +1,98 @@
 <div class="route">
-<div>
+    <div>
         <form class="searchFilter">
-          <div class="inputFields">
+            <div class="inputFields">
 
-            <mat-form-field class="departInput" appearance="fill">
-              <mat-label>Departure Airport</mat-label>
-              <input type="text"
-                     placeholder="Pick one"
-                     aria-label="Number"
-                     matInput
-                     [formControl]="departureControl"
-                     [matAutocomplete]="auto1" #departure_Airport>
-              <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
-                <mat-option *ngFor="let option of filteredDepartureAirport" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-              <mat-icon matSuffix>flight_takeoff</mat-icon>
-            </mat-form-field>
+                <mat-form-field class="departInput" appearance="fill">
+                    <mat-label>Departure Airport</mat-label>
+                    <input type="text"
+                           placeholder="Pick one"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="departureControl"
+                           [matAutocomplete]="auto1" #departure_Airport>
+                    <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredDepartureAirport" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>flight_takeoff</mat-icon>
+                </mat-form-field>
 
 
-            <mat-form-field class="arriveInput" appearance="fill">
-              <mat-label>Arrival Airport</mat-label>
-              <input type="text"
-                     placeholder="Pick one"
-                     aria-label="Number"
-                     matInput
-                     [formControl]="arrivalControl"
-                     [matAutocomplete]="auto2" #arrival_Airport>
-              <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
-                <mat-option *ngFor="let option of filteredArrivalAirport" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-              <mat-icon matSuffix>flight_land</mat-icon>
-            </mat-form-field>
-          </div>
-
-          <div class="searchBtn">
-            <div class="search">
-          <button mat-raised-button class="buttons" (click)="search()">
-            <mat-icon>search</mat-icon>
-            Search flight
-          </button>
-
+                <mat-form-field class="arriveInput" appearance="fill">
+                    <mat-label>Arrival Airport</mat-label>
+                    <input type="text"
+                           placeholder="Pick one"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="arrivalControl"
+                           [matAutocomplete]="auto2" #arrival_Airport>
+                    <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredArrivalAirport" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>flight_land</mat-icon>
+                </mat-form-field>
             </div>
-            <div class="clear">
-          <button mat-raised-button class="buttons" (click)="clearSearch();departureControl.setValue('');arrivalControl.setValue('')">
-            <mat-icon>clear</mat-icon>
-            Clear search
-          </button>
+
+            <div class="searchBtn">
+                <div class="search">
+                    <button mat-raised-button class="buttons" (click)="search()">
+                        <mat-icon>search</mat-icon>
+                        Search flight
+                    </button>
+
+                </div>
+                <div class="clear">
+                    <button mat-raised-button class="buttons"
+                            (click)="clearSearch();departureControl.setValue('');arrivalControl.setValue('')">
+                        <mat-icon>clear</mat-icon>
+                        Clear search
+                    </button>
+                </div>
             </div>
-          </div>
-          <span class="space"></span>
-          <div class="addRoute">
-            <a mat-raised-button class="buttons"  (click)="openForm()">
-              <mat-icon>add</mat-icon>
-              Add route
-            </a>
-          </div>
+            <span class="space"></span>
+            <div class="addRoute">
+                <a mat-raised-button class="buttons" (click)="openForm()">
+                    <mat-icon>add</mat-icon>
+                    Add route
+                </a>
+            </div>
         </form>
         <span>{{errorMessage}}</span>
-      </div>
-<div class="route_table">
-  <table class="route_table">
-    <thead>
-    <tr>
-      <th *ngFor="let column of columnsSchema "> {{column.label}}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let row of dataSet">
-      <td *ngFor="let columnData of columnsSchema">
-        <div *ngIf="columnData.key!='isEdit' && columnData.key!='isDelete'">
-          {{row[columnData.key]}}
-        </div>
-        <div class="btn-edit" *ngIf="columnData.key==='isEdit'">
-          <button mat-button (click)="openForm(row.id)">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-        <div class="btn-delete" *ngIf="columnData.key==='isDelete'">
-          <button mat-button (click)="removeRow(row.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+    </div>
+    <div class="route_table">
+        <table class="route_table">
+            <thead>
+            <tr>
+                <th *ngFor="let column of columnsSchema "> {{column.label}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of routeDetails">
+                <td>{{row.departureAirport}}</td>
+                <td>{{row.arrivalAirport}}</td>
+                <td>{{row.mileage}}</td>
+                <td>{{row.duration}}</td>
+                <td>
+                    <div class="btn-edit">
+                        <button mat-button (click)="openForm(row.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-delete">
+                        <button mat-button (click)="removeRow(row.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
