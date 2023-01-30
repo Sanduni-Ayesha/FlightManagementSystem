@@ -126,15 +126,15 @@ export class RouteScreenComponent implements OnInit {
   }
 
   openForm(_id=-1): void {
-    let row:Array<object>|'';
+    let row:Route|'';
     let id:number|'';
     if(_id != -1){
       id = _id;
-      row = this.allRouteDetails[_id-1];
+      row = this.routeDetails[_id-1];
     }
     else{
       id = ''
-      row = ''
+      row = '';
     }
 
     this.dialog.open(AddRouteFormComponent, {
@@ -142,7 +142,7 @@ export class RouteScreenComponent implements OnInit {
       disableClose: true,
       width: '600px',
       data: {
-        ds: this.allRouteDetails,
+        ds: this.routeDetails,
         id: id,
         rowData: row,
       },
