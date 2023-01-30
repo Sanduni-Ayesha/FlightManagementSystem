@@ -71,21 +71,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let row of routeDetails">
-                <td>{{row.departureAirport}}</td>
-                <td>{{row.arrivalAirport}}</td>
-                <td>{{row.mileage}}</td>
-                <td>{{row.duration}}</td>
+            <tr *ngFor="let route of routeDetails">
+                <td>{{route.departureAirport}}</td>
+                <td>{{route.arrivalAirport}}</td>
+                <td>{{route.mileage}}</td>
+                <td>{{route.duration}}</td>
                 <td>
                     <div class="btn-edit">
-                        <button mat-button (click)="openForm(row.id)">
+                        <button mat-button (click)="openForm(route.id)">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </div>
                 </td>
                 <td>
                     <div class="btn-delete">
-                        <button mat-button (click)="removeRow(row.id)">
+                        <button mat-button (click)="removeRow(route.id)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
