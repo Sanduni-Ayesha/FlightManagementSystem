@@ -10,7 +10,7 @@ export class RouteService{
   private baseUrl = "http://localhost:8080";
   constructor(private http:HttpClient) { }
 
-  getAllRoutes():Observable<Routes[]>{
+  public getAllRoutes():Observable<Routes[]>{
     return this.http.get<Routes[]>(`${this.baseUrl}/route/get_route`)
   }
 }
