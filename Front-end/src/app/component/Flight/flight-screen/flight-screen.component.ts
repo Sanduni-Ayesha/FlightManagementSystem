@@ -95,6 +95,7 @@ const COLUMNS = [
 export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
   public flightDetails: Flight[] = [];
+  public allFlightDetails: Flight[] = [];
   private newFlight: number = -1;
   dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
@@ -120,6 +121,7 @@ export class FlightScreenComponent implements OnInit {
 
     this.flightService.getAllFlights().subscribe((flights)=>{
       this.flightDetails = flights
+      this.allFlightDetails = flights
     })
   }
 
@@ -143,17 +145,17 @@ export class FlightScreenComponent implements OnInit {
 
   filter(departure: string, arrive: string) {
     if (departure != '') {
-      this.dataSource = this.dataSource.filter(
+      this.flightDetails = this.flightDetails.filter(
         (data: any) => data.departureAirport == departure
       );
     }
     if (arrive != '') {
-      this.dataSource = this.dataSource.filter(
+      this.flightDetails = this.flightDetails.filter(
         (data: any) => data.arrivalAirport == arrive
       );
     }
     if (arrive == '' && departure == '') {
-      this.dataSource = DATA;
+      this.flightDetails = this.allFlightDetails;
     }
   }
 
@@ -163,21 +165,17 @@ export class FlightScreenComponent implements OnInit {
     }
   }
 
-  openForm(id: number) {
-    let rowData: string;
-    let ID: string | number;
-    if (id == this.newFlight) {
-      ID = '';
-      rowData = '';
+  openForm(type: string,id: number) {
+    let rowData: Flight;
+    if (type=='edit') {
+      rowData = this.flightDetails[id-1];
     } else {
-      ID = id - 1;
-      rowData = this.dataSource[id - 1];
+      rowData = new Flight(-1,""," ", "",new Date(),new Date());
     }
     this.dialog.open(AddFlightFormComponent, {
       disableClose: true,
       data: {
-        id: ID,
-        ds: this.dataSource,
+        ds: this.flightDetails,
         row: rowData,
       },
     });
