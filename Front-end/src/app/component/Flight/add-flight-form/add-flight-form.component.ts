@@ -16,12 +16,40 @@ import { map } from 'rxjs/operators';
 })
 export class AddFlightFormComponent implements OnInit {
   public airports: string[] = [];
+  filteredDepartures: string[] | undefined;
+  filteredArrivals: string[] | undefined;
+
+  flightForm = new FormGroup(
+      {
+        id: new FormControl(''),
+        departureAirport: new FormControl('', [
+          Validators.required,
+        ]),
+        arrivalAirport: new FormControl('', [
+          Validators.required,
+        ]),
+        flightNo: new FormControl([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
+        ]),
+        departureTime: new FormControl([
+          Validators.required,
+        ]),
+        arrivalTime: new FormControl([
+          Validators.required,
+        ]),
+      },
+      { validators: [airportValidator, dateValidator, futureDateValidator] }
+
+  );
+
   constructor(
     public dialog: MatDialog,
     @Inject(DIALOG_DATA) public data: any,
     private http: HttpClient
   ) {}
   ngOnInit() {
+    this.flightForm.patchValue(this.data.row)
     this.loadAirports();
     this.flightForm.controls['departureAirport'].valueChanges
       .pipe(map((value) => this.filterAirports(value || '')))
@@ -35,9 +63,6 @@ export class AddFlightFormComponent implements OnInit {
         this.filteredArrivals = arrivals;
       });
   }
-
-  filteredDepartures: string[] | undefined;
-  filteredArrivals: string[] | undefined;
 
   loadAirports() {
     this.http
@@ -56,28 +81,6 @@ export class AddFlightFormComponent implements OnInit {
       return [];
     }
   }
-  flightForm = new FormGroup(
-    {
-      id: new FormControl(''),
-      departureAirport: new FormControl(this.data.row.departureAirport, [
-        Validators.required,
-      ]),
-      arrivalAirport: new FormControl(this.data.row.arrivalAirport, [
-        Validators.required,
-      ]),
-      flightNo: new FormControl(this.data.row.flightNo, [
-        Validators.required,
-        Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
-      ]),
-      departureTime: new FormControl(this.data.row.departureTime, [
-        Validators.required,
-      ]),
-      arrivalTime: new FormControl(this.data.row.arrivalTime, [
-        Validators.required,
-      ]),
-    },
-    { validators: [airportValidator, dateValidator, futureDateValidator] }
-  );
 
   onSubmit() {
     this.dialog.closeAll();
@@ -93,21 +96,7 @@ export class AddFlightFormComponent implements OnInit {
     }
   }
   resetRow() {
-    if (confirm('Are you sure you want to reset?')) {
-      this.flightForm.controls['departureAirport'].setValue(
-        this.data.row.departureAirport
-      );
-      this.flightForm.controls['arrivalAirport'].setValue(
-        this.data.row.arrivalAirport
-      );
-      this.flightForm.controls['flightNo'].setValue(this.data.row.flightNo);
-      this.flightForm.controls['departureTime'].setValue(
-        this.data.row.departureTime
-      );
-      this.flightForm.controls['arrivalTime'].setValue(
-        this.data.row.arrivalTime
-      );
-    }
+    this.flightForm.patchValue(this.data.row);
   }
 
   update(dirty: boolean) {
