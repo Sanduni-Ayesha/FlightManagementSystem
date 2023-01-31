@@ -15,4 +15,7 @@ public class RouteService {
     public List<Route> getRoutes(){
        return routeRepository.getAllRoutes();
     }
+    public String removeRoute(int id){
+        return routeRepository.deleteRoute(id);
+    }
 }
