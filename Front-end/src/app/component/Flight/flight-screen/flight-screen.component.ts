@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import {Flight} from "../../../model/Flight";
+import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 
 const DATA = [
   {
@@ -92,8 +94,16 @@ const COLUMNS = [
 })
 export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
+  public flightDetails: Flight[] = [];
+  private newFlight: number = -1;
+  dataSource: any = DATA;
+  columnsSchema: any = COLUMNS;
+  filteredDepartures: string[] | undefined;
+  filteredArrivals: string[] | undefined;
+  filterDepart = new FormControl('');
+  filterArrive = new FormControl('');
 
-  constructor(public dialog: MatDialog, private http: HttpClient) {}
+  constructor(private flightService: FlightDataService ,public dialog: MatDialog, private http: HttpClient) {}
   ngOnInit() {
     this.loadAirports();
     this.filterDepart.valueChanges
@@ -107,17 +117,11 @@ export class FlightScreenComponent implements OnInit {
       .subscribe((arrivals) => {
         this.filteredArrivals = arrivals;
       });
+
+    this.flightService.getAllFlights().subscribe((flights)=>{
+      this.flightDetails = flights
+    })
   }
-
-  dataSource: any = DATA;
-  columnsSchema: any = COLUMNS;
-
-  filterDepart = new FormControl('');
-  filterArrive = new FormControl('');
-
-  filteredDepartures: string[] | undefined;
-  filteredArrivals: string[] | undefined;
-  private newFlight: number = -1;
 
   loadAirports() {
     this.http

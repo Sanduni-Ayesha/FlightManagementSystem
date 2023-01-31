@@ -74,29 +74,23 @@
           {{col.label}}
         </th>
       </tr>
-      <div *ngIf="dataSource.length==0" class="noFlights">
-        <h4 class="noFlightError">Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
-      </div>
-      <tr *ngFor="let row of dataSource">
-
-        <td *ngFor="let col of columnsSchema" >
-          <div *ngIf="col.key != 'departureTime' && col.key != 'arrivalTime'">
-            {{ row[col.key] }}
-          </div>
-          <div *ngIf="col.key == 'departureTime'">
-            {{ row[col.key] | date: 'M/d/y, h:mm a, z' }}
-          </div>
-          <div *ngIf="col.key == 'arrivalTime'">
-            {{ row[col.key] | date: 'M/d/y, h:mm a, z' }}
-          </div>
-
-          <div class="btn-edit" *ngIf="col.key === 'isEdit'">
-            <button mat-button (click)="openForm(row.id)"><mat-icon>edit</mat-icon></button>
-          </div>
-          <div class="btn-delete" *ngIf="col.key === 'isDelete'">
-            <button mat-button (click)="removeRow(row.id)"><mat-icon>delete</mat-icon></button>
+      <tr *ngFor="let flight of flightDetails">
+        <td>{{flight.departureAirport}}</td>
+        <td>{{flight.arrivalAirport}}</td>
+        <td>{{flight.flightNo}}</td>
+        <td>{{flight.departureTime | date: 'M/d/y, h:mm a, z' }}</td>
+        <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
+        <td>
+          <div class="btn-edit">
+            <button mat-button (click)="openForm(flight.id)"><mat-icon>edit</mat-icon></button>
           </div>
         </td>
+        <td>
+          <div class="btn-delete">
+            <button mat-button (click)="removeRow(flight.id)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </td>
+
       </tr>
     </table>
   </div>
