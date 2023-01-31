@@ -1,5 +1,6 @@
 package com.example.Backend.repositories;
 
+import com.example.Backend.exceptions.RouteNotFoundException;
 import com.example.Backend.models.Route;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,22 @@ public class RouteRepository {
     }
     public List<Route> getAllRoutes(){
         return routes;
+    }
+
+    public String deleteRoute(int id){
+        if (id >= 0){
+            try{
+                this.routes.removeIf(route ->route.getId()==id);
+                return "Removed route successfully";
+            }
+            catch (RouteNotFoundException e) {
+                throw new RouteNotFoundException("Route by id" + Integer.toString(id) + "was not found");
+            }
+        }
+
+        else{
+            return "Route id should be positive";
+        }
     }
 
 }
