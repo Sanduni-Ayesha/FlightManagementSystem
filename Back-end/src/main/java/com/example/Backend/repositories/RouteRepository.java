@@ -24,7 +24,6 @@ public class RouteRepository {
     }
 
     public String deleteRoute(int id){
-        if (id >= 0){
             try{
                 this.routes.removeIf(route ->route.getId()==id);
                 return "Removed route successfully";
@@ -33,10 +32,4 @@ public class RouteRepository {
                 throw new RouteNotFoundException("Route by id" + Integer.toString(id) + "was not found");
             }
         }
-
-        else{
-            return "Route id should be positive";
-        }
-    }
-
 }
