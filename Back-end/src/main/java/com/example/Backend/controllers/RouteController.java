@@ -26,7 +26,7 @@ public class RouteController {
 
 }
     @PutMapping("/update-route")
-    public ResponseEntity<HttpStatus> updateRoute(@RequestBody Route route){
+    public ResponseEntity<Route> updateRoute(@RequestBody Route route){
         return this.routeService.updateRoute(route);
     }
 }
