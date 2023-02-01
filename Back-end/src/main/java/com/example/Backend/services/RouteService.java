@@ -34,4 +34,13 @@ public class RouteService {
             return new ResponseEntity<>(route,HttpStatus.NOT_FOUND);
         }
     }
+    public ResponseEntity<Route> createRoute(Route route){
+        try{
+            this.routeRepository.createRoute(route);
+            return new ResponseEntity<>(route,HttpStatus.CREATED);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(route,HttpStatus.BAD_REQUEST);
+        }
+    }
 }
