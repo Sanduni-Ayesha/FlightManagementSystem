@@ -33,4 +33,9 @@ public class FlightRepository {
     public boolean deleteFlight(int id){
         return flights.removeIf(f->f.getId() == id);
     }
+
+    public boolean addFlight(Flight f){
+        Flight flight = new Flight(f.getId(),f.getDepartureAirport(),f.getArrivalAirport(),f.getFlightNo(),f.getDepartureTime(),f.getArrivalTime());
+        return flights.add(flight);
+    }
 }

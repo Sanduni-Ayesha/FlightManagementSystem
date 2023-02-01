@@ -22,4 +22,8 @@ public class FlightServices {
     public boolean deleteFlight(int id){
         return flightRepository.deleteFlight(id);
     }
+
+    public boolean addFlight(Flight flight){
+        return flightRepository.addFlight(flight);
+    }
 }

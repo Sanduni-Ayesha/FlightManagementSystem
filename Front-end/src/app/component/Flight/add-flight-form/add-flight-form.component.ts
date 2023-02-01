@@ -8,6 +8,8 @@ import { dateValidator } from '../../../shared/date.validator';
 import { futureDateValidator } from '../../../shared/futureDate.validator';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import {FlightDataService} from "../../../services/flight-data/flight-data.service";
+import {Flight} from "../../../model/Flight";
 
 @Component({
   selector: 'app-add-flight-form',
@@ -32,10 +34,10 @@ export class AddFlightFormComponent implements OnInit {
           Validators.required,
           Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
         ]),
-        departureTime: new FormControl([
+        departureTime: new FormControl('',[
           Validators.required,
         ]),
-        arrivalTime: new FormControl([
+        arrivalTime: new FormControl('',[
           Validators.required,
         ]),
       },
@@ -46,7 +48,8 @@ export class AddFlightFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     @Inject(DIALOG_DATA) public data: any,
-    private http: HttpClient
+    private http: HttpClient,
+    private flightService: FlightDataService ,
   ) {}
   ngOnInit() {
     this.flightForm.patchValue(this.data.row)
@@ -83,9 +86,12 @@ export class AddFlightFormComponent implements OnInit {
   }
 
   onSubmit() {
+    let f = this.flightForm.value
+    let lastID  = this.data.ds[(this.data.ds.length-1)].id;
+    let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
     this.dialog.closeAll();
-    this.flightForm.value.id = this.data.ds.length + 1;
-    this.data.ds.push(this.flightForm.value);
+    this.flightService.addFlight(newFlight).subscribe();
+    window.location.reload();
   }
 
   close(dirty: boolean) {

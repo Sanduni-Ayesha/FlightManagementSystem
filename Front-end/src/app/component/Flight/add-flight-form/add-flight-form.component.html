@@ -1,6 +1,6 @@
 <div class = 'overlay'>
-  <h1 *ngIf="this.data['row']==null">Add new flight</h1>
-  <h1 *ngIf="this.data['row']!=null">Update flight</h1>
+  <h1 *ngIf="this.data['row'].id==-1">Add new flight</h1>
+  <h1 *ngIf="this.data['row'].id!=-1">Update flight</h1>
   <form [formGroup]="flightForm">
       <div class="departAirport">
       <label>
@@ -115,10 +115,10 @@
       <button mat-button type="button" (click)="resetRow()">
         Reset
       </button>
-      <button mat-button *ngIf="this.data['row'] ==''" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'].id==-1" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
         Submit
       </button>
-      <button mat-button *ngIf="this.data['row'] !=''" type="submit" (click)="update(flightForm.dirty)" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'].id!=-1" type="submit" (click)="update(flightForm.dirty)" [disabled]="!flightForm.valid">
         Update
       </button>
     </div>

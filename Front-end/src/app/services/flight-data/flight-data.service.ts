@@ -17,4 +17,8 @@ export class FlightDataService {
   public deleteFlight(id: number){
     return this.http.delete(`${this.baseUrl}/flight/getFlights/${id}`)
   }
+
+  public addFlight(flight: Flight){
+    return this.http.post(`${this.baseUrl}/flight/addFlight`, flight);
+  }
 }

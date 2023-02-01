@@ -29,4 +29,9 @@ public class FlightController {
     public boolean deleteFlightByID(@PathVariable("id") int id){
         return flightServices.deleteFlight(id);
     }
+
+    @PostMapping("/addFlight")
+    public boolean addFlight(@RequestBody Flight flight){
+        return flightServices.addFlight(flight);
+    }
 }

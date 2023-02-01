@@ -125,12 +125,18 @@ export class FlightScreenComponent implements OnInit {
     }
   }
 
-  openAddFlightForm(flight: Flight|null) {
+  openAddFlightForm(type: string, flight: Flight|null) {
+    let rowData: Flight |null;
+    if (type=='edit') {
+      rowData = flight;
+    } else {
+      rowData = new Flight(-1,"","", "","","");
+    }
     this.dialog.open(AddFlightFormComponent, {
       disableClose: true,
       data: {
         ds: this.flightDetails,
-        row: flight,
+        row: rowData,
       },
     });
   }
