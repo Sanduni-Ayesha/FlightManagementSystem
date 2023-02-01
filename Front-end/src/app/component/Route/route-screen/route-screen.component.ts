@@ -46,9 +46,7 @@ export class RouteScreenComponent implements OnInit {
         this.filterAirport(value || ''))).subscribe((departures) => {
         this.filteredDepartureAirport = departures;
       });
-    this.routeService.getAllRoutes().subscribe((route)=>{
-      this.routeDetails=route;
-    })
+    this.getRoutes()
     this.allRouteDetails = this.routeDetails;
   }
 
@@ -86,13 +84,15 @@ export class RouteScreenComponent implements OnInit {
       },
     });
   }
-
-  removeRow(id: number) {
-    if (confirm("Press Ok to confirm the deletion !!!") == true) {
-        this.routeService.deleteRoute(id) .subscribe();
+    getRoutes(){
         this.routeService.getAllRoutes().subscribe((route)=>{
             this.routeDetails=route;
         })
+    }
+  removeRow(id: number) {
+    if (confirm("Press Ok to confirm the deletion !!!") == true) {
+        this.routeService.deleteRoute(id) .subscribe();
+        this.getRoutes()
     }
 
   }
