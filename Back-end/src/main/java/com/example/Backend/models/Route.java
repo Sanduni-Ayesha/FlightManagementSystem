@@ -3,13 +3,13 @@ package com.example.Backend.models;
 import org.springframework.stereotype.Component;
 
 public class Route {
-    private long id ;
+    private int id ;
     private String arrivalAirport;
     private String departureAirport;
     private double mileage;
     private double duration;
 
-    public Route(long id, String arrivalAirport, String departureAirport, double mileage, double duration) {
+    public Route(int id, String arrivalAirport, String departureAirport, double mileage, double duration) {
         this.id = id;
         this.arrivalAirport = arrivalAirport;
         this.departureAirport = departureAirport;
@@ -17,11 +17,11 @@ public class Route {
         this.duration = duration;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
