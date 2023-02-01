@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {airportValidator} from "../../../shared/airport.validator";
+import {RouteService} from "../../../services/route/route.service";
 
 @Component({
   selector: 'app-add-route-form',
@@ -12,7 +13,7 @@ import {airportValidator} from "../../../shared/airport.validator";
 export class AddRouteFormComponent {
 
   routeInfo = new FormGroup({
-      id: new FormControl(''),
+      id: new FormControl(this.data.rowData.id),
       departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       arrivalAirport: new FormControl(this.data.rowData.arrivalAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       mileage: new FormControl(this.data.rowData.mileage, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')]),
@@ -22,7 +23,7 @@ export class AddRouteFormComponent {
     }
   )
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
+  constructor(private routeService: RouteService , private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
   }
   onSubmit() {
     this.dialog.closeAll();
@@ -33,7 +34,7 @@ export class AddRouteFormComponent {
   onUpdate() {
     if (this.routeInfo.dirty) {
     if (confirm('Are you sure you want to update the data?') == true) {
-      this.data.ds[this.data.id - 1] = this.routeInfo.value
+     this.routeService.updateRoute(this.routeInfo.value).subscribe();
     }}
     this.dialog.closeAll();
   }
