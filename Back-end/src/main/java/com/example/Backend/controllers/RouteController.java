@@ -29,4 +29,8 @@ public class RouteController {
     public ResponseEntity<Route> updateRoute(@RequestBody Route route){
         return this.routeService.updateRoute(route);
     }
+    @PostMapping("/add-route")
+    public ResponseEntity<Route> createRoute(@RequestBody Route route){
+        return this.routeService.createRoute(route);
+    }
 }
