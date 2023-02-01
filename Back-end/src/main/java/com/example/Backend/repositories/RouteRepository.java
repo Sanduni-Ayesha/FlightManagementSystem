@@ -25,5 +25,12 @@ public class RouteRepository {
     public void deleteRoute(int id) {
         this.routes.removeIf(route->(route.getId()==id));
     }
-
+    public Route findRouteById(int id) {
+        for (Route route : this.routes) {
+            if (route.getId() == id) {
+                return route;
+            }
+        }
+        return null;
+    }
 }
