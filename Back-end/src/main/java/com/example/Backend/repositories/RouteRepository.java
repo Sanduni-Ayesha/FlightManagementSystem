@@ -25,12 +25,20 @@ public class RouteRepository {
     public void deleteRoute(int id) {
         this.routes.removeIf(route->(route.getId()==id));
     }
-    public Route findRouteById(int id) {
+    public Route findRoute(int id) {
         for (Route route : this.routes) {
             if (route.getId() == id) {
                 return route;
             }
         }
         return null;
+    }
+    public void updateRoute(Route route){
+        Route updatableRoute = findRoute(route.getId());
+        updatableRoute.setArrivalAirport(route.getArrivalAirport());
+        updatableRoute.setDepartureAirport(route.getDepartureAirport());
+        updatableRoute.setDuration(route.getDuration());
+        updatableRoute.setMileage(route.getMileage());
+        this.routes.set(this.routes.indexOf(findRoute(route.getId())),updatableRoute);
     }
 }
