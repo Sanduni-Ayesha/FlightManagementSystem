@@ -21,7 +21,7 @@ export class RouteService{
     return this.http.put<any>(`${this.baseUrl}/update-route`,route)
   }
   public createRoute(route:any):Observable<any>{
-    return this.http.post<any>(`${this.baseUrl}/create-route`,route)
+    return this.http.post<any>(`${this.baseUrl}/add-route`,route)
   }
 
 }
