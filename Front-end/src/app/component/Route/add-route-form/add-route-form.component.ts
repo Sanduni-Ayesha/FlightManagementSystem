@@ -27,7 +27,7 @@ export class AddRouteFormComponent {
   }
   onSubmit() {
     if (confirm('Are you sure you want to add the new route?') == true){
-      this.routeService.createRoute(this.routeInfo.value).subscribe();
+      this.routeService.addRoute(this.routeInfo.value).subscribe();
     }
     this.dialog.closeAll();
   }
