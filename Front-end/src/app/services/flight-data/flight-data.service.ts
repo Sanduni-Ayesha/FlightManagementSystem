@@ -21,4 +21,8 @@ export class FlightDataService {
   public addFlight(flight: Flight){
     return this.http.post(`${this.baseUrl}/flight/addFlight`, flight);
   }
+
+  public  updateFlight(flight: Flight){
+    return this.http.put(`${this.baseUrl}/flight/updateFlight`, flight)
+  }
 }

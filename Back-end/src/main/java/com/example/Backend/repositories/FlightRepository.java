@@ -27,7 +27,12 @@ public class FlightRepository {
     }
 
     public Flight getFlightByID(int id){
-        return flights.get(id);
+        for (Flight flight:flights) {
+            if (flight.getId()==id){
+                return flight;
+            }
+        }
+        return null;
     }
 
     public boolean deleteFlight(int id){
@@ -37,5 +42,16 @@ public class FlightRepository {
     public boolean addFlight(Flight f){
         Flight flight = new Flight(f.getId(),f.getDepartureAirport(),f.getArrivalAirport(),f.getFlightNo(),f.getDepartureTime(),f.getArrivalTime());
         return flights.add(flight);
+    }
+
+    public boolean updateFlight(Flight fl){
+        Integer id = fl.getId();
+        Flight flight = getFlightByID(id);
+        flight.setDepartureAirport(fl.getDepartureAirport());
+        flight.setArrivalAirport(fl.getArrivalAirport());
+        flight.setFlightNo(fl.getFlightNo());
+        flight.setArrivalTime(fl.getArrivalTime());
+        flight.setDepartureTime(fl.getDepartureTime());
+        return true;
     }
 }

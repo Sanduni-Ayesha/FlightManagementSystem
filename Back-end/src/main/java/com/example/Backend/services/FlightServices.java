@@ -26,4 +26,8 @@ public class FlightServices {
     public boolean addFlight(Flight flight){
         return flightRepository.addFlight(flight);
     }
+
+    public boolean updateFlight(Flight fl){
+        return flightRepository.updateFlight(fl);
+    }
 }

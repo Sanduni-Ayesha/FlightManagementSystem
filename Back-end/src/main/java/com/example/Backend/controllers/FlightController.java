@@ -34,4 +34,9 @@ public class FlightController {
     public boolean addFlight(@RequestBody Flight flight){
         return flightServices.addFlight(flight);
     }
+
+    @PutMapping("/updateFlight")
+    public boolean updateFlight(@RequestBody Flight flight){
+        return flightServices.updateFlight(flight);
+    }
 }
