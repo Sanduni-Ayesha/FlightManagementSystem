@@ -2,6 +2,7 @@ package com.example.Backend.controllers;
 import com.example.Backend.models.Route;
 import com.example.Backend.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class RouteController {
     }
 
     @DeleteMapping("/delete-route")
-    public ResponseEntity<?> deleteRoute(@RequestParam("id") int id){
+    public ResponseEntity<HttpStatus> deleteRoute(@RequestParam("id") int id){
        return this.routeService.deleteRoute(id);
 
 }
