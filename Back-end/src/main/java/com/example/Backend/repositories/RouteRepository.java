@@ -2,6 +2,7 @@ package com.example.Backend.repositories;
 
 import com.example.Backend.exceptions.RouteNotFoundException;
 import com.example.Backend.models.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -44,5 +45,16 @@ public class RouteRepository {
         updatableRoute.setDuration(route.getDuration());
         updatableRoute.setMileage(route.getMileage());
         this.routes.set(this.routes.indexOf(findRoute(route.getId())),updatableRoute);
+    }
+
+    public void createRoute(Route route){
+        Route newRoute = new Route(
+                this.findLastRouteId()+1,
+                route.getArrivalAirport(),
+                route.getDepartureAirport(),
+                route.getDuration(),
+                route.getMileage());
+        this.routes.add(newRoute);
+
     }
 }
