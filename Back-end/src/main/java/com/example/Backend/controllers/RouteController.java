@@ -25,4 +25,8 @@ public class RouteController {
        return this.routeService.deleteRoute(id);
 
 }
+    @PutMapping("/update-route")
+    public ResponseEntity<HttpStatus> updateRoute(@RequestBody Route route){
+        return this.routeService.updateRoute(route);
+    }
 }
