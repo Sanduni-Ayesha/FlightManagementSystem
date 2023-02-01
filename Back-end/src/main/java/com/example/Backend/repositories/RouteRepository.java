@@ -23,6 +23,7 @@ public class RouteRepository {
     }
 
     public void deleteRoute(int id) {
-        this.routes.remove(id);
+        this.routes.removeIf(route->(route.getId()==id));
     }
+
 }
