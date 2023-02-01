@@ -120,16 +120,15 @@ export class FlightScreenComponent implements OnInit {
   }
   removeFlight(id: number) {
     if (confirm('Please confirm deleting')) {
-      // this.flightDetails = this.flightDetails.filter((data: any) => data.id != id);
       this.flightService.deleteFlight(id).subscribe();
       this.getFlightDetails();
     }
   }
 
-  openAddFlightForm(type: string, id: number) {
-    let rowData: Flight;
+  openAddFlightForm(type: string, flight: Flight|null) {
+    let rowData: Flight |null;
     if (type=='edit') {
-      rowData = this.flightDetails[id-1];
+      rowData = flight;
     } else {
       rowData = new Flight(-1,""," ", "",new Date(),new Date());
     }

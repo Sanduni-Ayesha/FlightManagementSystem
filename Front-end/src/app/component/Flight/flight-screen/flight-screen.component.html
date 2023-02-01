@@ -58,7 +58,7 @@
       </div>
       <span class="space"></span>
       <div class="addFlight">
-        <a mat-raised-button class="buttons" (click)="openAddFlightForm('add',-1)">
+        <a mat-raised-button class="buttons" (click)="openAddFlightForm('add',null)">
           <mat-icon>add</mat-icon>
           Add flight
         </a>
@@ -85,7 +85,7 @@
         <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
         <td>
           <div class="btn-edit">
-            <button mat-button (click)="openAddFlightForm('edit', flight.id)"><mat-icon>edit</mat-icon></button>
+            <button mat-button (click)="openAddFlightForm('edit', flight)"><mat-icon>edit</mat-icon></button>
           </div>
         </td>
         <td>
