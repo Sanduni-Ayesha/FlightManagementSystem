@@ -50,8 +50,6 @@ export class RouteScreenComponent implements OnInit {
       this.routeDetails=route;
     })
     this.allRouteDetails = this.routeDetails;
-
-
   }
 
   private filterAirport(value: string): string[] {
@@ -91,8 +89,10 @@ export class RouteScreenComponent implements OnInit {
 
   removeRow(id: number) {
     if (confirm("Press Ok to confirm the deletion !!!") == true) {
-      const index = this.allRouteDetails.findIndex((value: any) => value.id === id);
-      this.allRouteDetails.splice(index, 1);
+        this.routeService.deleteRoute(id) .subscribe();
+        this.routeService.getAllRoutes().subscribe((route)=>{
+            this.routeDetails=route;
+        })
     }
 
   }

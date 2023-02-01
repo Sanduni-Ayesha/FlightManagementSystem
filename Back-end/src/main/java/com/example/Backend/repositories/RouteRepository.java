@@ -11,25 +11,18 @@ import java.util.List;
 public class RouteRepository {
     private List<Route> routes = new ArrayList<Route>();
 
-    public RouteRepository(){
-        this.routes = List.of(
-                new Route(1,"Sofia Airport","Varna Airport",200,30),
-                new Route(2,"Bandaranaike International Colombo Airport","London Luton Airport",250,32),
-                new Route(3,"Honiara International Airport","Tokyo Haneda International Airport",300,38),
-                new Route(4,"Indianapolis International Airport","Turin Airport",290,35)
-        );
+    public RouteRepository() {
+        this.routes.add(new Route(1, "Sofia Airport", "Varna Airport", 200, 30));
+        this.routes.add(new Route(2, "Bandaranaike International Colombo Airport", "London Luton Airport", 250, 32));
+        this.routes.add(new Route(3, "Honiara International Airport", "Tokyo Haneda International Airport", 300, 38));
+        this.routes.add(new Route(4, "Indianapolis International Airport", "Turin Airport", 290, 35));
     }
-    public List<Route> getAllRoutes(){
+
+    public List<Route> getAllRoutes() {
         return routes;
     }
 
-    public String deleteRoute(int id){
-            try{
-                this.routes.removeIf(route ->route.getId()==id);
-                return "Removed route successfully";
-            }
-            catch (RouteNotFoundException e) {
-                throw new RouteNotFoundException("Route by id" + Integer.toString(id) + "was not found");
-            }
-        }
+    public void deleteRoute(int id) {
+        this.routes.remove(id);
+    }
 }
