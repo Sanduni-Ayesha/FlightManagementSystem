@@ -26,9 +26,10 @@ export class AddRouteFormComponent {
   constructor(private routeService: RouteService , private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
   }
   onSubmit() {
+    if (confirm('Are you sure you want to add the new route?') == true){
+      this.routeService.createRoute(this.routeInfo.value).subscribe();
+    }
     this.dialog.closeAll();
-    this.routeInfo.value.id = this.data.ds.length + 1;
-    this.data.ds.push(this.routeInfo.value);
   }
 
   onUpdate() {
