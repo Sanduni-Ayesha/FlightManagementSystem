@@ -18,16 +18,12 @@ public class RouteService {
     public List<Route> getRoutes(){
        return routeRepository.getAllRoutes();
     }
-    public ResponseEntity<HashMap<String, Object>> deleteRoute(int id){
-        HashMap<String, Object> routeResponse = new HashMap<String, Object>();
+    public ResponseEntity<HttpStatus> deleteRoute(int id){
         try {
             this.routeRepository.deleteRoute(id);
-            routeResponse.put("message", "Route is deleted successfully!");
-            return new ResponseEntity<>(routeResponse, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception ex) {
-            routeResponse.clear();
-            routeResponse.put("message", "Route is not found");
-            return new ResponseEntity<>(routeResponse, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
