@@ -84,7 +84,7 @@ export class RouteScreenComponent implements OnInit {
       },
     });
   }
-    getRoutes(){
+   private getRoutes(){
         this.routeService.getAllRoutes().subscribe((route)=>{
             this.routeDetails=route;
         })
