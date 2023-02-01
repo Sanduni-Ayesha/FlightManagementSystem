@@ -25,4 +25,13 @@ public class RouteService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    public ResponseEntity<HttpStatus> updateRoute(Route route){
+        try{
+            this.routeRepository.updateRoute(route);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
