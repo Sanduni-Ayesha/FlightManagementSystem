@@ -33,6 +33,10 @@ public class RouteRepository {
         }
         return null;
     }
+    public int findLastRouteId(){
+        int routeArrayLength = this.routes.size();
+        return this.routes.get(routeArrayLength-1).getId();
+    }
     public void updateRoute(Route route){
         Route updatableRoute = findRoute(route.getId());
         updatableRoute.setArrivalAirport(route.getArrivalAirport());
