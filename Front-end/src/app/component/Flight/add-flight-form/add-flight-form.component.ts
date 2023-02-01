@@ -28,7 +28,7 @@ export class AddFlightFormComponent implements OnInit {
         arrivalAirport: new FormControl('', [
           Validators.required,
         ]),
-        flightNo: new FormControl([
+        flightNo: new FormControl('',[
           Validators.required,
           Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
         ]),
