@@ -41,7 +41,7 @@
       <div class="searchBtn">
         <div class="search">
           <button mat-raised-button class="buttons"
-                  (click)="filter(departure.value, arrive.value)">
+                  (click)="filterByAirport(departure.value, arrive.value)">
             <mat-icon>search</mat-icon>
             Search flight
           </button>
@@ -49,7 +49,7 @@
 
         <div class="clear">
           <button mat-raised-button class="buttons"
-                  (click)="filter('', ''); departure.value=''; arrive.value=''">
+                  (click)="filterByAirport('', ''); departure.value=''; arrive.value=''">
             <mat-icon>clear</mat-icon>
             Clear Search
           </button>
@@ -58,7 +58,7 @@
       </div>
       <span class="space"></span>
       <div class="addFlight">
-        <a mat-raised-button class="buttons" (click)="openForm('add',-1)">
+        <a mat-raised-button class="buttons" (click)="openAddFlightForm('add',-1)">
           <mat-icon>add</mat-icon>
           Add flight
         </a>
@@ -85,12 +85,12 @@
         <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
         <td>
           <div class="btn-edit">
-            <button mat-button (click)="openForm('edit', flight.id)"><mat-icon>edit</mat-icon></button>
+            <button mat-button (click)="openAddFlightForm('edit', flight.id)"><mat-icon>edit</mat-icon></button>
           </div>
         </td>
         <td>
           <div class="btn-delete">
-            <button mat-button (click)="removeRow(flight.id)"><mat-icon>delete</mat-icon></button>
+            <button mat-button (click)="removeFlight(flight.id)"><mat-icon>delete</mat-icon></button>
           </div>
         </td>
 

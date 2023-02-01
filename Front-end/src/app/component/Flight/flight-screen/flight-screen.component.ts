@@ -7,49 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import {Flight} from "../../../model/Flight";
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 
-const DATA = [
-  {
-    id: 1,
-    departureAirport: 'Honiara International Airport',
-    arrivalAirport: 'Dublin Airport',
-    flightNo: 'AB2001',
-    departureTime: '2023-01-28T12:12',
-    arrivalTime: '2023-01-30T12:12',
-  },
-  {
-    id: 2,
-    departureAirport: 'Port Moresby Jacksons International Airport',
-    arrivalAirport: 'Houari Boumediene Airport',
-    flightNo: 'LP3001',
-    departureTime: '2023-01-28T12:12',
-    arrivalTime: '2023-01-30T12:12',
-  },
-  {
-    id: 3,
-    departureAirport: 'Brussels Airport',
-    arrivalAirport: 'Frankfurt Airport',
-    flightNo: 'AK1001',
-    departureTime: '2023-01-28T12:12',
-    arrivalTime: '2023-01-30T12:12',
-  },
-  {
-    id: 4,
-    departureAirport: 'Munich Airport',
-    arrivalAirport: 'London Luton Airport',
-    flightNo: 'AX2001',
-    departureTime: '2023-01-28T12:12',
-    arrivalTime: '2023-01-30T12:12',
-  },
-  {
-    id: 5,
-    departureAirport: 'Bandaranaike International Colombo Airport',
-    arrivalAirport: 'Sydney Kingsford Smith International Airport',
-    flightNo: 'SD1290',
-    departureTime: '2023-01-28T12:12',
-    arrivalTime: '2023-01-30T12:12',
-  },
-];
-
 const COLUMNS = [
   {
     key: 'departureAirport',
@@ -97,7 +54,6 @@ export class FlightScreenComponent implements OnInit {
   public flightDetails: Flight[] = [];
   public allFlightDetails: Flight[] = [];
   private newFlight: number = -1;
-  dataSource: any = DATA;
   columnsSchema: any = COLUMNS;
   filteredDepartures: string[] | undefined;
   filteredArrivals: string[] | undefined;
@@ -119,10 +75,7 @@ export class FlightScreenComponent implements OnInit {
         this.filteredArrivals = arrivals;
       });
 
-    this.flightService.getAllFlights().subscribe((flights)=>{
-      this.flightDetails = flights
-      this.allFlightDetails = flights
-    })
+    this.getFlightDetails();
   }
 
   loadAirports() {
@@ -143,7 +96,7 @@ export class FlightScreenComponent implements OnInit {
     }
   }
 
-  filter(departure: string, arrive: string) {
+  filterByAirport(departure: string, arrive: string) {
     if (departure != '') {
       this.flightDetails = this.flightDetails.filter(
         (data: any) => data.departureAirport == departure
@@ -159,13 +112,21 @@ export class FlightScreenComponent implements OnInit {
     }
   }
 
-  removeRow(id: number) {
+  getFlightDetails(){
+    this.flightService.getAllFlights().subscribe(flights =>{
+      this.flightDetails = flights
+      this.allFlightDetails = flights
+    })
+  }
+  removeFlight(id: number) {
     if (confirm('Please confirm deleting')) {
-      this.dataSource = this.dataSource.filter((data: any) => data.id != id);
+      // this.flightDetails = this.flightDetails.filter((data: any) => data.id != id);
+      this.flightService.deleteFlight(id).subscribe();
+      this.getFlightDetails();
     }
   }
 
-  openForm(type: string,id: number) {
+  openAddFlightForm(type: string, id: number) {
     let rowData: Flight;
     if (type=='edit') {
       rowData = this.flightDetails[id-1];

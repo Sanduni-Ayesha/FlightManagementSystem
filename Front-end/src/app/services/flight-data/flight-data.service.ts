@@ -13,4 +13,8 @@ export class FlightDataService {
   public getAllFlights():Observable<Flight[]>{
     return this.http.get<Flight[]>(`${this.baseUrl}/flight/getFlights`)
   }
+
+  public deleteFlight(id: number){
+    return this.http.delete(`${this.baseUrl}/flight/getFlights/${id}`)
+  }
 }

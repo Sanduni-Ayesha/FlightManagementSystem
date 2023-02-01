@@ -19,9 +19,18 @@ public class FlightRepository {
         flights.add(new Flight(5, "Cape Town International Airport", "Tenerife Sur Airport", "TY8822", "2023-01-28T12:12", "2023-01-30T12:12"));
         flights.add(new Flight(6, "Ivato Airport", "Sofia Airport", "KM8933", "2023-01-28T12:12", "2023-01-30T12:12"));
         flights.add(new Flight(7, "Honiara International Airport", "Ibiza Airport", "GT6775", "2023-01-28T12:12", "2023-01-30T12:12"));
+//        flights.remove((new Flight(5, "Cape Town International Airport", "Tenerife Sur Airport", "TY8822", "2023-01-28T12:12", "2023-01-30T12:12")).getId());
     }
 
     public List<Flight> getFlights(){
         return flights;
+    }
+
+    public Flight getFlightByID(int id){
+        return flights.get(id);
+    }
+
+    public boolean deleteFlight(int id){
+        return flights.removeIf(f->f.getId() == id);
     }
 }

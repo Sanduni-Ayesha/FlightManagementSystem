@@ -15,5 +15,11 @@ public class FlightServices {
     public List<Flight> getFlights(){
         return flightRepository.getFlights();
     }
+    public Flight getFlightByID(int id){
+        return flightRepository.getFlightByID(id);
+    }
 
+    public boolean deleteFlight(int id){
+        return flightRepository.deleteFlight(id);
+    }
 }
