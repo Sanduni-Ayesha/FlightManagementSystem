@@ -125,7 +125,8 @@ export class RouteScreenComponent implements OnInit {
   }
 
   clearSearch() {
-
+      this.departureControl.setValue('');
+      this. arrivalControl.setValue('')
       this.getRoutes();
   }
 
