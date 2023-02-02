@@ -18,8 +18,6 @@ const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Durati
 })
 export class RouteScreenComponent implements OnInit {
   routeTableHeading: any = TableHeading;
-
-  temporaryDataSet: any = [];
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
   filteredArrivalAirport: string[] | undefined;
@@ -128,10 +126,7 @@ export class RouteScreenComponent implements OnInit {
 
   clearSearch() {
 
-    if (this.temporaryDataSet.length)
-    {
       this.getRoutes();
-    }
   }
 
   loadAirports() {
