@@ -16,9 +16,9 @@ public class RouteController {
     private RouteService routeService;
 
     @GetMapping("/get_route")
-    public List<Route> findAllRoute(){
-        System.out.println(routeService.getRoutes());
-        return routeService.getRoutes();
+
+    public List<Route> getAllRoutes(){
+        return routeService.getAllRoutes();
     }
 
     @DeleteMapping("/delete-route")

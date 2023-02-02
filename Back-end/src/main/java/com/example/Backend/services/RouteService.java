@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -15,7 +14,7 @@ public class RouteService {
     @Autowired
     private RouteRepository routeRepository;
 
-    public List<Route> getRoutes(){
+    public List<Route> getAllRoutes(){
        return routeRepository.getAllRoutes();
     }
     public ResponseEntity<HttpStatus> deleteRoute(int id){
