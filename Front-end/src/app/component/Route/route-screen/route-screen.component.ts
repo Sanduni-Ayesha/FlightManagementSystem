@@ -103,12 +103,9 @@ export class RouteScreenComponent implements OnInit {
     }
   removeRow(id: number) {
     if (confirm("Press Ok to confirm the deletion !!!") == true) {
-        this.routeService.deleteRoute(id) .subscribe();
-        this.getRoutes()
+        this.routeService.deleteRoute(id) .subscribe(()=>{this.getRoutes()});
     }
-
   }
-
   search() {
     if (
       this.allRouteDetails.find(
