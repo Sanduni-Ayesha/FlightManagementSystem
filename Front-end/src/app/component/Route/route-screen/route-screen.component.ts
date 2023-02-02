@@ -112,7 +112,6 @@ export class RouteScreenComponent implements OnInit {
           obj.arrivalAirport === this.arrivalControl.value
       )
     ) {
-      this.temporaryDataSet = this.routeDetails;
       const filterAirportData = this.routeDetails.filter((obj: any) => {
         return (
           obj.departureAirport === this.departureControl.value ||
@@ -131,7 +130,7 @@ export class RouteScreenComponent implements OnInit {
 
     if (this.temporaryDataSet.length)
     {
-      this.routeDetails = this.temporaryDataSet;
+      this.getRoutes();
     }
   }
 
