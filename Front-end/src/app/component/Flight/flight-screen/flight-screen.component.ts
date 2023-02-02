@@ -132,12 +132,16 @@ export class FlightScreenComponent implements OnInit {
     } else {
       rowData = new Flight(-1,"","", "","","");
     }
-    this.dialog.open(AddFlightFormComponent, {
+    let addFlightForm = this.dialog.open(AddFlightFormComponent, {
       disableClose: true,
       data: {
         ds: this.flightDetails,
         row: rowData,
       },
     });
+    addFlightForm.afterClosed().subscribe(flights=>{
+      this.getFlightDetails()
+    }
+    )
   }
 }

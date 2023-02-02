@@ -91,7 +91,6 @@ export class AddFlightFormComponent implements OnInit {
     let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
     this.dialog.closeAll();
     this.flightService.addFlight(newFlight).subscribe();
-    window.location.reload();
   }
 
   close(dirty: boolean) {
@@ -117,6 +116,5 @@ export class AddFlightFormComponent implements OnInit {
       }
     }
     this.dialog.closeAll();
-    window.location.reload();
   }
 }
