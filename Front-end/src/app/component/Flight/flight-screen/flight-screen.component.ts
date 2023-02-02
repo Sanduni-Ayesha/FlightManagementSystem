@@ -120,8 +120,7 @@ export class FlightScreenComponent implements OnInit {
   }
   removeFlight(id: number) {
     if (confirm('Please confirm deleting')) {
-      this.flightService.deleteFlight(id).subscribe();
-      this.getFlightDetails();
+      this.flightService.deleteFlight(id).subscribe(()=>this.getFlightDetails());
     }
   }
 
@@ -139,7 +138,7 @@ export class FlightScreenComponent implements OnInit {
         row: rowData,
       },
     });
-    addFlightForm.afterClosed().subscribe(flights=>{
+    addFlightForm.afterClosed().subscribe(()=>{
       this.getFlightDetails()
     }
     )

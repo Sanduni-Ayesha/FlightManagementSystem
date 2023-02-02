@@ -23,11 +23,11 @@ public class FlightServices {
         return flightRepository.deleteFlight(id);
     }
 
-    public boolean addFlight(Flight flight){
+    public Flight addFlight(Flight flight){
         return flightRepository.addFlight(flight);
     }
 
-    public boolean updateFlight(Flight fl){
+    public Flight updateFlight(Flight fl){
         return flightRepository.updateFlight(fl);
     }
 }

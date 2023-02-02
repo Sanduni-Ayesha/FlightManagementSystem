@@ -3,6 +3,8 @@ package com.example.Backend.controllers;
 import com.example.Backend.models.Flight;
 import com.example.Backend.services.FlightServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,27 +18,27 @@ public class FlightController {
     private FlightServices flightServices;
 
     @GetMapping("/getFlights")
-    public List<Flight> getAllFlights(){
-        return flightServices.getFlights();
+    public ResponseEntity<List<Flight>> getAllFlights(){
+        return new ResponseEntity<>(flightServices.getFlights(), HttpStatus.OK);
     }
 
     @GetMapping("/getFlights/{id}")
-    public Flight getFlightByID(@PathVariable("id") int id){
-        return flightServices.getFlightByID(id-1);
+    public ResponseEntity<Flight> getFlightByID(@PathVariable("id") int id){
+        return new ResponseEntity<>(flightServices.getFlightByID(id-1), HttpStatus.OK);
     }
 
     @DeleteMapping("/getFlights/{id}")
-    public boolean deleteFlightByID(@PathVariable("id") int id){
-        return flightServices.deleteFlight(id);
+    public ResponseEntity<Boolean> deleteFlightByID(@PathVariable("id") int id){
+        return new ResponseEntity<>(flightServices.deleteFlight(id), HttpStatus.OK);
     }
 
     @PostMapping("/addFlight")
-    public boolean addFlight(@RequestBody Flight flight){
-        return flightServices.addFlight(flight);
+    public ResponseEntity<Flight> addFlight(@RequestBody Flight flight){
+        return new ResponseEntity<>(flightServices.addFlight(flight), HttpStatus.OK);
     }
 
     @PutMapping("/updateFlight")
-    public boolean updateFlight(@RequestBody Flight flight){
-        return flightServices.updateFlight(flight);
+    public ResponseEntity<Flight> updateFlight(@RequestBody Flight flight){
+        return new ResponseEntity<>(flightServices.updateFlight(flight), HttpStatus.OK);
     }
 }
