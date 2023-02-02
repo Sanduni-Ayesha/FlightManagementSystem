@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {airportValidator} from "../../../shared/airport.validator";
 import {RouteService} from "../../../services/route/route.service";
+import {Route} from "../../../model/Route";
 
 @Component({
   selector: 'app-add-route-form',
@@ -35,7 +36,15 @@ export class AddRouteFormComponent {
   onUpdate() {
     if (this.routeInfo.dirty) {
     if (confirm('Are you sure you want to update the data?') == true) {
-     this.routeService.updateRoute(this.routeInfo.value).subscribe();
+      let routeInfoData = this.routeInfo.value
+      let route = new Route(
+          routeInfoData.id,
+          routeInfoData.arrivalAirport,
+          routeInfoData.departureAirport,
+          routeInfoData.mileage,
+          routeInfoData.duration
+      )
+     this.routeService.updateRoute(route).subscribe();
     }}
     this.dialog.closeAll();
   }
