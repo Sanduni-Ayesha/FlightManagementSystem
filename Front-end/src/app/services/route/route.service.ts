@@ -17,8 +17,8 @@ export class RouteService{
   public deleteRoute(id:number){
     return this.http.delete(`${this.baseUrl}/delete-route?id=${id.toString()}`)
   }
-  public updateRoute(route:any):Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/update-route`,route)
+  public updateRoute(route:Route):Observable<Route>{
+    return this.http.put<Route>(`${this.baseUrl}/update-route`,route)
   }
   public addRoute(route:any):Observable<any>{
     return this.http.post<any>(`${this.baseUrl}/add-route`,route)
