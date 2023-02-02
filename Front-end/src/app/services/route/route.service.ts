@@ -11,7 +11,7 @@ export class RouteService{
   constructor(private http:HttpClient) { }
 
   public getAllRoutes():Observable<Route[]>{
-    return this.http.get<Route[]>(`${this.baseUrl}/get_route`)
+    return this.http.get<Route[]>(`${this.baseUrl}/get-route`)
   }
 
   public deleteRoute(id:number){

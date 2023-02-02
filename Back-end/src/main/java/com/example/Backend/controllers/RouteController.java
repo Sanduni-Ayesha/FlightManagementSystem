@@ -15,8 +15,7 @@ public class RouteController {
     @Autowired
     private RouteService routeService;
 
-    @GetMapping("/get_route")
-
+    @GetMapping("/get-route")
     public List<Route> getAllRoutes(){
         return routeService.getAllRoutes();
     }
