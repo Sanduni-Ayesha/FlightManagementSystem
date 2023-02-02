@@ -103,14 +103,15 @@ export class RouteScreenComponent implements OnInit {
     }
   }
   search() {
-    if (
+      let filterAirportData:Route[]=[];
+      if (
       this.routeDetails.find(
         (obj: any) =>
           obj.departureAirport === this.departureControl.value ||
           obj.arrivalAirport === this.arrivalControl.value
       )
     ) {
-      const filterAirportData = this.routeDetails.filter((obj: any) => {
+      filterAirportData = this.routeDetails.filter((obj: any) => {
         return (
           obj.departureAirport === this.departureControl.value ||
           obj.arrivalAirport === this.arrivalControl.value
@@ -119,12 +120,16 @@ export class RouteScreenComponent implements OnInit {
       this.errorMessage = '';
       this.routeDetails = filterAirportData;
     } else {
-      this.errorMessage =
-        'The Searching route is not available in the system!!!';
+        if (filterAirportData.length == 0)
+        {
+            this.errorMessage="Sorry, no route available"
+            this.routeDetails = filterAirportData;
+        }
     }
   }
 
   clearSearch() {
+      this.errorMessage = '';
       this.departureControl.setValue('');
       this. arrivalControl.setValue('')
       this.getRoutes();
