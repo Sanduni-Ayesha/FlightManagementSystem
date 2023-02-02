@@ -27,7 +27,6 @@ export class RouteScreenComponent implements OnInit {
   errorMessage: string | undefined;
  public airport: string[] =[]
  public routeDetails:Route[] = [];
-  public allRouteDetails: any;
   constructor(private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
@@ -47,7 +46,6 @@ export class RouteScreenComponent implements OnInit {
         this.filteredDepartureAirport = departures;
       });
     this.getRoutes()
-    this.allRouteDetails = this.routeDetails;
   }
 
   private filterAirport(value: string): string[] {
@@ -108,21 +106,21 @@ export class RouteScreenComponent implements OnInit {
   }
   search() {
     if (
-      this.allRouteDetails.find(
+      this.routeDetails.find(
         (obj: any) =>
           obj.departureAirport === this.departureControl.value ||
           obj.arrivalAirport === this.arrivalControl.value
       )
     ) {
-      this.temporaryDataSet = this.allRouteDetails;
-      const filterAirportData = this.allRouteDetails.filter((obj: any) => {
+      this.temporaryDataSet = this.routeDetails;
+      const filterAirportData = this.routeDetails.filter((obj: any) => {
         return (
           obj.departureAirport === this.departureControl.value ||
           obj.arrivalAirport === this.arrivalControl.value
         );
       });
       this.errorMessage = '';
-      this.allRouteDetails = filterAirportData;
+      this.routeDetails = filterAirportData;
     } else {
       this.errorMessage =
         'The Searching route is not available in the system!!!';
@@ -133,7 +131,7 @@ export class RouteScreenComponent implements OnInit {
 
     if (this.temporaryDataSet.length)
     {
-      this.allRouteDetails = this.temporaryDataSet;
+      this.routeDetails = this.temporaryDataSet;
     }
   }
 
