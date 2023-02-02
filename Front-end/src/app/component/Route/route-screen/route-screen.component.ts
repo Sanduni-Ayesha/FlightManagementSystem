@@ -60,13 +60,21 @@ export class RouteScreenComponent implements OnInit {
       return [];
     }
   }
+  private findRoute(id:number):any{
+      let routeIndex=0
+      for(routeIndex=0;routeIndex<this.routeDetails.length;routeIndex++){
+          if(this.routeDetails[routeIndex].id == id){
+              return this.routeDetails[routeIndex];
+          }
+      }
 
+  }
   openForm(_id=-1): void {
-    let row:Route|'';
-    let id:number|'';
+    let  row:any;
+    let  id:any;
     if(_id != -1){
       id = _id;
-      row = this.routeDetails[_id-1];
+      row = this.findRoute(_id);
     }
     else{
       id = ''
