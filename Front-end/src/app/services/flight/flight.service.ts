@@ -6,7 +6,7 @@ import {Flight} from "../../model/Flight";
 @Injectable({
   providedIn: 'root',
 })
-export class FlightDataService {
+export class FlightService {
   private baseUrl = "http://localhost:8080";
   constructor(private http:HttpClient) { }
 
@@ -15,7 +15,7 @@ export class FlightDataService {
   }
 
   public deleteFlight(id: number){
-    return this.http.delete(`${this.baseUrl}/flight/getFlights/${id}`)
+    return this.http.delete(`${this.baseUrl}/flight/deleteFlight/${id}`)
   }
 
   public addFlight(flight: Flight){
