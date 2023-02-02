@@ -73,7 +73,7 @@ export class RouteScreenComponent implements OnInit {
       row = '';
     }
 
-    this.dialog.open(AddRouteFormComponent, {
+    let dialogRef=this.dialog.open(AddRouteFormComponent, {
       height: '520px',
       disableClose: true,
       width: '600px',
@@ -83,6 +83,10 @@ export class RouteScreenComponent implements OnInit {
         rowData: row,
       },
     });
+      dialogRef.afterClosed().subscribe(() => {
+         this.getRoutes()
+      });
+
   }
    private getRoutes(){
         this.routeService.getAllRoutes().subscribe((route)=>{
