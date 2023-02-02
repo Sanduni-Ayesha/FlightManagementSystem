@@ -1,28 +1,15 @@
 package com.example.Backend.models;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-
 public class Flight {
-    @NotBlank(message = "ID cannot be empty")
-    @Min(value = 0, message = "ID should be an integer greater than 0")
     private int id;
-    @NotBlank(message = "Departure Airport cannot be empty")
-    @Pattern(regexp="^[A-Za-z ]*$",message = "Invalid Input")
     private String departureAirport;
-    @NotBlank(message = "Arrival Airport cannot be empty")
-    @Pattern(regexp="^[A-Za-z ]*$",message = "Invalid Input")
+
     private String arrivalAirport;
-    @NotBlank(message = "Flight number cannot be empty")
-    @Pattern(regexp="/^[a-zA-Z]{2}[0-9]{4}$/",message = "Flight number should have 2 letters following 4 numbers")
+
     private String flightNo;
-    @NotBlank(message = "Departure time cannot be empty")
-    @Future(message = "Departure date should be from the future")
+
     private String departureTime;
-    @NotBlank(message = "Arrival time cannot be empty")
-    @Future(message = "Arrival date should be from the future")
+
     private String arrivalTime;
 
     

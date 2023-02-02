@@ -5,7 +5,7 @@ import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.compo
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import {Flight} from "../../../model/Flight";
-import {FlightService} from "../../../services/flight/flight.service";
+import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 
 const COLUMNS = [
   {
@@ -60,7 +60,7 @@ export class FlightScreenComponent implements OnInit {
   filterDepart = new FormControl('');
   filterArrive = new FormControl('');
 
-  constructor(private flightService: FlightService , public dialog: MatDialog, private http: HttpClient) {}
+  constructor(private flightService: FlightDataService , public dialog: MatDialog, private http: HttpClient) {}
   ngOnInit() {
     this.loadAirports();
     this.filterDepart.valueChanges

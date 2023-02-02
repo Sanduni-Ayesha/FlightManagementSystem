@@ -8,7 +8,7 @@ import { dateValidator } from '../../../shared/date.validator';
 import { futureDateValidator } from '../../../shared/futureDate.validator';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {FlightService} from "../../../services/flight/flight.service";
+import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {Flight} from "../../../model/Flight";
 
 @Component({
@@ -49,7 +49,7 @@ export class AddFlightFormComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(DIALOG_DATA) public data: any,
     private http: HttpClient,
-    private flightService: FlightService ,
+    private flightService: FlightDataService ,
   ) {}
   ngOnInit() {
     this.flightForm.patchValue(this.data.row)
