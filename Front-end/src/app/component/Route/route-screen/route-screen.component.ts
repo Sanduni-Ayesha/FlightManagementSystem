@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {HttpClient} from "@angular/common/http";
 import {Route} from "../../../model/Route";
-import {RouteService} from "../../../services/route/route.service";
+import {RouteService} from "../../../services/route-data/route.service";
 
 
 const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Duration/Hours']

@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {airportValidator} from "../../../shared/airport.validator";
-import {RouteService} from "../../../services/route/route.service";
+import {RouteService} from "../../../services/route-data/route.service";
 import {Route} from "../../../model/Route";
 
 @Component({
