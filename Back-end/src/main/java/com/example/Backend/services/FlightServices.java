@@ -19,6 +19,10 @@ public class FlightServices {
         return flightRepository.getFlightByID(id);
     }
 
+    public List<Flight> getFlightsFilteredByAirport(String departureAirport, String arrivalAirport){
+        return flightRepository.getFlightsFilteredByAirport(departureAirport, arrivalAirport);
+    }
+
     public boolean deleteFlight(int id){
         return flightRepository.deleteFlight(id);
     }

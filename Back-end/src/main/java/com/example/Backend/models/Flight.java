@@ -1,18 +1,22 @@
 package com.example.Backend.models;
 
+import java.time.LocalDateTime;
+
 public class Flight {
     private int id;
     private String departureAirport;
-
     private String arrivalAirport;
-
     private String flightNo;
-
     private String departureTime;
-
     private String arrivalTime;
+/*    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
+    private Boolean isDeleted = false;
+    private Boolean isUpdating = false;
 
-    
+
+    , Boolean isDeleted, Boolean isUpdating
+    */
     public Flight(int id, String departureAirport, String arrivalAirport, String flightNo, String departureDate, String arrivalDate) {
         this.id=id;
         this.departureAirport = departureAirport;
