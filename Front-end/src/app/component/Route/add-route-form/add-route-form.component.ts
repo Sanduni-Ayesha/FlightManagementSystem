@@ -34,6 +34,7 @@ export class AddRouteFormComponent {
   }
 
   onUpdate() {
+    const date = new Date();
     if (this.routeInfo.dirty) {
     if (confirm('Are you sure you want to update the data?') == true) {
       let routeInfoData = this.routeInfo.value
@@ -42,8 +43,13 @@ export class AddRouteFormComponent {
           routeInfoData.arrivalAirport,
           routeInfoData.departureAirport,
           routeInfoData.mileage,
-          routeInfoData.duration
+          routeInfoData.duration,
+          this.data.rowData.version,
+          this.data.rowData.createdTime,
+          date
+
       )
+      console.log(route)
      this.routeService.updateRoute(route).subscribe();
     }}
     this.dialog.closeAll();
