@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FlightRepository {
+public class FlightRepository implements FlightRepositoryInterface{
 
     private List<Flight> flights = new ArrayList<Flight>();
-
 
     public FlightRepository(){
         flights.add(new Flight(1, "Honiara International Airport", "Maputo Airport", "AB2001", "2023-01-28T12:12", "2023-01-30T12:12"));
@@ -21,11 +20,11 @@ public class FlightRepository {
         flights.add(new Flight(6, "Ivato Airport", "Sofia Airport", "KM8933", "2023-01-28T12:12", "2023-01-30T12:12"));
         flights.add(new Flight(7, "Honiara International Airport", "Ibiza Airport", "GT6775", "2023-01-28T12:12", "2023-01-30T12:12"));
     }
-
+    @Override
     public List<Flight> getFlights(){
         return flights;
     }
-
+    @Override
     public List<Flight> getFlightsFilteredByAirport(String departureAirport, String arrivalAirport){
         List<Flight> filteredFlights = new ArrayList<Flight>();
         List<Flight> singleAirportFilteredFLights = new ArrayList<>();
@@ -44,6 +43,7 @@ public class FlightRepository {
         }
         return filteredFlights;
     }
+    @Override
     public Flight getFlightByID(int id){
         for (Flight flight:flights) {
             if (flight.getId()==id){
@@ -52,16 +52,16 @@ public class FlightRepository {
         }
         return null;
     }
-
+    @Override
     public boolean deleteFlight(int id){
         return flights.removeIf(f->f.getId() == id);
     }
-
+    @Override
     public Flight addFlight(Flight flight){
         flights.add(flight);
         return flight;
     }
-
+    @Override
     public Flight updateFlight(Flight fl){
         Integer id = fl.getId();
         Flight flight = getFlightByID(id);
