@@ -1,8 +1,14 @@
 package com.example.Backend.models;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+@Entity
+@Table
 public class Flight {
+    @Id
     private int id;
     private String departureAirport;
     private String arrivalAirport;
