@@ -97,6 +97,11 @@ export class FlightScreenComponent implements OnInit {
   }
 
   filterByAirport(departure: string, arrive: string) {
+    if(departure=='' && arrive==''){
+      this.filterDepart.reset();
+      this.filterArrive.reset();
+      this.getFlightDetails();
+    }
     if (departure != '') {
       this.flightDetails = this.flightDetails.filter(
         (data: any) => data.departureAirport == departure
@@ -107,9 +112,6 @@ export class FlightScreenComponent implements OnInit {
         (data: any) => data.arrivalAirport == arrive
       );
     }
-    if (arrive == '' && departure == '') {
-      this.flightDetails = this.allFlightDetails;
-    }
   }
 
   getFlightDetails(){
@@ -119,6 +121,7 @@ export class FlightScreenComponent implements OnInit {
     })
   }
   removeFlight(id: number) {
+    this.getFlightDetails();
     if (confirm('Please confirm deleting')) {
       this.flightService.deleteFlight(id).subscribe(()=>this.getFlightDetails());
     }
@@ -139,7 +142,9 @@ export class FlightScreenComponent implements OnInit {
       },
     });
     addFlightForm.afterClosed().subscribe(()=>{
-      this.getFlightDetails()
+      this.getFlightDetails();
+      this.filterDepart.reset();
+      this.filterArrive.reset();
     }
     )
   }
