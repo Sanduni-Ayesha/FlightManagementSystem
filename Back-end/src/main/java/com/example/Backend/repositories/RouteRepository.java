@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class RouteRepository {
+public class RouteRepository{
     private List<Route> routes = new ArrayList<Route>();
 
     public RouteRepository() {
