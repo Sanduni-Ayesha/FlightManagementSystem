@@ -51,12 +51,6 @@ public class RouteService {
     }
 
     public ResponseEntity<Route> addRoute(Route route){
-        try{
-            this.routeRepository.addRoute(route);
-            return new ResponseEntity<>(route,HttpStatus.CREATED);
-        }
-        catch (Exception ex){
-            return new ResponseEntity<>(route,HttpStatus.BAD_REQUEST);
-        }
+       return ResponseEntity.ok(routeRepositoryInterface.save(route));
     }
 }
