@@ -49,7 +49,6 @@ export class AddRouteFormComponent {
           date
 
       )
-      console.log(route)
      this.routeService.updateRoute(route).subscribe();
     }}
     this.dialog.closeAll();
