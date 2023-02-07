@@ -7,6 +7,8 @@ import com.example.Backend.repositories.RouteRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +16,17 @@ import java.util.List;
 @Service
 public class RouteService {
     private RouteRepository routeRepository;
+    private JdbcTemplate routeDetails;
     private RouteRepositoryInterface routeRepositoryInterface;
-    public List<Route> getAllRoutes(){
-       return routeRepositoryInterface.findAll();
-    }
     @Autowired
-    public RouteService(RouteRepositoryInterface routeRepositoryInterface) {
+    public RouteService(RouteRepositoryInterface routeRepositoryInterface,JdbcTemplate routeDetails) {
         this.routeRepositoryInterface = routeRepositoryInterface;
+        this.routeDetails= routeDetails;
+    }
+    public List<Route> getAllRoutes(){
+        String query = "Select * from route";
+       List<Route> allRoutes=(this.routeDetails.query(query, BeanPropertyRowMapper.newInstance(Route.class)));
+       return allRoutes;
     }
     public ResponseEntity<HttpStatus> deleteRoute(int id){
         try {
