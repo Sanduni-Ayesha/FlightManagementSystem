@@ -3,7 +3,6 @@ package com.example.Backend.services;
 import com.example.Backend.exceptions.RouteNotFoundException;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.RouteRepository;
-import com.example.Backend.repositories.RouteRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +14,11 @@ import java.util.List;
 
 @Service
 public class RouteService {
-    private RouteRepository routeRepository;
+
     private JdbcTemplate routeDetails;
-    private RouteRepositoryInterface routeRepositoryInterface;
+    private RouteRepository routeRepositoryInterface;
     @Autowired
-    public RouteService(RouteRepositoryInterface routeRepositoryInterface,JdbcTemplate routeDetails) {
+    public RouteService(RouteRepository routeRepositoryInterface, JdbcTemplate routeDetails) {
         this.routeRepositoryInterface = routeRepositoryInterface;
         this.routeDetails= routeDetails;
     }
