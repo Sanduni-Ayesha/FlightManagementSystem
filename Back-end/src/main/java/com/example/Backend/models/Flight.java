@@ -1,36 +1,51 @@
 package com.example.Backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
 @Entity
-@Table
+@Table(name = "flights_table")
 public class Flight {
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name="departure_airport", length=3, nullable = false)
     private String departureAirport;
+    @Column(name="arrival_airport", length=3,nullable = false)
     private String arrivalAirport;
+    @Column(name="flight_no", length=6,nullable = false)
     private String flightNo;
-    private String departureTime;
-    private String arrivalTime;
-/*    private LocalDateTime departureTime;
+    @Column(name="departure_time",nullable = false)
+    private LocalDateTime departureTime;
+    @Column(name="arrival_time", nullable = false)
     private LocalDateTime arrivalTime;
-    private Boolean isDeleted = false;
-    private Boolean isUpdating = false;
+    @Column(name="created_time", nullable = false)
+    private LocalDateTime createdTime;
+    @Column(name="last_updated_time", nullable = false)
+    private LocalDateTime lastUpdatedTime;
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.active;
+    @Version
+    private int version =1;
 
+    public Flight(){
 
-    , Boolean isDeleted, Boolean isUpdating
-    */
-    public Flight(int id, String departureAirport, String arrivalAirport, String flightNo, String departureDate, String arrivalDate) {
+    }
+
+    /*public Flight(int id, String departureAirport, String arrivalAirport, String flightNo, String departureDate, String arrivalDate) {
         this.id=id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.flightNo = flightNo;
         this.departureTime = departureDate;
         this.arrivalTime = arrivalDate;
+    }*/
+
+    public enum Status{
+        active,
+        inactive
     }
+
     public int getId() {
         return id;
     }
@@ -63,19 +78,50 @@ public class Flight {
         this.flightNo = flightNo;
     }
 
-    public String getDepartureTime() {
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureDate) {
-        this.departureTime = departureDate;
-    }
-
-    public String getArrivalTime() {
+    public LocalDateTime getArrivalTime() {
         return arrivalTime;
     }
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
+    }
 
-    public void setArrivalTime(String arrivalTime) {
+    public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDateTime getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(LocalDateTime lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

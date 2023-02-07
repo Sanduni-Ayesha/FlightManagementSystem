@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class FlightController {
     private FlightServices flightServices;
     @Validated
     @GetMapping("/getFlights")
-    public ResponseEntity<List<Flight>> getAllFlights(){
+    public ResponseEntity<Iterable<Flight>> getAllFlights(){
         return new ResponseEntity<>(flightServices.getFlights(), HttpStatus.OK);
     }
 
@@ -34,12 +35,14 @@ public class FlightController {
     }
 
     @DeleteMapping("/deleteFlight/{id}")
-    public ResponseEntity<Boolean> deleteFlightByID(@PathVariable("id") int id){
-        return new ResponseEntity<>(flightServices.deleteFlight(id), HttpStatus.OK);
+    public void deleteFlightByID(@PathVariable("id") int id){
+        flightServices.deleteFlight(id);
     }
 
     @PostMapping("/addFlight")
     public ResponseEntity<Flight> addFlight(@RequestBody Flight flight){
+        flight.setCreatedTime(LocalDateTime.now());
+        flight.setLastUpdatedTime(LocalDateTime.now());
         return new ResponseEntity<>(flightServices.addFlight(flight), HttpStatus.OK);
     }
 
