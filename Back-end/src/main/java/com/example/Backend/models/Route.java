@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "routes")
+@Table(name = "route")
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
