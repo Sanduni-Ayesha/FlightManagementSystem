@@ -16,8 +16,15 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class FlightController {
 
-    @Autowired
+//    @Autowired
     private FlightServices flightServices;
+
+
+    @Autowired
+    public FlightController(FlightServices flightServices) {
+        this.flightServices = flightServices;
+    }
+
     @Validated
     @GetMapping("/getFlights")
     public ResponseEntity<Iterable<Flight>> getAllFlights(){

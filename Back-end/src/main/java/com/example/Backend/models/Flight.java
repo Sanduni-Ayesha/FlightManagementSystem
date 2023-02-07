@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "flights_table")
+@Table(name = "flights")
 public class Flight {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -29,17 +29,7 @@ public class Flight {
     private int version =1;
 
     public Flight(){
-
     }
-
-    /*public Flight(int id, String departureAirport, String arrivalAirport, String flightNo, String departureDate, String arrivalDate) {
-        this.id=id;
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
-        this.flightNo = flightNo;
-        this.departureTime = departureDate;
-        this.arrivalTime = arrivalDate;
-    }*/
 
     public enum Status{
         active,
