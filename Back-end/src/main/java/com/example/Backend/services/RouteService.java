@@ -16,10 +16,10 @@ import java.util.List;
 public class RouteService {
 
     private JdbcTemplate routeDetails;
-    private RouteRepository routeRepositoryInterface;
+    private RouteRepository routeRepository;
     @Autowired
     public RouteService(RouteRepository routeRepositoryInterface, JdbcTemplate routeDetails) {
-        this.routeRepositoryInterface = routeRepositoryInterface;
+        this.routeRepository = routeRepositoryInterface;
         this.routeDetails= routeDetails;
     }
     public List<Route> getAllRoutes(){
@@ -29,7 +29,7 @@ public class RouteService {
     }
     public ResponseEntity<HttpStatus> deleteRoute(int id){
         try {
-            this.routeRepositoryInterface.deleteById(id);
+            this.routeRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -37,7 +37,7 @@ public class RouteService {
     }
     public ResponseEntity<Route> updateRoute(Route route) throws RouteNotFoundException {
 
-        Route UpdatingRoute = routeRepositoryInterface.findById(route.getId())
+        Route UpdatingRoute = routeRepository.findById(route.getId())
                 .orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + route.getId()));
         UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
         UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
@@ -45,11 +45,11 @@ public class RouteService {
         UpdatingRoute.setDuration(route.getDuration());
         UpdatingRoute.setCreatedTime(route.getCreatedTime());
         UpdatingRoute.setLastUpdatedTime(route.getLastUpdatedTime());
-        Route updatedRoute = routeRepositoryInterface.save(UpdatingRoute);
+        Route updatedRoute = routeRepository.save(UpdatingRoute);
         return ResponseEntity.ok(updatedRoute);
     }
 
     public ResponseEntity<Route> addRoute(Route route){
-       return ResponseEntity.ok(routeRepositoryInterface.save(route));
+       return ResponseEntity.ok(routeRepository.save(route));
     }
 }
