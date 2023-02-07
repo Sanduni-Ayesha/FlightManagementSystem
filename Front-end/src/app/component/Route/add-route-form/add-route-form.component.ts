@@ -28,7 +28,20 @@ export class AddRouteFormComponent {
   }
   onSubmit() {
     if (confirm('Are you sure you want to add the new route?') == true){
-      this.routeService.addRoute(this.routeInfo.value).subscribe();
+      let routeInfoData = this.routeInfo.value
+      const date = new Date();
+      let route = new Route(
+          routeInfoData.id,
+          routeInfoData.arrivalAirport,
+          routeInfoData.departureAirport,
+          routeInfoData.mileage,
+          routeInfoData.duration,
+          this.data.rowData.version,
+          date,
+          date
+
+      )
+      this.routeService.addRoute(route).subscribe();
     }
     this.dialog.closeAll();
   }
