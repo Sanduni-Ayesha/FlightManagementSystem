@@ -25,8 +25,8 @@ public class Route {
     private Date createdTime;
     @Column(name = "last_updated_time", nullable = false)
     private Date lastUpdatedTime;
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Route.Status status = Route.Status.active;
     public Route(int id, String arrivalAirport, String departureAirport, double mileage, double duration) {
         this.id = id;
         this.arrivalAirport = arrivalAirport;
@@ -38,7 +38,10 @@ public class Route {
     public Route() {
 
     }
-
+    public enum Status{
+        active,
+        inactive
+    }
 
     public int getId() {
         return id;
@@ -104,11 +107,11 @@ public class Route {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }
