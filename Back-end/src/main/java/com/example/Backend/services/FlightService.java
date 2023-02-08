@@ -57,8 +57,8 @@ public class FlightService {
     }
 
     public Flight addFlight(Flight flight) {
-        String departure = flight.getDepartureAirport();
-        airportRepository.findByAirport_name(departure);
+//        String departure = flight.getDepartureAirport();
+//        airportRepository.findByAirport_name(departure);
         return flightRepository.save(flight);
      }
 
