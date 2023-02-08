@@ -137,7 +137,7 @@ export class FlightScreenComponent implements OnInit {
     let addFlightForm = this.dialog.open(AddFlightFormComponent, {
       disableClose: true,
       data: {
-        ds: this.flightDetails,
+        flightData: this.flightDetails,
         row: rowData,
       },
     });

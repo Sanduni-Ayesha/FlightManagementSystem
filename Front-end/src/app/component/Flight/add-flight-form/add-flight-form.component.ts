@@ -87,10 +87,30 @@ export class AddFlightFormComponent implements OnInit {
 
   onSubmit() {
     let f = this.flightForm.value
-    let lastID  = this.data.ds[(this.data.ds.length-1)].id;
+    let lastID  = this.data.flightData[(this.data.flightData.length-1)].id;
     let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
-    this.dialog.closeAll();
-    this.flightService.addFlight(newFlight).subscribe();
+    if (this.checkExistence(newFlight)){
+        alert("The flight is already used in the given time!\n Please use a different time.")
+    }else {
+        this.flightService.addFlight(newFlight).subscribe();
+        this.dialog.closeAll();
+    }
+  }
+
+  checkExistence(flight: Flight):boolean{
+      let flightNo = flight.flightNo;
+      let departureTime = new Date(flight.departureTime);
+      let arrivalTime = new Date(flight.arrivalTime);
+
+      for (const flightData of this.data.flightData) {
+          let departure = new Date(flightData.departureTime);
+          let arrival = new Date(flightData.arrivalTime);
+
+          if (flightNo==flightData.flightNo && (departure.toString() == departureTime.toString() || arrival.toString()==arrivalTime.toString())){
+              return true;
+          }
+      }
+      return false;
   }
 
   close(dirty: boolean) {
