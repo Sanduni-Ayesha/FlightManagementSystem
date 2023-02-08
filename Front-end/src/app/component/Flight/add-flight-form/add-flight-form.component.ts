@@ -97,6 +97,7 @@ export class AddFlightFormComponent implements OnInit {
   }
 
   checkFlightExistence(flight: Flight):boolean{
+      let id = flight.id;
       let flightNo = flight.flightNo;
       let departureTime = new Date(flight.departureTime);
       let arrivalTime = new Date(flight.arrivalTime);
@@ -105,7 +106,7 @@ export class AddFlightFormComponent implements OnInit {
           let departure = new Date(flightData.departureTime);
           let arrival = new Date(flightData.arrivalTime);
 
-          if (flightNo==flightData.flightNo && (departure.toString() == departureTime.toString() || arrival.toString()==arrivalTime.toString())){
+          if (flightData.id!=id && flightNo==flightData.flightNo && (departure.toString() == departureTime.toString() || arrival.toString()==arrivalTime.toString())){
               return true;
           }
       }
@@ -124,14 +125,18 @@ export class AddFlightFormComponent implements OnInit {
   }
 
   update(dirty: boolean) {
-    const updatedId = this.data.row.id || null;
+    const updatedId = this.data.row.id;
     if (dirty) {
         if (updatedId != null) {
           let f = this.flightForm.value;
           let newFlight = new Flight(updatedId, <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
-          this.flightService.updateFlight(newFlight).subscribe();
+          if (this.checkFlightExistence(newFlight)){
+              alert("The flight is already used in the given time!\n Please use a different time.")
+          }else{
+              this.flightService.updateFlight(newFlight).subscribe();
+              this.dialog.closeAll();
+          }
         }
     }
-    this.dialog.closeAll();
   }
 }
