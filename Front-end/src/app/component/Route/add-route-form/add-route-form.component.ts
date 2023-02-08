@@ -57,8 +57,8 @@ export class AddRouteFormComponent implements OnInit{
       const date = new Date();
       let route = new Route(
           routeInfoData.id,
-          routeInfoData.arrivalAirport,
-          routeInfoData.departureAirport,
+          this.getAirportCode(routeInfoData.arrivalAirport),
+          this.getAirportCode(routeInfoData.departureAirport),
           routeInfoData.mileage,
           routeInfoData.duration,
           this.data.rowData.version,
