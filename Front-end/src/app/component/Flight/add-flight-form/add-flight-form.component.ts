@@ -17,10 +17,9 @@ import {Flight} from "../../../model/Flight";
   styleUrls: ['../../../styles/form-overlay.scss'],
 })
 export class AddFlightFormComponent implements OnInit {
-  public airports: string[] = [];
+  public airports: string[] = this.data.airportNames;
   filteredDepartures: string[] | undefined;
   filteredArrivals: string[] | undefined;
-
   flightForm = new FormGroup(
       {
         id: new FormControl(''),
@@ -53,7 +52,7 @@ export class AddFlightFormComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.flightForm.patchValue(this.data.row)
-    this.loadAirports();
+    // this.loadAirports();
     this.flightForm.controls['departureAirport'].valueChanges
       .pipe(map((value) => this.filterAirports(value || '')))
       .subscribe((departures) => {
@@ -67,13 +66,13 @@ export class AddFlightFormComponent implements OnInit {
       });
   }
 
-  loadAirports() {
-    this.http
-      .get('/assets/airports.csv', { responseType: 'text' })
-      .subscribe((airportList) => {
-        this.airports = airportList.split('\n');
-      });
-  }
+  // loadAirports() {
+  //   this.http
+  //     .get('/assets/airports.csv', { responseType: 'text' })
+  //     .subscribe((airportList) => {
+  //       this.airports = airportList.split('\n');
+  //     });
+  // }
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
     if (this.airports) {

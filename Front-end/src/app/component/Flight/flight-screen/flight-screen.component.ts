@@ -89,13 +89,13 @@ export class FlightScreenComponent implements OnInit {
       }
     })
   }
-  loadAirports() {
-    this.http
-      .get('/assets/airports.csv', { responseType: 'text' })
-      .subscribe((airportList) => {
-        this.airports = airportList.split('\n');
-      });
-  }
+  // loadAirports() {
+  //   this.http
+  //     .get('/assets/airports.csv', { responseType: 'text' })
+  //     .subscribe((airportList) => {
+  //       this.airports = airportList.split('\n');
+  //     });
+  // }
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
     if (this.airports) {
