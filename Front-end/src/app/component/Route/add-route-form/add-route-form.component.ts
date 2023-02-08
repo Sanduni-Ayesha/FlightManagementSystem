@@ -5,14 +5,20 @@ import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {airportValidator} from "../../../shared/airport.validator";
 import {RouteService} from "../../../services/route-data/route.service";
 import {Route} from "../../../model/Route";
+import {Airport} from "../../../model/Airport";
+import {AirportService} from "../../../services/airport-data/airport.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-route-form',
   templateUrl: './add-route-form.component.html',
   styleUrls: ['../../../styles/form-overlay.scss']
 })
-export class AddRouteFormComponent {
+export class AddRouteFormComponent implements OnInit{
 
+  airports: String[] = [];
+  filteredDepartures: String[] | undefined;
+  filteredArrivals: String[] | undefined;
   routeInfo = new FormGroup({
       id: new FormControl(this.data.rowData.id),
       departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -24,7 +30,23 @@ export class AddRouteFormComponent {
     }
   )
 
-  constructor(private routeService: RouteService , private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
+
+  constructor(private airportService:AirportService,private routeService: RouteService , private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
+  }
+
+  ngOnInit(): void {
+    this.airports=this.data.airports;
+    this.routeInfo.controls['departureAirport'].valueChanges
+        .pipe(map((value) => this.filterAirports(value || '')))
+        .subscribe((departures) => {
+          this.filteredDepartures = departures;
+        });
+
+    this.routeInfo.controls['arrivalAirport'].valueChanges
+        .pipe(map((value) => this.filterAirports(value || '')))
+        .subscribe((arrivals) => {
+          this.filteredArrivals = arrivals;
+        });
   }
   onSubmit() {
     if (confirm('Are you sure you want to add the new route?') == true){
@@ -48,6 +70,7 @@ export class AddRouteFormComponent {
 
   onUpdate() {
     const date = new Date();
+    let data1:Date = this.data;
     if (this.routeInfo.dirty) {
     if (confirm('Are you sure you want to update the data?') == true) {
       let routeInfoData = this.routeInfo.value
@@ -108,6 +131,21 @@ export class AddRouteFormComponent {
 
   get addedDuration() {
     return this.routeInfo.get('duration')
+  }
+  private getAllAirports(){
+    this.airportService.getAllAirports().subscribe((airport)=>{
+      this.airports=airport;
+    })
+  }
+  private filterAirports(value: String): String[] {
+    const filterValue = value.toLowerCase();
+    if (this.airports) {
+      return this.airports.filter((option) =>
+          option.toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
   }
 
 }
