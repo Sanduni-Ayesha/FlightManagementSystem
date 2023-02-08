@@ -16,12 +16,8 @@ public class AirportService {
         this.airportRepository = airportRepository;
     }
 
-    public List<String> getAllAirports(){
+    public List<Airport> getAllAirports(){
         List<Airport> airports = airportRepository.findAll();
-        List<String> airportNames= new ArrayList<>();
-        for(Airport airport :airports){
-            airportNames.add(airport.getAirport_name());
-        }
-        return airportNames;
+        return airports;
     }
 }

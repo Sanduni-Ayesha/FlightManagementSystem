@@ -132,11 +132,11 @@ export class AddRouteFormComponent implements OnInit{
   get addedDuration() {
     return this.routeInfo.get('duration')
   }
-  private getAllAirports(){
-    this.airportService.getAllAirports().subscribe((airport)=>{
-      this.airports=airport;
-    })
-  }
+  // private getAllAirports(){
+  //   this.airportService.getAllAirports().subscribe((airport)=>{
+  //     this.airports=airport;
+  //   })
+  // }
   private filterAirports(value: String): String[] {
     const filterValue = value.toLowerCase();
     if (this.airports) {

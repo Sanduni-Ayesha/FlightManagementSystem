@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 import {Route} from "../../../model/Route";
 import {RouteService} from "../../../services/route-data/route.service";
 import {AirportService} from "../../../services/airport-data/airport.service";
+import {Airport} from "../../../model/Airport";
 
 
 const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Duration/Hours']
@@ -26,6 +27,8 @@ export class RouteScreenComponent implements OnInit {
   errorMessage: string | undefined;
  public airports: String[] =[]
  public routeDetails:Route[] = [];
+ public airportDetails:Airport[]=[]
+
   constructor(private airportService:AirportService,private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
@@ -146,7 +149,7 @@ export class RouteScreenComponent implements OnInit {
   // }
     private getAllAirports(){
         this.airportService.getAllAirports().subscribe((airport)=>{
-            this.airports=airport;
+            this.airportDetails=airport;
         })
     }
 
