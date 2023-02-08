@@ -16,7 +16,8 @@ import {map} from "rxjs/operators";
 })
 export class AddRouteFormComponent implements OnInit{
 
-  airports: String[] = [];
+  airportsNames: String[] = [];
+  airport:Airport[]=[];
   filteredDepartures: String[] | undefined;
   filteredArrivals: String[] | undefined;
   routeInfo = new FormGroup({
@@ -35,7 +36,9 @@ export class AddRouteFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.airports=this.data.airports;
+    this.airportsNames=this.data.airportsNames;
+    this.airport=this.data.airportsDetails;
+    console.log(this.airportsNames)
     this.routeInfo.controls['departureAirport'].valueChanges
         .pipe(map((value) => this.filterAirports(value || '')))
         .subscribe((departures) => {
@@ -76,8 +79,8 @@ export class AddRouteFormComponent implements OnInit{
       let routeInfoData = this.routeInfo.value
       let route = new Route(
           routeInfoData.id,
-          routeInfoData.arrivalAirport,
-          routeInfoData.departureAirport,
+          this.getAirportCode(routeInfoData.arrivalAirport),
+          this.getAirportCode(routeInfoData.departureAirport),
           routeInfoData.mileage,
           routeInfoData.duration,
           this.data.rowData.version,
@@ -132,20 +135,24 @@ export class AddRouteFormComponent implements OnInit{
   get addedDuration() {
     return this.routeInfo.get('duration')
   }
-  // private getAllAirports(){
-  //   this.airportService.getAllAirports().subscribe((airport)=>{
-  //     this.airports=airport;
-  //   })
-  // }
+
   private filterAirports(value: String): String[] {
     const filterValue = value.toLowerCase();
-    if (this.airports) {
-      return this.airports.filter((option) =>
+    if (this.airportsNames) {
+      return this.airportsNames.filter((option) =>
           option.toLowerCase().includes(filterValue)
       );
     } else {
       return [];
     }
+  }
+  private getAirportCode(airportName:String):any{
+    for(let index = 0;index < this.airport.length;index++){
+      if(this.airport[index].airport_name == airportName){
+        return this.airport[index].airport_code;
+      }
+    }
+
   }
 
 }

@@ -25,14 +25,13 @@ export class RouteScreenComponent implements OnInit {
   filteredArrivalAirport: String[] | undefined;
   filteredDepartureAirport: String[] | undefined;
   errorMessage: string | undefined;
- public airports: String[] =[]
+ public airportsNames: String[] =[]
  public routeDetails:Route[] = [];
  public airportDetails:Airport[]=[]
 
   constructor(private airportService:AirportService,private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
-    //this.loadAirports()
     this.getAllAirports();
     this.arrivalControl.valueChanges.pipe(
       startWith(''),
@@ -52,8 +51,8 @@ export class RouteScreenComponent implements OnInit {
 
   private filterAirport(value: String): String[] {
     const filterValue = value.toLowerCase();
-    if (this.airports) {
-      return this.airports.filter((option) =>
+    if (this.airportsNames) {
+      return this.airportsNames.filter((option) =>
         option.toLowerCase().includes(filterValue)
       );
     } else {
@@ -89,7 +88,8 @@ export class RouteScreenComponent implements OnInit {
         ds: this.routeDetails,
         id: id,
         rowData: row,
-        airports:this.airports,
+        airportsNames:this.airportsNames,
+        airportsDetails:this.airportDetails,
       },
     });
       dialogRef.afterClosed().subscribe(() => {
@@ -140,17 +140,18 @@ export class RouteScreenComponent implements OnInit {
       this.getRoutes();
   }
 
-  // loadAirports() {
-  //   this.http
-  //     .get('/assets/airports.csv', { responseType: 'text' })
-  //     .subscribe((airportList) => {
-  //       this.airport = airportList.split('\n');
-  //     });
-  // }
     private getAllAirports(){
         this.airportService.getAllAirports().subscribe((airport)=>{
             this.airportDetails=airport;
+            this.getAllAirportNames();
         })
     }
+    private getAllAirportNames(){
+        this.airportDetails.forEach((airport)=>{
+            this.airportsNames.push(airport.airport_name);
+        });
+
+    }
+
 
 }
