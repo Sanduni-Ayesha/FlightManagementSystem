@@ -76,24 +76,38 @@ export class AddRouteFormComponent implements OnInit{
 
   onUpdate() {
     const date = new Date();
-    let data1:Date = this.data;
+    let routeInfoData = this.routeInfo.value
+    let route = new Route(
+        routeInfoData.id,
+        this.getAirportCode(routeInfoData.arrivalAirport),
+        this.getAirportCode(routeInfoData.departureAirport),
+        routeInfoData.mileage,
+        routeInfoData.duration,
+        this.data.rowData.version,
+        this.data.rowData.createdTime,
+        date
+    )
     if (this.routeInfo.dirty) {
-    if (confirm('Are you sure you want to update the data?') == true) {
-      let routeInfoData = this.routeInfo.value
-      let route = new Route(
-          routeInfoData.id,
-          this.getAirportCode(routeInfoData.arrivalAirport),
-          this.getAirportCode(routeInfoData.departureAirport),
-          routeInfoData.mileage,
-          routeInfoData.duration,
-          this.data.rowData.version,
-          this.data.rowData.createdTime,
-          date
+      if(this.data.rowData.departureAirport!=routeInfoData.departureAirport ||
+      this.data.rowData.arrivalAirport!=routeInfoData.arrivalAirport){
+        if(!this.isDuplicateRouteAvailable(routeInfoData.arrivalAirport,
+            routeInfoData.departureAirport)){
+          this.routeService.updateRoute(route).subscribe();
+          this.dialog.closeAll();
+        }
+        else{
+          confirm('The route is already available in system.')
+        }
+        }
+      else{
+        this.routeService.updateRoute(route).subscribe();
+        this.dialog.closeAll();
+      }
+     }
+    else{
+      this.dialog.closeAll();
+    }
 
-      )
-     this.routeService.updateRoute(route).subscribe();
-    }}
-    this.dialog.closeAll();
   }
 
   onCancel() {
