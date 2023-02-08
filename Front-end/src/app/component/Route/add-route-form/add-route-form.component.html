@@ -4,7 +4,19 @@
   <form [formGroup]="routeInfo">
     <div class="departAirport">
       <label for="departure-Airport">Departure Airport: </label>
-      <input id="departure-Airport" type="text" formControlName="departureAirport">
+      <input type="text"
+             placeholder="Pick Airport"
+             matInput
+             [formControl]="routeInfo.controls['departureAirport']"
+             [matAutocomplete]="departures"
+             id="departure-Airport"
+             formControlName="departureAirport"
+             #departure>
+      <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
+        <mat-option *ngFor="let departureAirport of filteredDepartures" [value]="departureAirport">
+          {{departureAirport}}
+        </mat-option>
+      </mat-autocomplete>
       <br>
       <div class="errorMsg">
         <small
@@ -20,7 +32,20 @@
     <br>
     <div class="arrivalAirport">
       <label for="arrival-Airport">Arrival Airport: </label>
-      <input id="arrival-Airport" type="text" formControlName="arrivalAirport">
+<!--      <input id="arrival-Airport" type="text" formControlName="arrivalAirport">-->
+      <input type="text"
+             placeholder="Pick Airport"
+             matInput
+             [formControl]="routeInfo.controls['arrivalAirport']"
+             [matAutocomplete]="arrivals"
+             id="arrival-Airport"
+             formControlName="arrivalAirport"
+             #arrive>
+      <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
+        <mat-option *ngFor="let arrivalAirport of filteredArrivals" [value]="arrivalAirport">
+          {{arrivalAirport}}
+        </mat-option>
+      </mat-autocomplete>
       <br>
       <div class="errorMsg">
         <small *ngIf="addedArrivalAirport && addedArrivalAirport.errors?.['required'] && addedArrivalAirport.touched">
