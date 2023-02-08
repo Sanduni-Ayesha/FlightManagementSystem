@@ -44,6 +44,12 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:6.0.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:6.0.4" />
           <element id="library" level="project" name="Maven: jakarta.annotation:jakarta.annotation-api:2.1.1" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-data-jdbc:3.0.2" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:3.0.2" />
+          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:5.0.1" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:6.0.4" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-jdbc:3.0.1" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-relational:3.0.1" />
           <element id="library" level="project" name="Maven: org.mariadb.jdbc:mariadb-java-client:3.1.2" />
           <element id="library" level="project" name="Maven: com.github.waffle:waffle-jna:3.2.0" />
           <element id="library" level="project" name="Maven: net.java.dev.jna:jna:5.12.1" />
@@ -55,7 +61,6 @@
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-jpa:3.0.1" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:3.0.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:6.0.4" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:6.0.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:6.0.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:6.0.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:6.0.4" />
@@ -66,8 +71,6 @@
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:3.0.2" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-aop:3.0.2" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.9.19" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:3.0.2" />
-          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:5.0.1" />
           <element id="library" level="project" name="Maven: org.hibernate.orm:hibernate-core:6.1.6.Final" />
           <element id="library" level="project" name="Maven: jakarta.transaction:jakarta.transaction-api:2.0.1" />
           <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:6.0.2.Final" />

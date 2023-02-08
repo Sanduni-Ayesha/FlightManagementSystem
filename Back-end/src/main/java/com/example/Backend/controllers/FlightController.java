@@ -1,6 +1,7 @@
 package com.example.Backend.controllers;
 
 import com.example.Backend.models.Flight;
+import com.example.Backend.repositories.FlightDao;
 import com.example.Backend.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +17,18 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class FlightController {
     private FlightService flightService;
+    private FlightDao<Flight> flightDao;
 
     @Autowired
-    public FlightController(FlightService flightService) {
+    public FlightController(FlightService flightService, FlightDao<Flight> flightDao) {
         this.flightService = flightService;
+        this.flightDao = flightDao;
     }
 
     @Validated
     @GetMapping("/getFlights")
     public ResponseEntity<List<Flight>> getAllFlights(){
-        return new ResponseEntity<>(flightService.getFlights(), HttpStatus.OK);
+        return new ResponseEntity<>(flightDao.getFlights(), HttpStatus.OK);
     }
 
     @PostMapping("/getFlightsFilteredByAirport")
