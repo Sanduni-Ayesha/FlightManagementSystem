@@ -107,13 +107,11 @@ export class AddFlightFormComponent implements OnInit {
   update(dirty: boolean) {
     const updatedId = this.data.row.id || null;
     if (dirty) {
-      if (confirm('Are you sure you want to update data?')) {
         if (updatedId != null) {
           let f = this.flightForm.value;
           let newFlight = new Flight(updatedId, <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
           this.flightService.updateFlight(newFlight).subscribe();
         }
-      }
     }
     this.dialog.closeAll();
   }
