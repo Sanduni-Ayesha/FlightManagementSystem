@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import {Flight} from "../../../model/Flight";
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
+import {AirportService} from "../../../services/airport-data/airport.service";
+import {Airport} from "../../../model/Airport";
 
 const COLUMNS = [
   {
@@ -51,18 +53,19 @@ const COLUMNS = [
 })
 export class FlightScreenComponent implements OnInit {
   public airports: string[] = [];
+  public airportDetails:Airport[]=[]
   public flightDetails: Flight[] = [];
   public allFlightDetails: Flight[] = [];
-  private newFlight: number = -1;
   columnsSchema: any = COLUMNS;
   filteredDepartures: string[] | undefined;
   filteredArrivals: string[] | undefined;
   filterDepart = new FormControl('');
   filterArrive = new FormControl('');
 
-  constructor(private flightService: FlightDataService , public dialog: MatDialog, private http: HttpClient) {}
+  constructor(private flightService: FlightDataService , public dialog: MatDialog, private http: HttpClient,private airportService:AirportService) {}
   ngOnInit() {
-    this.loadAirports();
+    // this.loadAirports();
+    this.getAllAirports();
     this.filterDepart.valueChanges
       .pipe(map((value) => this.filterAirports(value || '')))
       .subscribe((departures) => {
@@ -78,6 +81,14 @@ export class FlightScreenComponent implements OnInit {
     this.getFlightDetails();
   }
 
+  private getAllAirports(){
+    this.airportService.getAllAirports().subscribe((airports)=>{
+      this.airportDetails=airports;
+      for (const airport of airports) {
+        this.airports.push(airport.airport_name.toString());
+      }
+    })
+  }
   loadAirports() {
     this.http
       .get('/assets/airports.csv', { responseType: 'text' })
@@ -128,24 +139,27 @@ export class FlightScreenComponent implements OnInit {
   }
 
   openAddFlightForm(type: string, flight: Flight|null) {
-    let rowData: Flight |null;
-    if (type=='edit') {
+    let rowData: Flight | null;
+    if (type == 'edit') {
       rowData = flight;
     } else {
-      rowData = new Flight(-1,"","", "","","");
+      rowData = new Flight(-1, "", "", "", "", "");
     }
     let addFlightForm = this.dialog.open(AddFlightFormComponent, {
       disableClose: true,
       data: {
         flightData: this.flightDetails,
         row: rowData,
+        airportNames: this.airports
       },
     });
-    addFlightForm.afterClosed().subscribe(()=>{
-      this.getFlightDetails();
-      this.filterDepart.reset();
-      this.filterArrive.reset();
-    }
+    addFlightForm.afterClosed().subscribe(() => {
+          this.getFlightDetails();
+          this.filterDepart.reset();
+          this.filterArrive.reset();
+        }
     )
   }
+
+
 }
