@@ -9,7 +9,7 @@ import {Airport} from "../../model/Airport";
 export class AirportService {
   private baseUrl = "http://localhost:8080/airport";
   constructor(private http:HttpClient) { }
-  public getAllAirports():Observable<Airport[]>{
-    return this.http.get<Airport[]>(`${this.baseUrl}/get-airport`)
+  public getAllAirports():Observable<String[]>{
+    return this.http.get<String[]>(`${this.baseUrl}/get-airport`)
   }
 }
