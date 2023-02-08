@@ -52,23 +52,26 @@ export class AddRouteFormComponent implements OnInit{
         });
   }
   onSubmit() {
-    if (confirm('Are you sure you want to add the new route?') == true){
       let routeInfoData = this.routeInfo.value
-      const date = new Date();
-      let route = new Route(
-          routeInfoData.id,
-          this.getAirportCode(routeInfoData.arrivalAirport),
-          this.getAirportCode(routeInfoData.departureAirport),
-          routeInfoData.mileage,
-          routeInfoData.duration,
-          this.data.rowData.version,
-          date,
-          date
+      if(!this.isDuplicateRouteAvailable(routeInfoData.arrivalAirport,routeInfoData.departureAirport)){
+        const date = new Date();
+        let route = new Route(
+            routeInfoData.id,
+            this.getAirportCode(routeInfoData.arrivalAirport),
+            this.getAirportCode(routeInfoData.departureAirport),
+            routeInfoData.mileage,
+            routeInfoData.duration,
+            this.data.rowData.version,
+            date,
+            date
+        )
+        this.routeService.addRoute(route).subscribe();
+        this.dialog.closeAll();
+      }
+      else{
+        confirm('The route is already available in system.')
+      }
 
-      )
-      this.routeService.addRoute(route).subscribe();
-    }
-    this.dialog.closeAll();
   }
 
   onUpdate() {
@@ -152,6 +155,17 @@ export class AddRouteFormComponent implements OnInit{
         return this.airport[index].airport_code;
       }
     }
+
+  }
+  private isDuplicateRouteAvailable(arrivalAirport:String,departureAirport:String ):boolean{
+  let duplicateRoute = this.data.allRoutes.find((route:any)=>route.arrivalAirport==arrivalAirport
+                                  && route.departureAirport==departureAirport)
+  if(duplicateRoute != undefined){
+    return true;
+  }
+  else{
+    return false;
+  }
 
   }
 
