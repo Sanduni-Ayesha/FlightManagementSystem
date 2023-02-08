@@ -7,6 +7,7 @@ import { map, startWith } from 'rxjs/operators';
 import {HttpClient} from "@angular/common/http";
 import {Route} from "../../../model/Route";
 import {RouteService} from "../../../services/route-data/route.service";
+import {AirportService} from "../../../services/airport-data/airport.service";
 
 
 const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Duration/Hours']
@@ -20,16 +21,16 @@ export class RouteScreenComponent implements OnInit {
   routeTableHeading: any = TableHeading;
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
-  filteredArrivalAirport: string[] | undefined;
-  filteredDepartureAirport: string[] | undefined;
+  filteredArrivalAirport: String[] | undefined;
+  filteredDepartureAirport: String[] | undefined;
   errorMessage: string | undefined;
- public airport: string[] =[]
+ public airports: String[] =[]
  public routeDetails:Route[] = [];
-  constructor(private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
+  constructor(private airportService:AirportService,private routeService: RouteService , public dialog: MatDialog , private http:HttpClient) {}
 
   ngOnInit() {
-    this.loadAirports()
-
+    //this.loadAirports()
+    this.getAllAirports();
     this.arrivalControl.valueChanges.pipe(
       startWith(''),
       map((value) => this.filterAirport(value || '')))
@@ -46,10 +47,10 @@ export class RouteScreenComponent implements OnInit {
     this.getRoutes()
   }
 
-  private filterAirport(value: string): string[] {
+  private filterAirport(value: String): String[] {
     const filterValue = value.toLowerCase();
-    if (this.airport) {
-      return this.airport.filter((option) =>
+    if (this.airports) {
+      return this.airports.filter((option) =>
         option.toLowerCase().includes(filterValue)
       );
     } else {
@@ -85,6 +86,7 @@ export class RouteScreenComponent implements OnInit {
         ds: this.routeDetails,
         id: id,
         rowData: row,
+        airports:this.airports,
       },
     });
       dialogRef.afterClosed().subscribe(() => {
@@ -135,12 +137,17 @@ export class RouteScreenComponent implements OnInit {
       this.getRoutes();
   }
 
-  loadAirports() {
-    this.http
-      .get('/assets/airports.csv', { responseType: 'text' })
-      .subscribe((airportList) => {
-        this.airport = airportList.split('\n');
-      });
-  }
+  // loadAirports() {
+  //   this.http
+  //     .get('/assets/airports.csv', { responseType: 'text' })
+  //     .subscribe((airportList) => {
+  //       this.airport = airportList.split('\n');
+  //     });
+  // }
+    private getAllAirports(){
+        this.airportService.getAllAirports().subscribe((airport)=>{
+            this.airports=airport;
+        })
+    }
 
 }
