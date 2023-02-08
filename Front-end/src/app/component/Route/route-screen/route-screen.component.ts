@@ -90,6 +90,7 @@ export class RouteScreenComponent implements OnInit {
         rowData: row,
         airportsNames:this.airportsNames,
         airportsDetails:this.airportDetails,
+        allRoutes:this.routeDetails,
       },
     });
       dialogRef.afterClosed().subscribe(() => {
