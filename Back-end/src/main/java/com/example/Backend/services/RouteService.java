@@ -50,17 +50,10 @@ public class RouteService {
 
     }
     public ResponseEntity<Route> updateRoute(Route route){
-
         Route UpdatingRoute = routeRepository.findById(route.getId())
                 .orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + route.getId()));
-        for(Airport airport:getAirportCodesByAirportNames(route.getDepartureAirport(),route.getArrivalAirport())){
-            if(route.getArrivalAirport()==airport.getAirport_name()){
-                UpdatingRoute.setArrivalAirport(airport.getAirport_name());
-            }
-            if(route.getDepartureAirport() == airport.getAirport_name()){
-                UpdatingRoute.setArrivalAirport(airport.getAirport_name());
-            }
-        }
+        UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
+        UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
         UpdatingRoute.setMileage(route.getMileage());
         UpdatingRoute.setDuration(route.getDuration());
         UpdatingRoute.setCreatedTime(route.getCreatedTime());
@@ -70,7 +63,6 @@ public class RouteService {
     }
 
     public ResponseEntity<Route> addRoute(Route route){
-        route.setId(5);
         return ResponseEntity.ok(routeRepository.save(route));
     }
     public Route getRouteById(int id){
@@ -80,13 +72,5 @@ public class RouteService {
         Airport airport = airportRepository.findById(airportCode).orElse(null);
         return airport.getAirport_name();
     }
-
-    private List<Airport> getAirportCodesByAirportNames(String departureAirportName,String arrivalAirportName){
-        String query = "Select * from airport where airport_name = ? or airport_name = ? ";
-        List<Airport> airports=(this.airportDetails.query(query, BeanPropertyRowMapper.newInstance(Airport.class),departureAirportName,arrivalAirportName));
-        return airports;
-    }
-
-
 
 }
