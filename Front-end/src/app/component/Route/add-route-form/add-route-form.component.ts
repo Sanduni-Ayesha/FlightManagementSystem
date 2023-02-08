@@ -38,7 +38,6 @@ export class AddRouteFormComponent implements OnInit{
   ngOnInit(): void {
     this.airportsNames=this.data.airportsNames;
     this.airport=this.data.airportsDetails;
-    console.log(this.airportsNames)
     this.routeInfo.controls['departureAirport'].valueChanges
         .pipe(map((value) => this.filterAirports(value || '')))
         .subscribe((departures) => {
