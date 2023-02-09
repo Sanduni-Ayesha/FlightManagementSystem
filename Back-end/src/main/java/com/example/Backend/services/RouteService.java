@@ -60,9 +60,5 @@ public class RouteService {
     public Route getRouteById(int id){
        return routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + id));
     }
-    private String getAirportNameByAirportCode(String airportCode){
-        Airport airport = airportRepository.findById(airportCode).orElse(null);
-        return airport.getAirport_name();
-    }
 
 }
