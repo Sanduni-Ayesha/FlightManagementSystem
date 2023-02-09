@@ -6,7 +6,6 @@ import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { airportValidator } from '../../../shared/airport.validator';
 import { dateValidator } from '../../../shared/date.validator';
 import { futureDateValidator } from '../../../shared/futureDate.validator';
-import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {Flight} from "../../../model/Flight";
@@ -47,18 +46,15 @@ export class AddFlightFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     @Inject(DIALOG_DATA) public data: any,
-    private http: HttpClient,
     private flightService: FlightDataService ,
   ) {}
   ngOnInit() {
     this.flightForm.patchValue(this.data.row)
-    // this.loadAirports();
     this.flightForm.controls['departureAirport'].valueChanges
       .pipe(map((value) => this.filterAirports(value || '')))
       .subscribe((departures) => {
         this.filteredDepartures = departures;
       });
-
     this.flightForm.controls['arrivalAirport'].valueChanges
       .pipe(map((value) => this.filterAirports(value || '')))
       .subscribe((arrivals) => {
@@ -66,13 +62,6 @@ export class AddFlightFormComponent implements OnInit {
       });
   }
 
-  // loadAirports() {
-  //   this.http
-  //     .get('/assets/airports.csv', { responseType: 'text' })
-  //     .subscribe((airportList) => {
-  //       this.airports = airportList.split('\n');
-  //     });
-  // }
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
     if (this.airports) {
@@ -88,7 +77,6 @@ export class AddFlightFormComponent implements OnInit {
     let f = this.flightForm.value
     let lastID  = this.data.flightData[(this.data.flightData.length-1)].id;
     // TODO find code from ame of airport
-    // this.data.airports.find(airport=> airport.)
     let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
     if (this.checkFlightExistence(newFlight)){
         alert("The flight is already used in the given time!\n Please use a different time.")

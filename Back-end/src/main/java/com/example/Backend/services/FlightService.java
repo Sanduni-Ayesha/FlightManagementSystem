@@ -44,12 +44,6 @@ public class FlightService {
         return flightRepository.findById(id).orElse(null);
     }
 
-    public List<Flight> getFlightsFilteredByAirport(String departureAirport, String arrivalAirport) {
-        //return flightRepository.getFlightsFilteredByAirport(departureAirport, arrivalAirport);
-        //TODO
-        return new ArrayList<Flight>();
-    }
-
     public void deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         flight.setStatus(Flight.Status.inactive);
@@ -57,8 +51,6 @@ public class FlightService {
     }
 
     public Flight addFlight(Flight flight) {
-//        String departure = flight.getDepartureAirport();
-//        airportRepository.findByAirport_name(departure);
         return flightRepository.save(flight);
      }
 

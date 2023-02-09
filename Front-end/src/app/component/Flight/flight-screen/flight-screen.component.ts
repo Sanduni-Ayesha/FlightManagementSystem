@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { AddFlightFormComponent } from '../add-flight-form/add-flight-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
 import {Flight} from "../../../model/Flight";
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {AirportService} from "../../../services/airport-data/airport.service";
@@ -62,9 +61,13 @@ export class FlightScreenComponent implements OnInit {
   filterDepart = new FormControl('');
   filterArrive = new FormControl('');
 
-  constructor(private flightService: FlightDataService , public dialog: MatDialog, private http: HttpClient,private airportService:AirportService) {}
+  constructor(
+      private flightService: FlightDataService ,
+      public dialog: MatDialog,
+      private airportService:AirportService
+  ) {}
+
   ngOnInit() {
-    // this.loadAirports();
     this.getAllAirports();
     this.filterDepart.valueChanges
       .pipe(map((value) => this.filterAirports(value || '')))
@@ -77,7 +80,6 @@ export class FlightScreenComponent implements OnInit {
       .subscribe((arrivals) => {
         this.filteredArrivals = arrivals;
       });
-
     this.getFlightDetails();
   }
 
@@ -89,13 +91,7 @@ export class FlightScreenComponent implements OnInit {
       }
     })
   }
-  // loadAirports() {
-  //   this.http
-  //     .get('/assets/airports.csv', { responseType: 'text' })
-  //     .subscribe((airportList) => {
-  //       this.airports = airportList.split('\n');
-  //     });
-  // }
+
   private filterAirports(value: string): string[] {
     const filterValue = value.toLowerCase();
     if (this.airports) {
@@ -161,6 +157,4 @@ export class FlightScreenComponent implements OnInit {
         }
     )
   }
-
-
 }
