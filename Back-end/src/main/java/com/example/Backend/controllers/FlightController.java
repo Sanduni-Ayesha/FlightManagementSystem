@@ -1,7 +1,7 @@
 package com.example.Backend.controllers;
 
 import com.example.Backend.models.Flight;
-import com.example.Backend.repositories.FlightDao;
+import com.example.Backend.dao.FlightDao;
 import com.example.Backend.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

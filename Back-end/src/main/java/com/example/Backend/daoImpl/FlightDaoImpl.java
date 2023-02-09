@@ -1,12 +1,11 @@
-package com.example.Backend.services;
+package com.example.Backend.daoImpl;
 
 import com.example.Backend.models.Flight;
-import com.example.Backend.repositories.FlightDao;
+import com.example.Backend.dao.FlightDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

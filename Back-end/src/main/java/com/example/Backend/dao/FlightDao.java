@@ -1,4 +1,4 @@
-package com.example.Backend.repositories;
+package com.example.Backend.dao;
 
 import com.example.Backend.models.Flight;
 import org.springframework.stereotype.Repository;
