@@ -123,6 +123,10 @@ export class FlightScreenComponent implements OnInit {
 
   getFlightDetails(){
     this.flightService.getAllFlights().subscribe(flights =>{
+      for (const flight of flights) {
+
+        //flight.departureAirport = this.airportDetails.find(airport =>{airport.airport_code==flight.departureAirport}).airport_name
+      }
       this.flightDetails = flights
       this.allFlightDetails = flights
     })
