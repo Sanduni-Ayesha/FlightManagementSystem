@@ -153,6 +153,14 @@ export class RouteScreenComponent implements OnInit {
         });
 
     }
+    public getAirportNameByAirportCode(airportCode:String):any{
+     for(let airport of this.airportDetails){
+         if (airport.airport_code==airportCode){
+             return airport.airport_name;
+         }
+
+     }
+    }
 
 
 }
