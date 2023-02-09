@@ -72,8 +72,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let route of routeDetails">
-                <td>{{route.departureAirport}}</td>
-                <td>{{route.arrivalAirport}}</td>
+                <td>{{getAirportNameByAirportCode(route.departureAirport)}}</td>
+                <td>{{getAirportNameByAirportCode(route.arrivalAirport)}}</td>
                 <td>{{route.mileage}}</td>
                 <td>{{route.duration}}</td>
                 <td>
