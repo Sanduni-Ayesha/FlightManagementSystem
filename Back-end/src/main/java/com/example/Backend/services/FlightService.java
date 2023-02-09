@@ -1,43 +1,19 @@
 package com.example.Backend.services;
 
-import com.example.Backend.models.Airport;
 import com.example.Backend.models.Flight;
-import com.example.Backend.repositories.AirportRepository;
 import com.example.Backend.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class FlightService {
 
     private FlightRepository flightRepository;
-    private AirportRepository airportRepository;
     @Autowired
-    public FlightService(FlightRepository flightRepository, AirportRepository airportRepository) {
+    public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
-        this.airportRepository = airportRepository;
-    }
-
-    public List<Flight> getFlights() {
-        Iterable<Flight> allFlights = flightRepository.findAll();
-        List<Flight> activeFlights = new ArrayList<>();
-        for (Flight fl: allFlights) {
-            if (fl.getStatus()== Flight.Status.active){
-                fl.setDepartureAirport(getAirportName(fl.getDepartureAirport()));
-                fl.setArrivalAirport(getAirportName(fl.getArrivalAirport()));
-                activeFlights.add(fl);
-            }
-        }
-        return activeFlights;
-    }
-
-    public String getAirportName(String code){
-        Airport airport =  airportRepository.findById(code).orElse(null);
-        return airport.getAirport_name();
     }
 
     public Flight getFlightByID(int id) {
