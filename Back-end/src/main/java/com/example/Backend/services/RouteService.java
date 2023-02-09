@@ -19,7 +19,6 @@ import java.util.List;
 public class RouteService {
     private AirportRepository airportRepository;
     private JdbcTemplate routeDetails;
-    private JdbcTemplate airportDetails;
     private RouteRepository routeRepository;
     @Autowired
     public RouteService(RouteRepository routeRepositoryInterface, JdbcTemplate routeDetails,AirportRepository airportRepository) {
