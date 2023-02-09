@@ -31,11 +31,6 @@ public class FlightController {
         return new ResponseEntity<>(flightDao.getFlights(), HttpStatus.OK);
     }
 
-    @PostMapping("/getFlightsFilteredByAirport")
-    public ResponseEntity<List<Flight>> getFlightsFilteredByAirport(@RequestBody String departureAirport, String arrivalAirport){
-        return new ResponseEntity<>(flightService.getFlightsFilteredByAirport(departureAirport,arrivalAirport), HttpStatus.OK);
-    }
-
     @GetMapping("/getFlights/{id}")
     public ResponseEntity<Flight> getFlightByID(@PathVariable("id") int id){
         return new ResponseEntity<>(flightService.getFlightByID(id-1), HttpStatus.OK);
