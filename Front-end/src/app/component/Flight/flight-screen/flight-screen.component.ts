@@ -150,7 +150,8 @@ export class FlightScreenComponent implements OnInit {
       data: {
         flightData: this.flightDetails,
         row: rowData,
-        airportNames: this.airports
+        airportNames: this.airports,
+        airports: this.airportDetails
       },
     });
     addFlightForm.afterClosed().subscribe(() => {
