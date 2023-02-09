@@ -28,17 +28,9 @@ public class RouteService {
         this.airportRepository=airportRepository;
     }
     public List<Route> getAllRoutes(){
-        String query = "Select * from route";
+        String query = "Select * from route where status='active'";
        List<Route> allRoutes=(this.routeDetails.query(query, BeanPropertyRowMapper.newInstance(Route.class)));
-       List<Route> activateRoute = new ArrayList<>();
-       for(Route route:allRoutes){
-           if(route.getStatus() == Route.Status.active){
-               route.setArrivalAirport(getAirportNameByAirportCode(route.getArrivalAirport()));
-               route.setDepartureAirport(getAirportNameByAirportCode(route.getDepartureAirport()));
-               activateRoute.add(route);
-           }
-       }
-       return activateRoute;
+       return allRoutes;
     }
 
 
