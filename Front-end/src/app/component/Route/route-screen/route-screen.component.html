@@ -12,7 +12,7 @@
                            [formControl]="departureControl"
                            [matAutocomplete]="auto1" #departure_Airport>
                     <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
-                        <mat-option *ngFor="let departureAirport of airportDetails" [value]="departureAirport.airport_name">
+                        <mat-option *ngFor="let departureAirport of filteredDepartureAirport" [value]="departureAirport.airport_code">
                             {{departureAirport.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -29,7 +29,7 @@
                            [formControl]="arrivalControl"
                            [matAutocomplete]="auto2" #arrival_Airport>
                     <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
-                        <mat-option *ngFor="let arrivalAirport of airportDetails" [value]="arrivalAirport.airport_name">
+                        <mat-option *ngFor="let arrivalAirport of filteredArrivalAirport" [value]="arrivalAirport.airport_code">
                             {{arrivalAirport.airport_name}}
                         </mat-option>
                     </mat-autocomplete>

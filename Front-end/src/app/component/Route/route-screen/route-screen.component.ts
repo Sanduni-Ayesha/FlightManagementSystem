@@ -22,8 +22,8 @@ export class RouteScreenComponent implements OnInit {
   routeTableHeading: any = TableHeading;
   arrivalControl = new FormControl('');
   departureControl = new FormControl('');
-  filteredArrivalAirport: String[] | undefined;
-  filteredDepartureAirport: String[] | undefined;
+  filteredArrivalAirport: Airport[] =[];
+  filteredDepartureAirport: Airport[] =[];
   errorMessage: string | undefined;
  public airportsNames: String[] =[]
  public routeDetails:Route[] = [];
@@ -49,11 +49,11 @@ export class RouteScreenComponent implements OnInit {
     this.getRoutes()
   }
 
-  private filterAirport(value: String): String[] {
+  private filterAirport(value: String): Airport[] {
     const filterValue = value.toLowerCase();
-    if (this.airportsNames) {
-      return this.airportsNames.filter((option) =>
-        option.toLowerCase().includes(filterValue)
+    if (this.airportDetails) {
+      return this.airportDetails.filter((option) =>
+        option.airport_code.toLowerCase().includes(filterValue)
       );
     } else {
       return [];

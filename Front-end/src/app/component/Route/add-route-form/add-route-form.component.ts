@@ -18,8 +18,8 @@ export class AddRouteFormComponent implements OnInit{
 
   airportsNames: String[] = [];
   airport:Airport[]=[];
-  filteredDepartures: String[] | undefined;
-  filteredArrivals: String[] | undefined;
+  filteredDepartures: Airport[] =[];
+  filteredArrivals: Airport[] =[];
   routeInfo = new FormGroup({
       id: new FormControl(this.data.rowData.id),
       departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -152,11 +152,11 @@ export class AddRouteFormComponent implements OnInit{
     return this.routeInfo.get('duration')
   }
 
-  private filterAirports(value: String): String[] {
+  private filterAirports(value: String): Airport[] {
     const filterValue = value.toLowerCase();
-    if (this.airportsNames) {
-      return this.airportsNames.filter((option) =>
-          option.toLowerCase().includes(filterValue)
+    if (this.airport) {
+      return this.airport.filter((option) =>
+          option.airport_code.toLowerCase().includes(filterValue)
       );
     } else {
       return [];
