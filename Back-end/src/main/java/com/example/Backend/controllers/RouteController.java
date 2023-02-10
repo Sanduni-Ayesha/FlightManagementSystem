@@ -16,8 +16,9 @@ public class RouteController {
     private RouteService routeService;
 
     @GetMapping("/get-route")
-    public List<Route> getAllRoutes(){
-        return routeService.getAllRoutes();
+    public ResponseEntity<List<Route>>  getAllRoutes(@RequestParam("departureAirport") String departureAirport,
+                                           @RequestParam("arrivalAirport") String arrivalAirport){
+        return new ResponseEntity<>(this.routeService.getAllRoutes(departureAirport,arrivalAirport),(HttpStatus.OK)) ;
     }
 
     @DeleteMapping("/delete-route")
