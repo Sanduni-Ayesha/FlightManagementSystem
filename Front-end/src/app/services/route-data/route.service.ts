@@ -10,8 +10,8 @@ export class RouteService{
   private baseUrl = "http://localhost:8080/route";
   constructor(private http:HttpClient) { }
 
-  public getAllRoutes():Observable<Route[]>{
-    return this.http.get<Route[]>(`${this.baseUrl}/get-route`)
+  public getAllRoutes(departureAirport:string,arrivalAirport:string):Observable<Route[]>{
+    return this.http.get<Route[]>(`${this.baseUrl}/get-route?departureAirport=${departureAirport}&arrivalAirport=${arrivalAirport}`)
   }
 
   public deleteRoute(id:number){
