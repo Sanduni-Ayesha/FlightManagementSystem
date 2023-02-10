@@ -9,6 +9,7 @@ import { futureDateValidator } from '../../../shared/futureDate.validator';
 import { map } from 'rxjs/operators';
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {Flight} from "../../../model/Flight";
+import {Airport} from "../../../model/Airport";
 
 @Component({
   selector: 'app-add-flight-form',
@@ -16,9 +17,9 @@ import {Flight} from "../../../model/Flight";
   styleUrls: ['../../../styles/form-overlay.scss'],
 })
 export class AddFlightFormComponent implements OnInit {
-  public airports: string[] = this.data.airportNames;
-  filteredDepartures: string[] | undefined;
-  filteredArrivals: string[] | undefined;
+
+  filteredDepartures: Airport[]=[];
+  filteredArrivals: Airport[]=[];
   flightForm = new FormGroup(
       {
         id: new FormControl(''),
@@ -62,11 +63,11 @@ export class AddFlightFormComponent implements OnInit {
       });
   }
 
-  private filterAirports(value: string): string[] {
+  private filterAirports(value: string): Airport[] {
     const filterValue = value.toLowerCase();
-    if (this.airports) {
-      return this.airports.filter((option) =>
-        option.toLowerCase().includes(filterValue)
+    if (this.data.airports) {
+      return this.data.airports.filter((port: { airport_name: string; }) =>
+        port.airport_name.toLowerCase().includes(filterValue)
       );
     } else {
       return [];
