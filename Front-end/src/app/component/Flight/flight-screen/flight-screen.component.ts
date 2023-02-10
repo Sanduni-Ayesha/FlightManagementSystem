@@ -106,7 +106,7 @@ export class FlightScreenComponent implements OnInit {
     }
 
     public getAirportName(code: string): String {
-        return this.airportDetails?.find(airport => airport.airport_code == code)?.airport_name!;
+        return this.airportDetails.find(airport => airport.airport_code == code)?.airport_name!;
     }
 
     filterByAirport(departure: string, arrive: string) {
