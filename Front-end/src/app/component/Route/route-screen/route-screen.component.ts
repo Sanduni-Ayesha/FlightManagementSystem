@@ -46,7 +46,7 @@ export class RouteScreenComponent implements OnInit {
         this.filterAirport(value || ''))).subscribe((departures) => {
         this.filteredDepartureAirport = departures;
       });
-    this.getRoutes()
+    this.getRoutes("","")
   }
 
   private filterAirport(value: String): Airport[] {
@@ -94,18 +94,18 @@ export class RouteScreenComponent implements OnInit {
       },
     });
       dialogRef.afterClosed().subscribe(() => {
-         this.getRoutes()
+         this.getRoutes("","")
       });
 
   }
-   private getRoutes(){
-        this.routeService.getAllRoutes().subscribe((route)=>{
+   private getRoutes(departureAirport:string,arrivalAirport:string){
+        this.routeService.getAllRoutes(departureAirport,arrivalAirport).subscribe((route)=>{
             this.routeDetails=route;
         })
     }
   removeRow(id: number) {
     if (confirm("Press Ok to confirm the deletion !!!") == true) {
-        this.routeService.deleteRoute(id) .subscribe(()=>{this.getRoutes()});
+        this.routeService.deleteRoute(id) .subscribe(()=>{this.getRoutes("","")});
     }
   }
   search() {
@@ -138,7 +138,7 @@ export class RouteScreenComponent implements OnInit {
       this.errorMessage = '';
       this.departureControl.setValue('');
       this. arrivalControl.setValue('')
-      this.getRoutes();
+      this.getRoutes("","");
   }
 
     private getAllAirports(){
