@@ -1,8 +1,8 @@
 export class Airport{
-    airport_code:String;
-    airport_name:String;
+    airport_code:string;
+    airport_name:string;
 
-    constructor(airport_code: String, airport_name: String) {
+    constructor(airport_code: string, airport_name: string) {
         this.airport_code = airport_code;
         this.airport_name = airport_name;
     }

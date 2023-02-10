@@ -57,8 +57,8 @@ export class FlightScreenComponent implements OnInit {
     public flightDetails: Flight[] = [];
     public allFlightDetails: Flight[] = [];
     columnsSchema: any = COLUMNS;
-    filteredDepartures: string[] | undefined;
-    filteredArrivals: string[] | undefined;
+    filteredDepartures: Airport[] | undefined;
+    filteredArrivals: Airport[] | undefined;
     filterDepart = new FormControl('');
     filterArrive = new FormControl('');
 
@@ -94,11 +94,11 @@ export class FlightScreenComponent implements OnInit {
         })
     }
 
-    private filterAirports(value: string): string[] {
+    private filterAirports(value: string): Airport[] {
         const filterValue = value.toLowerCase();
-        if (this.airports) {
-            return this.airports.filter((option) =>
-                option.toLowerCase().includes(filterValue)
+        if (this.airportDetails) {
+            return this.airportDetails.filter((port) =>
+                port.airport_name.toLowerCase().includes(filterValue)
             );
         } else {
             return [];

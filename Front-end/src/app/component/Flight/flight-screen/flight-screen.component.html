@@ -12,8 +12,8 @@
                  [matAutocomplete]="departures"
                  #departure>
           <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
-            <mat-option *ngFor="let depart of filteredDepartures" [value]="depart">
-              {{depart}}
+            <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_code">
+              {{depart.airport_name}}
             </mat-option>
           </mat-autocomplete>
           <mat-icon matSuffix>flight_takeoff</mat-icon>
@@ -29,8 +29,8 @@
                  [matAutocomplete]="arrivals"
                  #arrive>
           <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
-            <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives">
-              {{arrives}}
+            <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_code">
+              {{arrives.airport_name}}
             </mat-option>
           </mat-autocomplete>
           <mat-icon matSuffix>flight_land</mat-icon>
