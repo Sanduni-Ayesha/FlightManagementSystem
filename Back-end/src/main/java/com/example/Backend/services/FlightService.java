@@ -22,27 +22,60 @@ public class FlightService {
 
     public void deleteFlight(int id) {
         Flight flight = getFlightByID(id);
+        if (flight.getStatus().equals(Flight.Status.inactive)){
+//            TODO already deleted exception
+        }
         flight.setStatus(Flight.Status.inactive);
         flightRepository.save(flight);
     }
 
     public Flight addFlight(Flight flight) {
+        boolean checkDeparture = checkFlightExistence(flight);
+        boolean flightValidated = validateFlight(flight);
+        if (checkDeparture) {
+//            TODO throw flight exists exception
+             return null;
+        }
+        if (!flightValidated) {
+//            TODO throw flight validation unsuccessful exception
+            return null;
+        }
         return flightRepository.save(flight);
      }
 
     public Flight updateFlight(Flight fl) {
         Flight flight = getFlightByID(fl.getId());
-        flight.setDepartureAirport(fl.getDepartureAirport());
-        flight.setArrivalAirport(fl.getArrivalAirport());
-        flight.setFlightNo(fl.getFlightNo());
-        flight.setDepartureTime(fl.getDepartureTime());
-        flight.setArrivalTime(fl.getArrivalTime());
-        flight.setLastUpdatedTime(LocalDateTime.now());
-        flight.setVersion(fl.getVersion() + 1);
-        return flightRepository.save(flight);
+        boolean checkDeparture = checkFlightExistence(fl);
+        boolean flightValidated = validateFlight(fl);
+        if (checkDeparture) {
+//            TODO throw flight exists exception
+            return null;
+        }
+        if (!flightValidated) {
+//            TODO throw flight validation unsuccessful exception
+            return null;
+        }
+        if (fl.getVersion()==flight.getVersion()){
+            flight.setDepartureAirport(fl.getDepartureAirport());
+            flight.setArrivalAirport(fl.getArrivalAirport());
+            flight.setFlightNo(fl.getFlightNo());
+            flight.setDepartureTime(fl.getDepartureTime());
+            flight.setArrivalTime(fl.getArrivalTime());
+            flight.setLastUpdatedTime(LocalDateTime.now());
+            flight.setVersion(fl.getVersion() + 1);
+            return flightRepository.save(flight);
+        }else{
+//            TODO throw flight already updated exception
+        }
+        return flight;
+
     }
 
-    public boolean checkData(Flight flight) {
+    public boolean checkVersion(int currentVersion, int newVersion){
+        return true;
+    }
+
+    public boolean validateFlight(Flight flight) {
         String departureAirport = flight.getDepartureAirport();
         String arrivalAirport = flight.getArrivalAirport();
         String flightNo = flight.getFlightNo();
@@ -57,5 +90,14 @@ public class FlightService {
             return true;
         }
         return false;
+    }
+
+    public boolean checkFlightExistence(Flight flight){
+        String flightNo = flight.getFlightNo();
+        LocalDateTime departureTime = flight.getDepartureTime();
+        LocalDateTime arrivalTime = flight.getArrivalTime();
+        boolean departure = flightRepository.existsByFlightNoAndDepartureTime(flightNo,departureTime);
+        boolean arrival = flightRepository.existsByFlightNoAndArrivalTime(flightNo,arrivalTime);
+        return departure;
     }
 }
