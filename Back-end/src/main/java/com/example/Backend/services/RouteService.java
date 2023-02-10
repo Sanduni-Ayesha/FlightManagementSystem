@@ -1,35 +1,33 @@
 package com.example.Backend.services;
 
+import com.example.Backend.daoImpl.RouteDaoImpl;
 import com.example.Backend.exceptions.RouteNotFoundException;
-import com.example.Backend.models.Airport;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.AirportRepository;
 import com.example.Backend.repositories.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RouteService {
     private AirportRepository airportRepository;
-    private JdbcTemplate routeDetails;
     private RouteRepository routeRepository;
+    private RouteDaoImpl routeDaoImpl;
     @Autowired
-    public RouteService(RouteRepository routeRepositoryInterface, JdbcTemplate routeDetails,AirportRepository airportRepository) {
+    public RouteService(RouteRepository routeRepositoryInterface,
+                        AirportRepository airportRepository,
+                        RouteDaoImpl routeDaoImpl) {
         this.routeRepository = routeRepositoryInterface;
-        this.routeDetails= routeDetails;
         this.airportRepository=airportRepository;
+        this.routeDaoImpl = routeDaoImpl;
     }
-    public List<Route> getAllRoutes(){
-        String query = "Select * from route where status='active'";
-       List<Route> allRoutes=(this.routeDetails.query(query, BeanPropertyRowMapper.newInstance(Route.class)));
-       return allRoutes;
+    public List<Route> getRoutes(String departureAirport, String arrivalAirport){
+       return routeDaoImpl.searchRoute(departureAirport,arrivalAirport);
     }
 
 
