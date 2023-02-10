@@ -109,21 +109,17 @@ export class FlightScreenComponent implements OnInit {
         return this.airportDetails.find(airport => airport.airport_code == code)?.airport_name!;
     }
 
-    filterByAirport(departure: string, arrive: string) {
-        if (departure == '' && arrive == '') {
+    filterByAirport(departure: string, arrival: string) {
+        if (departure == '' && arrival == '') {
             this.filterDepart.reset();
             this.filterArrive.reset();
             this.getFlightDetails();
-        }
-        if (departure != '') {
-            this.flightDetails = this.flightDetails.filter(
-                (data: any) => data.departureAirport == departure
-            );
-        }
-        if (arrive != '') {
-            this.flightDetails = this.flightDetails.filter(
-                (data: any) => data.arrivalAirport == arrive
-            );
+        }else{
+            if (departure=='') departure="all";
+            if (arrival=='') arrival="all";
+            this.flightService.getAllFlights(departure,arrival).subscribe(flights =>{
+                this.flightDetails = flights
+            })
         }
     }
 

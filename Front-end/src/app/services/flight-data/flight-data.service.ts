@@ -10,8 +10,8 @@ export class FlightDataService {
   private baseUrl = "http://localhost:8080";
   constructor(private http:HttpClient) { }
 
-  public getAllFlights():Observable<Flight[]>{
-    return this.http.get<Flight[]>(`${this.baseUrl}/flight/getFlights`)
+  public getAllFlights(departure="all" , arrival="all"):Observable<Flight[]>{
+    return this.http.get<Flight[]>(`${this.baseUrl}/flight/getFlights/${departure}/${arrival}`)
   }
 
   public deleteFlight(id: number){

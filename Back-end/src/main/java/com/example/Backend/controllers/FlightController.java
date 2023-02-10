@@ -26,9 +26,9 @@ public class FlightController {
     }
 
     @Validated
-    @GetMapping("/getFlights")
-    public ResponseEntity<List<Flight>> getAllFlights(){
-        return new ResponseEntity<>(flightDao.getFlights(), HttpStatus.OK);
+    @GetMapping("/getFlights/{departure}/{arrival}")
+    public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival")String arrival){
+        return new ResponseEntity<>(flightDao.getFlights(departure,arrival), HttpStatus.OK);
     }
 
     @GetMapping("/getFlights/{id}")

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface FlightDao<T>{
-    List<Flight> getFlights();
+    List<Flight> getFlights(String departure, String arrival);
 }
