@@ -1,100 +1,104 @@
 <div class="flight">
-  <div class="flightSearch">
-    <form class="searchFilter">
-      <div class="inputFields">
-        <mat-form-field class="departInput" appearance="fill">
-          <mat-label>Departure Airport</mat-label>
-          <input type="text"
-                 placeholder="Pick Airport"
-                 value=""
-                 matInput
-                 [formControl]="filterDepart"
-                 [matAutocomplete]="departures"
-                 #departure>
-          <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
-            <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_code">
-              {{depart.airport_name}}
-            </mat-option>
-          </mat-autocomplete>
-          <mat-icon matSuffix>flight_takeoff</mat-icon>
-        </mat-form-field>
+    <div class="flightSearch">
+        <form class="searchFilter">
+            <div class="inputFields">
+                <mat-form-field class="departInput" appearance="fill">
+                    <mat-label>Departure Airport</mat-label>
+                    <input type="text"
+                           placeholder="Pick Airport"
+                           value=""
+                           matInput
+                           [formControl]="filterDepart"
+                           [matAutocomplete]="departures"
+                           #departure>
+                    <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
+                        <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_code">
+                            {{depart.airport_name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>flight_takeoff</mat-icon>
+                </mat-form-field>
 
-        <mat-form-field class="arriveInput">
-          <mat-label>Arrival Airport</mat-label>
-          <input type="text"
-                 placeholder="Pick Airport"
-                 value=""
-                 matInput
-                 [formControl]="filterArrive"
-                 [matAutocomplete]="arrivals"
-                 #arrive>
-          <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
-            <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_code">
-              {{arrives.airport_name}}
-            </mat-option>
-          </mat-autocomplete>
-          <mat-icon matSuffix>flight_land</mat-icon>
-        </mat-form-field>
-      </div>
-
-
-      <div class="searchBtn">
-        <div class="search">
-          <button mat-raised-button class="buttons"
-                  (click)="filterByAirport(departure.value, arrive.value)">
-            <mat-icon>search</mat-icon>
-            Search flight
-          </button>
-        </div>
-
-        <div class="clear">
-          <button mat-raised-button class="buttons"
-                  (click)="filterByAirport('', '')">
-            <mat-icon>clear</mat-icon>
-            Clear Search
-          </button>
-        </div>
-
-      </div>
-      <span class="space"></span>
-      <div class="addFlight">
-        <a mat-raised-button class="buttons" (click)="openAddFlightForm('add')">
-          <mat-icon>add</mat-icon>
-          Add flight
-        </a>
-      </div>
+                <mat-form-field class="arriveInput">
+                    <mat-label>Arrival Airport</mat-label>
+                    <input type="text"
+                           placeholder="Pick Airport"
+                           value=""
+                           matInput
+                           [formControl]="filterArrive"
+                           [matAutocomplete]="arrivals"
+                           #arrive>
+                    <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
+                        <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_code">
+                            {{arrives.airport_name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>flight_land</mat-icon>
+                </mat-form-field>
+            </div>
 
 
-    </form>
-  </div>
-  <div class="flight_table">
-    <div *ngIf="flightDetails.length==0" class="noFlights">
-      <h4 class="noFlightError">Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
+            <div class="searchBtn">
+                <div class="search">
+                    <button mat-raised-button class="buttons"
+                            (click)="filterByAirport(departure.value, arrive.value)">
+                        <mat-icon>search</mat-icon>
+                        Search flight
+                    </button>
+                </div>
+
+                <div class="clear">
+                    <button mat-raised-button class="buttons"
+                            (click)="filterByAirport('', '')">
+                        <mat-icon>clear</mat-icon>
+                        Clear Search
+                    </button>
+                </div>
+
+            </div>
+            <span class="space"></span>
+            <div class="addFlight">
+                <a mat-raised-button class="buttons" (click)="openAddFlightForm('add')">
+                    <mat-icon>add</mat-icon>
+                    Add flight
+                </a>
+            </div>
+
+
+        </form>
     </div>
-    <table class="flight_table">
-      <tr>
-        <th *ngFor="let col of columnsSchema">
-          {{col.label}}
-        </th>
-      </tr>
-      <tr *ngFor="let flight of flightDetails">
-        <td>{{getAirportName(flight.departureAirport)}}</td>
-        <td>{{getAirportName(flight.arrivalAirport)}}</td>
-        <td>{{flight.flightNo}}</td>
-        <td>{{flight.departureTime | date: 'M/d/y, h:mm a, z' }}</td>
-        <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
-        <td>
-          <div class="btn-edit">
-            <button mat-button (click)="openAddFlightForm('edit', flight)"><mat-icon>edit</mat-icon></button>
-          </div>
-        </td>
-        <td>
-          <div class="btn-delete">
-            <button mat-button (click)="removeFlight(flight.id)"><mat-icon>delete</mat-icon></button>
-          </div>
-        </td>
+    <div class="flight_table">
+        <div *ngIf="flightDetails.length==0" class="noFlights">
+            <h4 class="noFlightError">Sorry, no flights available from {{departure.value}} to {{arrive.value}}</h4>
+        </div>
+        <table class="flight_table">
+            <tr>
+                <th *ngFor="let col of columnsSchema">
+                    {{col.label}}
+                </th>
+            </tr>
+            <tr *ngFor="let flight of flightDetails">
+                <td>{{getAirportName(flight.departureAirport)}}</td>
+                <td>{{getAirportName(flight.arrivalAirport)}}</td>
+                <td>{{flight.flightNo}}</td>
+                <td>{{flight.departureTime | date: 'M/d/y, h:mm a, z' }}</td>
+                <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
+                <td>
+                    <div class="btn-edit">
+                        <button mat-button (click)="openAddFlightForm('edit', flight)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-delete">
+                        <button mat-button (click)="removeFlight(flight.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </td>
 
-      </tr>
-    </table>
-  </div>
+            </tr>
+        </table>
+    </div>
 </div>
