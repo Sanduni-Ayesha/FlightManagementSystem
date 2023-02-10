@@ -156,7 +156,7 @@ export class AddRouteFormComponent implements OnInit{
     const filterValue = value.toLowerCase();
     if (this.airport) {
       return this.airport.filter((option) =>
-          option.airport_code.toLowerCase().includes(filterValue)
+          option.airport_name.toLowerCase().includes(filterValue)
       );
     } else {
       return [];

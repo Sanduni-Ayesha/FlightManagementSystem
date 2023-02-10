@@ -53,7 +53,7 @@ export class RouteScreenComponent implements OnInit {
     const filterValue = value.toLowerCase();
     if (this.airportDetails) {
       return this.airportDetails.filter((option) =>
-        option.airport_code.toLowerCase().includes(filterValue)
+        option.airport_name.toLowerCase().includes(filterValue)
       );
     } else {
       return [];
