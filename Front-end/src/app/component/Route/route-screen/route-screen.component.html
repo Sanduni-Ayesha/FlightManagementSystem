@@ -11,8 +11,9 @@
                            matInput
                            [formControl]="departureControl"
                            [matAutocomplete]="auto1" #departure_Airport>
+                    <mat-error *ngIf="departureControl.invalid">Invalid input</mat-error>
                     <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
-                        <mat-option *ngFor="let departureAirport of filteredDepartureAirport" [value]="departureAirport.airport_code">
+                        <mat-option *ngFor="let departureAirport of filteredDepartureAirport" [value]="departureAirport.airport_name">
                             {{departureAirport.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -28,8 +29,9 @@
                            matInput
                            [formControl]="arrivalControl"
                            [matAutocomplete]="auto2" #arrival_Airport>
+                    <mat-error *ngIf="arrivalControl.invalid">Invalid input</mat-error>
                     <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
-                        <mat-option *ngFor="let arrivalAirport of filteredArrivalAirport" [value]="arrivalAirport.airport_code">
+                        <mat-option *ngFor="let arrivalAirport of filteredArrivalAirport" [value]="arrivalAirport.airport_name">
                             {{arrivalAirport.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -41,7 +43,7 @@
                 <div class="search">
                     <button mat-raised-button class="buttons" (click)="search()">
                         <mat-icon>search</mat-icon>
-                        Search flight
+                        Search route
                     </button>
 
                 </div>

@@ -23,10 +23,10 @@ public class RouteDaoImpl implements RouteDao<Route> {
         String table = "route";
         String query = "SELECT * FROM route WHERE status='active'";
         if(!(departureAirport.equals(""))){
-            query+=" and departure_airport = " + departureAirport;
+            query+="and departure_airport ='" + departureAirport+"'";
         }
         if (!(arrivalAirport.equals(""))) {
-            query+=" and arrival_airport = " + arrivalAirport;
+            query+=" and arrival_airport ='" + arrivalAirport+"'";
         }
         List<Route> searchedRoutesDetails= this.jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(Route.class));
         return searchedRoutesDetails;

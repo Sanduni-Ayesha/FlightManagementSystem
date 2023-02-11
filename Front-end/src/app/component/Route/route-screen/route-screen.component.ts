@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ɵElement, ɵValue } from '@angular/forms';
+import {FormControl, Validators, ɵElement, ɵValue} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRouteFormComponent } from '../add-route-form/add-route-form.component';
 import { Observable } from 'rxjs';
@@ -20,8 +20,8 @@ const TableHeading = ['Departure Airport','Arrival Airport','Mileage/Km','Durati
 })
 export class RouteScreenComponent implements OnInit {
   routeTableHeading: any = TableHeading;
-  arrivalControl = new FormControl('');
-  departureControl = new FormControl('');
+  arrivalControl = new FormControl('',[Validators.pattern('^$|[a-zA-Z]+')]);
+  departureControl = new FormControl('',[Validators.pattern('^$|[a-zA-Z]+')]);
   filteredArrivalAirport: Airport[] =[];
   filteredDepartureAirport: Airport[] =[];
   errorMessage: string | undefined;
@@ -33,23 +33,27 @@ export class RouteScreenComponent implements OnInit {
 
   ngOnInit() {
     this.getAllAirports();
-    this.arrivalControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this.filterAirport(value || '')))
-      .subscribe((arrivals) => {
-        this.filteredArrivalAirport = arrivals;
-      });
-    ;
-    this.departureControl.valueChanges.pipe(
-      startWith(''),
-      map((value) =>
-        this.filterAirport(value || ''))).subscribe((departures) => {
-        this.filteredDepartureAirport = departures;
-      });
+    this.setFilteredArrivalAirport();
+    this.setFilteredDepartureAirport();
     this.getRoutes("","")
   }
-
-  private filterAirport(value: String): Airport[] {
+  private setFilteredArrivalAirport(){
+      this.arrivalControl.valueChanges.pipe(
+          startWith(''),
+          map((value) => this.filterAirport(value || '')))
+          .subscribe((arrivals) => {
+              this.filteredArrivalAirport = arrivals;
+          });
+  }
+  private setFilteredDepartureAirport(){
+      this.departureControl.valueChanges.pipe(
+          startWith(''),
+          map((value) =>
+              this.filterAirport(value || ''))).subscribe((departures) => {
+          this.filteredDepartureAirport = departures;
+      });
+    }
+    private filterAirport(value: String): Airport[] {
     const filterValue = value.toLowerCase();
     if (this.airportDetails) {
       return this.airportDetails.filter((option) =>
@@ -66,7 +70,6 @@ export class RouteScreenComponent implements OnInit {
               return this.routeDetails[routeIndex];
           }
       }
-
   }
   openForm(_id=-1): void {
     let  row:any;
@@ -101,6 +104,12 @@ export class RouteScreenComponent implements OnInit {
    private getRoutes(departureAirport:string,arrivalAirport:string){
         this.routeService.getAllRoutes(departureAirport,arrivalAirport).subscribe((route)=>{
             this.routeDetails=route;
+            if(this.routeDetails.length==0){
+                this.errorMessage = "Sorry,there are no route available that match your search criteria";
+            }
+            else{
+                this.errorMessage='';
+            }
         })
     }
   removeRow(id: number) {
@@ -109,29 +118,20 @@ export class RouteScreenComponent implements OnInit {
     }
   }
   search() {
-      let filterAirportData:Route[]=[];
-      if (
-      this.routeDetails.find(
-        (obj: any) =>
-          obj.departureAirport === this.departureControl.value ||
-          obj.arrivalAirport === this.arrivalControl.value
-      )
-    ) {
-      filterAirportData = this.routeDetails.filter((obj: any) => {
-        return (
-          obj.departureAirport === this.departureControl.value ||
-          obj.arrivalAirport === this.arrivalControl.value
-        );
-      });
-      this.errorMessage = '';
-      this.routeDetails = filterAirportData;
-    } else {
-        if (filterAirportData.length == 0)
-        {
-            this.errorMessage="Sorry, no route available"
-            this.routeDetails = filterAirportData;
-        }
-    }
+     if (this.departureControl.valid && this.arrivalControl.valid){
+         let departureAirportCode="";
+         let arrivalAirportCode="";
+         if(this.departureControl.value != '' ){
+             departureAirportCode=this.getAirportCodeByAirportName(this.departureControl.value);
+         }
+         if(this.arrivalControl.value != ''){
+             arrivalAirportCode=this.getAirportCodeByAirportName(this.arrivalControl.value);
+         }
+         this.getRoutes(departureAirportCode,arrivalAirportCode)
+     }
+     else{
+         this.errorMessage='';
+     }
   }
 
   clearSearch() {
@@ -161,6 +161,12 @@ export class RouteScreenComponent implements OnInit {
 
      }
     }
+    public getAirportCodeByAirportName(airportName:any):any{
+       return this.airportDetails.find(airport=>airport.airport_name==airportName)?.airport_code;
+
+        }
+
+
 
 
 }
