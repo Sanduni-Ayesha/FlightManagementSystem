@@ -135,10 +135,7 @@ export class RouteScreenComponent implements OnInit {
   }
 
   clearSearch() {
-      this.errorMessage = '';
-      this.departureControl.setValue('');
-      this. arrivalControl.setValue('')
-      this.getRoutes("","");
+      this.setPageDefault();
   }
 
     private getAllAirports(){
@@ -165,6 +162,12 @@ export class RouteScreenComponent implements OnInit {
        return this.airportDetails.find(airport=>airport.airport_name==airportName)?.airport_code;
 
         }
+    public setPageDefault(){
+        this.errorMessage = '';
+        this.departureControl.setValue('');
+        this. arrivalControl.setValue('')
+        this.getRoutes("","");
+    }
 
 
 
