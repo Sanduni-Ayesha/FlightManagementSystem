@@ -8,7 +8,6 @@ import {Route} from "../../../model/Route";
 import {Airport} from "../../../model/Airport";
 import {AirportService} from "../../../services/airport-data/airport.service";
 import {map} from "rxjs/operators";
-
 @Component({
   selector: 'app-add-route-form',
   templateUrl: './add-route-form.component.html',
@@ -22,8 +21,8 @@ export class AddRouteFormComponent implements OnInit{
   filteredArrivals: Airport[] =[];
   routeInfo = new FormGroup({
       id: new FormControl(this.data.rowData.id),
-      departureAirport: new FormControl(this.data.rowData.departureAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      arrivalAirport: new FormControl(this.data.rowData.arrivalAirport, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      departureAirport: new FormControl({value:this.data.rowData.departureAirport,disabled:this.data.disable}, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      arrivalAirport: new FormControl({value:this.data.rowData.arrivalAirport,disabled:this.data.disable}, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       mileage: new FormControl(this.data.rowData.mileage, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')]),
       duration: new FormControl(this.data.rowData.duration, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')])
     }, {
@@ -49,8 +48,8 @@ export class AddRouteFormComponent implements OnInit{
         const date = new Date();
         let route = new Route(
             routeInfoData.id,
-            this.getAirportCode(routeInfoData.arrivalAirport),
-            this.getAirportCode(routeInfoData.departureAirport),
+            this.getAirportCode(this.routeInfo.get('arrivalAirport')?.value),
+            this.getAirportCode(this.routeInfo.get('departureAirport')?.value),
             routeInfoData.mileage,
             routeInfoData.duration,
             this.data.rowData.version,
@@ -71,8 +70,8 @@ export class AddRouteFormComponent implements OnInit{
     let routeInfoData = this.routeInfo.value
     let route = new Route(
         routeInfoData.id,
-        this.getAirportCode(routeInfoData.arrivalAirport),
-        this.getAirportCode(routeInfoData.departureAirport),
+        this.getAirportCode(this.routeInfo.get('arrivalAirport')?.value),
+        this.getAirportCode(this.routeInfo.get('departureAirport')?.value),
         routeInfoData.mileage,
         routeInfoData.duration,
         this.data.rowData.version,
@@ -80,26 +79,12 @@ export class AddRouteFormComponent implements OnInit{
         date
     )
     if (this.routeInfo.dirty) {
-      if(this.data.rowData.departureAirport!=routeInfoData.departureAirport ||
-      this.data.rowData.arrivalAirport!=routeInfoData.arrivalAirport){
-        if(!this.isDuplicateRouteAvailable(routeInfoData.arrivalAirport,
-            routeInfoData.departureAirport)){
-          this.routeService.updateRoute(route).subscribe();
-          this.dialog.closeAll();
-        }
-        else{
-          confirm('The route is already available in system.')
-        }
-        }
-      else{
         this.routeService.updateRoute(route).subscribe();
         this.dialog.closeAll();
-      }
      }
     else{
       this.dialog.closeAll();
     }
-
   }
 
   onCancel() {
