@@ -75,16 +75,18 @@ export class RouteScreenComponent implements OnInit {
     this.getRoutes("","")
     let  row:any;
     let  id:any;
+    let disableStatus:boolean;
     if(_id != -1){
       id = _id;
       row = this.findRoute(_id);
       row.arrivalAirport=this.getAirportNameByAirportCode(row.arrivalAirport);
       row.departureAirport=this.getAirportNameByAirportCode(row.departureAirport);
-
+        disableStatus=true;
     }
     else{
       id = ''
       row = '';
+        disableStatus=false;
     }
 
     let dialogRef=this.dialog.open(AddRouteFormComponent, {
@@ -98,6 +100,7 @@ export class RouteScreenComponent implements OnInit {
         airportsNames:this.airportsNames,
         airportsDetails:this.airportDetails,
         allRoutes:this.routeDetails,
+          disable:disableStatus,
       },
     });
       dialogRef.afterClosed().subscribe(() => {
