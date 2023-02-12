@@ -72,11 +72,15 @@ export class RouteScreenComponent implements OnInit {
       }
   }
   openForm(_id=-1): void {
+    this.getRoutes("","")
     let  row:any;
     let  id:any;
     if(_id != -1){
       id = _id;
       row = this.findRoute(_id);
+      row.arrivalAirport=this.getAirportNameByAirportCode(row.arrivalAirport);
+      row.departureAirport=this.getAirportNameByAirportCode(row.departureAirport);
+
     }
     else{
       id = ''
