@@ -38,17 +38,10 @@ export class AddRouteFormComponent implements OnInit{
   ngOnInit(): void {
     this.airportsNames=this.data.airportsNames;
     this.airport=this.data.airportsDetails;
-    this.routeInfo.controls['departureAirport'].valueChanges
-        .pipe(map((value) => this.filterAirports(value || '')))
-        .subscribe((departures) => {
-          this.filteredDepartures = departures;
-        });
+    this.setFilteredDepartureAirport();
+    this.setFilteredArrivalAirport();
 
-    this.routeInfo.controls['arrivalAirport'].valueChanges
-        .pipe(map((value) => this.filterAirports(value || '')))
-        .subscribe((arrivals) => {
-          this.filteredArrivals = arrivals;
-        });
+
   }
   onSubmit() {
       let routeInfoData = this.routeInfo.value
@@ -181,5 +174,18 @@ export class AddRouteFormComponent implements OnInit{
   }
 
   }
-
+  private setFilteredDepartureAirport(){
+    this.routeInfo.controls['departureAirport'].valueChanges
+        .pipe(map((value) => this.filterAirports(value || '')))
+        .subscribe((departures) => {
+          this.filteredDepartures = departures;
+        });
+  }
+  private setFilteredArrivalAirport(){
+    this.routeInfo.controls['arrivalAirport'].valueChanges
+        .pipe(map((value) => this.filterAirports(value || '')))
+        .subscribe((arrivals) => {
+          this.filteredArrivals = arrivals;
+        });
+  }
 }
