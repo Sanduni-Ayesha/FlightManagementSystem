@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -56,6 +58,28 @@ public class RouteService {
     }
     public Route getRouteById(int id){
        return routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + id));
+    }
+    public Boolean isValidRoute(Route route){
+        String airportPattern = "[A-Z]{3}";
+        String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
+        String integerPattern= "^[1-9]\\d*$";
+        String datePattern= "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$\n";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
+        if(route.getDepartureAirport().matches(airportPattern) &&
+           route.getArrivalAirport().matches(airportPattern) &&
+           Double.toString(route.getMileage()).matches(floatPattern) &&
+           Double.toString(route.getDuration()).matches(floatPattern) &&
+           dateFormat.format(route.getCreatedTime()).matches(datePattern) &&
+           dateFormat.format(route.getLastUpdatedTime()).matches(datePattern) &&
+           Integer.toString(route.getId()).matches(integerPattern) &&
+            Long.toString(route.getVersion()).matches(integerPattern)
+        ){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }
