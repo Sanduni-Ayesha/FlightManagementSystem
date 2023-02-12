@@ -31,7 +31,13 @@ public class RouteController {
         return this.routeService.updateRoute(route);
     }
     @PostMapping("/add-route")
-    public ResponseEntity<Route> addRoute(@RequestBody Route route){
-        return this.routeService.addRoute(route);
+    public ResponseEntity<?> addRoute(@RequestBody Route route){
+        try{
+            return new ResponseEntity<>(this.routeService.addRoute(route),HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return null;
+        }
+
     }
 }
