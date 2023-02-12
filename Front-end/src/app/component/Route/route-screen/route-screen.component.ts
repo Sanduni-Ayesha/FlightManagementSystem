@@ -73,19 +73,19 @@ export class RouteScreenComponent implements OnInit {
   }
   openForm(_id=-1): void {
     this.getRoutes("","")
-    let  row:any;
+    let  route:any;
     let  id:any;
     let disableStatus:boolean;
     if(_id != -1){
       id = _id;
-      row = this.findRoute(_id);
-      row.arrivalAirport=this.getAirportNameByAirportCode(row.arrivalAirport);
-      row.departureAirport=this.getAirportNameByAirportCode(row.departureAirport);
+      route = this.findRoute(_id);
+      route.arrivalAirport=this.getAirportNameByAirportCode(route.arrivalAirport);
+      route.departureAirport=this.getAirportNameByAirportCode(route.departureAirport);
         disableStatus=true;
     }
     else{
       id = ''
-      row = '';
+      route = '';
         disableStatus=false;
     }
 
@@ -96,15 +96,15 @@ export class RouteScreenComponent implements OnInit {
       data: {
         ds: this.routeDetails,
         id: id,
-        rowData: row,
-        airportsNames:this.airportsNames,
+        rowData: route,
         airportsDetails:this.airportDetails,
         allRoutes:this.routeDetails,
           disable:disableStatus,
       },
     });
       dialogRef.afterClosed().subscribe(() => {
-         this.getRoutes("","")
+         this.getRoutes("","");
+         this.setPageDefault();
       });
 
   }
@@ -121,7 +121,8 @@ export class RouteScreenComponent implements OnInit {
     }
   removeRow(id: number) {
     if (confirm("Press Ok to confirm the deletion !!!") == true) {
-        this.routeService.deleteRoute(id) .subscribe(()=>{this.getRoutes("","")});
+        this.routeService.deleteRoute(id) .subscribe(
+            ()=>{this.getRoutes("","")});
     }
   }
   search() {
@@ -148,21 +149,13 @@ export class RouteScreenComponent implements OnInit {
     private getAllAirports(){
         this.airportService.getAllAirports().subscribe((airport)=>{
             this.airportDetails=airport;
-            this.getAllAirportNames();
         })
-    }
-    private getAllAirportNames(){
-        this.airportDetails.forEach((airport)=>{
-            this.airportsNames.push(airport.airport_name);
-        });
-
     }
     public getAirportNameByAirportCode(airportCode:String):any{
      for(let airport of this.airportDetails){
          if (airport.airport_code==airportCode){
              return airport.airport_name;
          }
-
      }
     }
     public getAirportCodeByAirportName(airportName:any):any{

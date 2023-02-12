@@ -15,7 +15,6 @@ import {map} from "rxjs/operators";
 })
 export class AddRouteFormComponent implements OnInit{
 
-  airportsNames: String[] = [];
   airport:Airport[]=[];
   filteredDepartures: Airport[] =[];
   filteredArrivals: Airport[] =[];
@@ -35,7 +34,6 @@ export class AddRouteFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.airportsNames=this.data.airportsNames;
     this.airport=this.data.airportsDetails;
     this.setFilteredDepartureAirport();
     this.setFilteredArrivalAirport();
@@ -44,7 +42,7 @@ export class AddRouteFormComponent implements OnInit{
   }
   onSubmit() {
       let routeInfoData = this.routeInfo.value
-      if(!this.isDuplicateRouteAvailable(routeInfoData.arrivalAirport,routeInfoData.departureAirport)){
+      if(!this.isDuplicateRouteAvailable(this.routeInfo.get('arrivalAirport')?.value,this.routeInfo.get('departureAirport')?.value)){
         const date = new Date();
         let route = new Route(
             routeInfoData.id,
@@ -56,11 +54,17 @@ export class AddRouteFormComponent implements OnInit{
             date,
             date
         )
-        this.routeService.addRoute(route).subscribe();
+        this.routeService.addRoute(route).subscribe((response)=>{
+          if(response.status == 200){
+            alert("Route successfully created! new route is now available.")
+          }
+        },(error)=>{
+          alert("Oops! Something went wrong.Sorry for the inconvenience")
+        });
         this.dialog.closeAll();
       }
       else{
-        confirm('The route is already available in system.')
+        alert('The route is already available in system.')
       }
 
   }
@@ -79,7 +83,15 @@ export class AddRouteFormComponent implements OnInit{
         date
     )
     if (this.routeInfo.dirty) {
-        this.routeService.updateRoute(route).subscribe();
+        this.routeService.updateRoute(route).subscribe(
+            (response)=>{
+              if(response.status == 200){
+                alert("Route successfully updated!")
+              }
+            },(error)=>{
+              alert("Oops! Something went wrong.Sorry for the inconvenience")
+            }
+        );
         this.dialog.closeAll();
      }
     else{
@@ -99,19 +111,20 @@ export class AddRouteFormComponent implements OnInit{
   }
 
   onReset() {
+    if(this.routeInfo.dirty && confirm("Are you sure you want to reset?")){
     if(this.routeInfo.controls.id.value != '' ) {
-      this.routeInfo.controls.id.setValue(this.data.ds[this.data.id - 1].id)
-      this.routeInfo.controls.departureAirport.setValue(this.data.ds[this.data.id - 1].departureAirport)
-      this.routeInfo.controls.arrivalAirport.setValue(this.data.ds[this.data.id - 1].arrivalAirport)
-      this.routeInfo.controls.mileage.setValue(this.data.ds[this.data.id - 1].mileage)
-      this.routeInfo.controls.duration.setValue(this.data.ds[this.data.id - 1].duration)
+      this.routeInfo.controls.id.setValue(this.data.rowData.id)
+      this.routeInfo.controls.departureAirport.setValue(this.data.rowData.departureAirport)
+      this.routeInfo.controls.arrivalAirport.setValue(this.data.rowData.arrivalAirport)
+      this.routeInfo.controls.mileage.setValue(this.data.rowData.mileage)
+      this.routeInfo.controls.duration.setValue(this.data.rowData.duration)
     }
     else{
       this.routeInfo.controls.departureAirport.setValue('')
       this.routeInfo.controls.arrivalAirport.setValue('')
       this.routeInfo.controls.mileage.setValue('')
       this.routeInfo.controls.duration.setValue('')
-    }
+    }}
   }
 
   get addedDepartureAirport() {
@@ -149,8 +162,8 @@ export class AddRouteFormComponent implements OnInit{
 
   }
   private isDuplicateRouteAvailable(arrivalAirport:String,departureAirport:String ):boolean{
-  let duplicateRoute = this.data.allRoutes.find((route:any)=>route.arrivalAirport==arrivalAirport
-                                  && route.departureAirport==departureAirport)
+  let duplicateRoute = this.data.allRoutes.find((route:any)=>route.arrivalAirport==this.getAirportCode(arrivalAirport)
+                                  && route.departureAirport==this.getAirportCode(departureAirport))
   if(duplicateRoute != undefined){
     return true;
   }

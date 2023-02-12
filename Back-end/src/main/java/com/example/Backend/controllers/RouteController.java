@@ -23,8 +23,8 @@ public class RouteController {
     }
 
     @DeleteMapping("/delete-route")
-    public ResponseEntity<HttpStatus> deleteRoute(@RequestParam("id") int id){
-       return this.routeService.deleteRoute(id);
+    public ResponseEntity<?> deleteRoute(@RequestParam("id") int id){
+       return new ResponseEntity<>(this.routeService.deleteRoute(id),HttpStatus.OK);
 
 }
     @PutMapping("/update-route")
@@ -35,12 +35,8 @@ public class RouteController {
     }
     @PostMapping("/add-route")
     public ResponseEntity<?> addRoute(@RequestBody Route route){
-        try{
-            return new ResponseEntity<>(this.routeService.addRoute(route),HttpStatus.CREATED);
-        }
-        catch (Exception e){
-            return null;
-        }
+            return new ResponseEntity<>(this.routeService.addRoute(route),HttpStatus.OK);
+
 
     }
 }

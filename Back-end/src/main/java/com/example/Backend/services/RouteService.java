@@ -32,21 +32,27 @@ public class RouteService {
     }
 
 
-    public ResponseEntity<HttpStatus> deleteRoute(int id){
-            Route route = routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + id));
+    public Route deleteRoute(int id){
+            if(!routeRepository.existsRouteByIdAndStatus(id,Route.Status.active)){
+                throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
+            };
+            Route route =this.routeRepository.findRouteById(id);
             route.setStatus(Route.Status.inactive);
-            routeRepository.save(route);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return routeRepository.save(route);
 
     }
     public Route updateRoute(Route route) {
-        if(!routeRepository.existsRouteByIdAndStatusEquals(route.getId(),Route.Status.active)){
+        if(!routeRepository.existsRouteByIdAndStatus(route.getId(),Route.Status.active)){
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
         if(!this.isValidRoute(route)){
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
+
         Route UpdatingRoute = routeRepository.findRouteById(route.getId());
+        if(!UpdatingRoute.getVersion().equals(route.getVersion())){
+            //ToDo
+        }
         UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
         UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
         UpdatingRoute.setMileage(route.getMileage());
@@ -69,20 +75,14 @@ public class RouteService {
 
 
     }
-    public Route getRouteById(int id){
-       return routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + id));
-    }
     public Boolean isValidRoute(Route route){
         String airportPattern = "[A-Z]{3}";
         String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
-        String integerPattern= "^[1-9]\\d*$";
 
         if(route.getDepartureAirport().matches(airportPattern) &&
            route.getArrivalAirport().matches(airportPattern) &&
            Double.toString(route.getMileage()).matches(floatPattern) &&
-           Double.toString(route.getDuration()).matches(floatPattern) &&
-           Integer.toString(route.getId()).matches(integerPattern) &&
-            Long.toString(route.getVersion()).matches(integerPattern)
+           Double.toString(route.getDuration()).matches(floatPattern)
         ){
             return true;
         }

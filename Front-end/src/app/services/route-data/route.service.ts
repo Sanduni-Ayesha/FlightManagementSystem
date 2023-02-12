@@ -17,11 +17,11 @@ export class RouteService{
   public deleteRoute(id:number){
     return this.http.delete(`${this.baseUrl}/delete-route?id=${id.toString()}`)
   }
-  public updateRoute(route:Route):Observable<Route>{
-    return this.http.put<Route>(`${this.baseUrl}/update-route`,route)
+  public updateRoute(route:Route){
+    return this.http.put<Route>(`${this.baseUrl}/update-route`,route,{observe:'response'})
   }
-  public addRoute(route:Route):Observable<Route>{
-    return this.http.post<Route>(`${this.baseUrl}/add-route`,route)
+  public addRoute(route:Route){
+    return this.http.post<Route>(`${this.baseUrl}/add-route`,route,{observe:'response'})
   }
 
 }
