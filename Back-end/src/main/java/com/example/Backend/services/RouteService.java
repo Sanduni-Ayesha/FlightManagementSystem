@@ -1,6 +1,7 @@
 package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.RouteDaoImpl;
+import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.exceptions.RouteNotFoundException;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.AirportRepository;
@@ -8,11 +9,9 @@ import com.example.Backend.repositories.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import com.example.Backend.exceptions.Exceptions;
 import java.util.List;
 
 @Service
@@ -40,32 +39,33 @@ public class RouteService {
             return new ResponseEntity<>(HttpStatus.OK);
 
     }
-    public ResponseEntity<Route> updateRoute(Route route) {
-        Route UpdatingRoute = routeRepository.findById(route.getId())
-                .orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + route.getId()));
-        if(this.isValidRoute(route)){
-            UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
-            UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
-            UpdatingRoute.setMileage(route.getMileage());
-            UpdatingRoute.setDuration(route.getDuration());
-            UpdatingRoute.setCreatedTime(route.getCreatedTime());
-            UpdatingRoute.setLastUpdatedTime(route.getLastUpdatedTime());
-            Route updatedRoute = routeRepository.save(UpdatingRoute);
-            return ResponseEntity.ok(updatedRoute);
+    public Route updateRoute(Route route) {
+        if(!routeRepository.existsRouteByIdAndStatusEquals(route.getId(),Route.Status.active)){
+            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
-        else {
-            return null;
+        if(!this.isValidRoute(route)){
+            throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
-
+        Route UpdatingRoute = routeRepository.findRouteById(route.getId());
+        UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
+        UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
+        UpdatingRoute.setMileage(route.getMileage());
+        UpdatingRoute.setDuration(route.getDuration());
+        UpdatingRoute.setCreatedTime(route.getCreatedTime());
+        UpdatingRoute.setLastUpdatedTime(route.getLastUpdatedTime());
+        Route updatedRoute = routeRepository.save(UpdatingRoute);
+        return updatedRoute ;
     }
 
-    public ResponseEntity<Route> addRoute(Route route){
-        if(this.isValidRoute(route)){
-            return ResponseEntity.ok(routeRepository.save(route));
+    public Route addRoute(Route route){
+        if(routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
+                route.getArrivalAirport(),route.getDepartureAirport(),Route.Status.active)){
+            throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
         }
-        else {
-            return null;
+        if(!this.isValidRoute(route)){
+            throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
+        return routeRepository.save(route);
 
 
     }
