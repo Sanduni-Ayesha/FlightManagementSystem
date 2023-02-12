@@ -13,7 +13,7 @@
              formControlName="departureAirport"
              #departure>
       <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
-        <mat-option *ngFor="let departureAirport of filteredDepartures" [value]="departureAirport.airport_code">
+        <mat-option *ngFor="let departureAirport of filteredDepartures" [value]="departureAirport.airport_name">
           {{departureAirport.airport_name}}
         </mat-option>
       </mat-autocomplete>
