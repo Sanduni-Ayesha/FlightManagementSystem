@@ -40,21 +40,34 @@ public class RouteService {
             return new ResponseEntity<>(HttpStatus.OK);
 
     }
-    public ResponseEntity<Route> updateRoute(Route route){
+    public ResponseEntity<Route> updateRoute(Route route) {
         Route UpdatingRoute = routeRepository.findById(route.getId())
                 .orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + route.getId()));
-        UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
-        UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
-        UpdatingRoute.setMileage(route.getMileage());
-        UpdatingRoute.setDuration(route.getDuration());
-        UpdatingRoute.setCreatedTime(route.getCreatedTime());
-        UpdatingRoute.setLastUpdatedTime(route.getLastUpdatedTime());
-        Route updatedRoute = routeRepository.save(UpdatingRoute);
-        return ResponseEntity.ok(updatedRoute);
+        if(this.isValidRoute(route)){
+            UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
+            UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
+            UpdatingRoute.setMileage(route.getMileage());
+            UpdatingRoute.setDuration(route.getDuration());
+            UpdatingRoute.setCreatedTime(route.getCreatedTime());
+            UpdatingRoute.setLastUpdatedTime(route.getLastUpdatedTime());
+            Route updatedRoute = routeRepository.save(UpdatingRoute);
+            return ResponseEntity.ok(updatedRoute);
+        }
+        else {
+            return null;
+        }
+
     }
 
     public ResponseEntity<Route> addRoute(Route route){
-        return ResponseEntity.ok(routeRepository.save(route));
+        if(this.isValidRoute(route)){
+            return ResponseEntity.ok(routeRepository.save(route));
+        }
+        else {
+            return null;
+        }
+
+
     }
     public Route getRouteById(int id){
        return routeRepository.findById(id).orElseThrow(() -> new RouteNotFoundException("Route not found for this id :: " + id));
@@ -63,15 +76,11 @@ public class RouteService {
         String airportPattern = "[A-Z]{3}";
         String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
         String integerPattern= "^[1-9]\\d*$";
-        String datePattern= "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$\n";
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
         if(route.getDepartureAirport().matches(airportPattern) &&
            route.getArrivalAirport().matches(airportPattern) &&
            Double.toString(route.getMileage()).matches(floatPattern) &&
            Double.toString(route.getDuration()).matches(floatPattern) &&
-           dateFormat.format(route.getCreatedTime()).matches(datePattern) &&
-           dateFormat.format(route.getLastUpdatedTime()).matches(datePattern) &&
            Integer.toString(route.getId()).matches(integerPattern) &&
             Long.toString(route.getVersion()).matches(integerPattern)
         ){
