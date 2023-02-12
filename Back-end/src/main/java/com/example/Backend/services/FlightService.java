@@ -1,5 +1,7 @@
 package com.example.Backend.services;
 
+import com.example.Backend.exceptions.Exceptions;
+import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,7 @@ public class FlightService {
         boolean checkDeparture = checkFlightExistence(flight);
         boolean flightValidated = validateFlight(flight);
         if (checkDeparture) {
-//            TODO throw flight exists exception
-             return null;
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         if (!flightValidated) {
 //            TODO throw flight validation unsuccessful exception

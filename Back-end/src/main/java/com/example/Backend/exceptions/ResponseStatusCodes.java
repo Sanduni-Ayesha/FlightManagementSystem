@@ -9,6 +9,15 @@ public enum ResponseStatusCodes {
     FLIGHT_DELETE_SUCCESSFUL(231),
     FLIGHT_UPDATE_SUCCESSFUL(232),
     ;
+
+    private int responseCode;
     ResponseStatusCodes(int responseCode) {
+    }
+
+    public int getResponseCode() {
+        return responseCode;
+    }
+    public static int valueOf(ResponseStatusCodes responseStatusCodes){
+        return responseStatusCodes.responseCode;
     }
 }
