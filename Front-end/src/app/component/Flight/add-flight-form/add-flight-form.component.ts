@@ -81,7 +81,17 @@ export class AddFlightFormComponent implements OnInit {
     if (this.checkFlightExistence(newFlight)){
         alert("The flight is already used in the given time!\n Please use a different time.")
     }else {
-        this.flightService.addFlight(newFlight).subscribe();
+        this.flightService.addFlight(newFlight).subscribe({next: (response) =>{
+            if (response.status==239){
+                alert("The flight is already used in the given time!\n Please use a different time.")
+            }else if (response.status==240){
+                alert("Flight details are invalid. Please enter valid details.")
+            }else{
+                alert("Flight creation successful.")
+            }
+        },error: ()=>{
+                alert("The flight creation process was unsuccessful. Please try again.");
+            }});
         this.dialog.closeAll();
     }
   }
@@ -125,7 +135,24 @@ export class AddFlightFormComponent implements OnInit {
           if (this.checkFlightExistence(newFlight)){
               alert("The flight is already used in the given time!\n Please use a different time.")
           }else{
-              this.flightService.updateFlight(newFlight).subscribe();
+              this.flightService.updateFlight(newFlight).subscribe({next:(response)=> {
+                      if (response.status == 241) {
+                          alert("Flight is already updated by another user.")
+                          this.resetRow()
+                      } else if (response.status == 239) {
+                          alert("The flight is already used in the given time!\n Please use a different time.")
+                      } else if (response.status == 240) {
+                          alert("Flight details are invalid. Please enter valid details.")
+                      } else if (response.status == 237) {
+                          alert("Flight does not exist to be updated.")
+                      } else {
+                          alert("Flight update successful.")
+                      }
+                  },
+                      error: ()=>{
+                          alert("The flight updating process was unsuccessful. Please try again.");
+                      }
+              });
               this.dialog.closeAll();
           }
         }
