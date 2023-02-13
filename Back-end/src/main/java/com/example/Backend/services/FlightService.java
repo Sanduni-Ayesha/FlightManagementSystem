@@ -1,10 +1,12 @@
 package com.example.Backend.services;
 
+import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.responseStatusCodes.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
-import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 public class FlightService {
 
     private FlightRepository flightRepository;
+    public static Logger logger = LoggerFactory.getLogger(FlightDaoImpl.class);
     @Autowired
     public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
