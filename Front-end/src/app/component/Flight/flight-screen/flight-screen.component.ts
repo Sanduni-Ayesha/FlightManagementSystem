@@ -133,7 +133,19 @@ export class FlightScreenComponent implements OnInit {
     removeFlight(id: number) {
         this.getFlightDetails();
         if (confirm('Please confirm deleting')) {
-            this.flightService.deleteFlight(id).subscribe(() => this.getFlightDetails());
+            this.flightService.deleteFlight(id).subscribe({next:(response) => {
+                if (response.status==238){
+                    alert("Flight already deleted!")
+                }else if(response.status==237) {
+                    alert("No such flight exists")
+                }else{
+                    alert("Flight deletion successful!")
+                }
+                this.getFlightDetails()
+            },
+                error: ()=>{
+                    alert("The deletion process was unsuccessful. Please try again.");
+                }});
         }
     }
 

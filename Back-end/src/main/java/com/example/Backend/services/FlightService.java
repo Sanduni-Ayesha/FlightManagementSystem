@@ -1,7 +1,7 @@
 package com.example.Backend.services;
 
 import com.example.Backend.exceptions.Exceptions;
-import com.example.Backend.exceptions.ResponseStatusCodes;
+import com.example.Backend.responseStatusCodes.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class FlightService {
     }
 
     public Flight getFlightByID(int id) {
-        return flightRepository.findById(id).orElse(null);
+        return flightRepository.findById(id).orElseThrow(() -> new Exceptions(ResponseStatusCodes.FLIGHT_NOT_FOUND_EXCEPTION));
     }
 
     public Flight deleteFlight(int id) {
