@@ -64,9 +64,9 @@ export class AddRouteFormComponent implements OnInit {
             )
             this.routeService.addRoute(route).subscribe({
                 next: (response) => {
-                    if (response.status == 200) {
+                    if (response.status == 200) { //OK
                         alert("Route successfully created! new route is now available.");
-                    } else if (response.status == 235) {
+                    } else if (response.status == 235) { //ROUTE_EXISTS_EXCEPTION
                         alert("Route already exist");
                     }
                 },
@@ -96,8 +96,11 @@ export class AddRouteFormComponent implements OnInit {
         )
         if (this.routeInfo.dirty) {
             this.routeService.updateRoute(route).subscribe({next:(response)=>{
-                if (response.status==200){
+                if (response.status==200){ //OK
                     alert("Route successfully updated!");
+                }
+                else if(response.status==236){ //ROUTE_ALREADY_UPDATED_EXCEPTION
+
                 }
                 }, error :()=> {
                 alert("Oops! Something went wrong. Sorry for the inconvenience.");
