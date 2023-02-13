@@ -1,7 +1,6 @@
 package com.example.Backend.services;
-
 import com.example.Backend.daoImpl.RouteDaoImpl;
-import com.example.Backend.exceptions.ResponseStatusCodes;
+import com.example.Backend.responseStatusCodes.ResponseStatusCodes;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.AirportRepository;
 import com.example.Backend.repositories.RouteRepository;
@@ -31,7 +30,7 @@ public class RouteService {
 
     public Route deleteRoute(int id){
             if(!routeRepository.existsRouteByIdAndStatus(id,Route.Status.active)){
-                throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
+                throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
             };
             Route route =this.routeRepository.findRouteById(id);
             route.setStatus(Route.Status.inactive);
