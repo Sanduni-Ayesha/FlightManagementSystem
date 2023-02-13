@@ -121,11 +121,15 @@ export class RouteScreenComponent implements OnInit {
     }
   removeRow(id: number) {
     if (confirm("Press Ok to confirm the deletion !!!")) {
-        this.routeService.deleteRoute(id) .subscribe(
+        this.routeService.deleteRoute(id) .subscribe({next:
             (response)=>{this.getRoutes("","");
             if(response.status==200){
                 alert("Route successfully deleted!")
-            }},()=>{alert("Oops! Something went wrong.Sorry for the inconvenience")});
+
+            }
+            else if (response.status==233){
+                alert("Route already deleted")
+            }},error : ()=>{alert("Oops! Something went wrong.Sorry for the inconvenience")}});
     }
   }
   search() {
