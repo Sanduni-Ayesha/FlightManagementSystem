@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/route")
 @CrossOrigin("http://localhost:4200")
 public class RouteController {
-    @Autowired
+
     private RouteService routeService;
+    @Autowired
+    public RouteController(RouteService routeService) {
+        this.routeService = routeService;
+    }
 
     @GetMapping("/get-route")
     public ResponseEntity<List<Route>>getRoutes(@RequestParam("departureAirport") String departureAirport,
