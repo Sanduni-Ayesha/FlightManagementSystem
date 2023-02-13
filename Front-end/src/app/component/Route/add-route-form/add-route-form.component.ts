@@ -114,7 +114,7 @@ export class AddRouteFormComponent implements OnInit {
 
     onCancel() {
         if (this.routeInfo.dirty) {
-            if (confirm('Are you sure you want to cancel?') == true) {
+            if (confirm('Are you sure you want to cancel?')) {
                 this.dialog.closeAll();
             }
         } else {
