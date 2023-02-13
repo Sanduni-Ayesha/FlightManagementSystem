@@ -5,6 +5,7 @@ import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.responseStatusCodes.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class FlightService {
         return flightRepository.findById(id).orElseThrow(() -> new Exceptions(ResponseStatusCodes.FLIGHT_NOT_FOUND_EXCEPTION));
     }
 
+    @Transactional
     public Flight deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         if (flight.getStatus().equals(Flight.Status.inactive)){
@@ -33,33 +35,31 @@ public class FlightService {
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
         }
         flight.setStatus(Flight.Status.inactive);
-        flightRepository.save(flight);
+//        flightRepository.save(flight);
         return flight;
     }
 
+    @Transactional
     public Flight addFlight(Flight flight) {
-        boolean checkDepartureAndArrival = checkFlightExistence(flight);
-        boolean flightValidated = validateFlight(flight);
-        if (checkDepartureAndArrival) {
+        if (checkFlightExistence(flight)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
-        if (!flightValidated) {
+        if (!validateFlight(flight)) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
         return flightRepository.save(flight);
      }
 
+     @Transactional
     public Flight updateFlight(Flight fl) {
         Flight flight = getFlightByID(fl.getId());
-        boolean checkDepartureAndArrival = checkFlightExistence(fl);
-        boolean flightValidated = validateFlight(fl);
-        if (checkDepartureAndArrival) {
+        if (checkFlightExistence(fl)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
-        if (!flightValidated) {
+        if (!validateFlight(fl)) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
@@ -72,7 +72,7 @@ public class FlightService {
             flight.setArrivalTime(fl.getArrivalTime());
             flight.setLastUpdatedTime(LocalDateTime.now());
             flight.setVersion(fl.getVersion() + 1);
-            return flightRepository.save(flight);
+            return flight;
         }else{
             logger.info("The selected flight is already updated by a user at "+flight.getLastUpdatedTime()+" .");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
