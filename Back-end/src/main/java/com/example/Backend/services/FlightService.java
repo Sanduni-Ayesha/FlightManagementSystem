@@ -22,13 +22,14 @@ public class FlightService {
         return flightRepository.findById(id).orElse(null);
     }
 
-    public void deleteFlight(int id) {
+    public Flight deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         if (flight.getStatus().equals(Flight.Status.inactive)){
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
         }
         flight.setStatus(Flight.Status.inactive);
         flightRepository.save(flight);
+        return flight;
     }
 
     public Flight addFlight(Flight flight) {

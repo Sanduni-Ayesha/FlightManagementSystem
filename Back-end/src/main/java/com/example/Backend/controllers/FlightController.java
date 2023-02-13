@@ -1,5 +1,7 @@
 package com.example.Backend.controllers;
 
+import com.example.Backend.exceptions.ResponseStatusCodes;
+import com.example.Backend.exceptions.SystemExceptionHandler;
 import com.example.Backend.models.Flight;
 import com.example.Backend.dao.FlightDao;
 import com.example.Backend.services.FlightService;
@@ -37,8 +39,8 @@ public class FlightController {
     }
 
     @DeleteMapping("/deleteFlight/{id}")
-    public void deleteFlightByID(@PathVariable("id") int id){
-        flightService.deleteFlight(id);
+    public ResponseEntity<Flight> deleteFlightByID(@PathVariable("id") int id){
+        return new ResponseEntity<>(flightService.deleteFlight(id), HttpStatus.OK);
     }
 
     @PostMapping("/addFlight")

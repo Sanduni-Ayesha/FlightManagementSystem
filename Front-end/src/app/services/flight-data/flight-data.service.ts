@@ -15,14 +15,14 @@ export class FlightDataService {
   }
 
   public deleteFlight(id: number){
-    return this.http.delete(`${this.baseUrl}/flight/deleteFlight/${id}`)
+    return this.http.delete(`${this.baseUrl}/flight/deleteFlight/${id}`,{observe: 'response'})
   }
 
   public addFlight(flight: Flight){
-    return this.http.post(`${this.baseUrl}/flight/addFlight`, flight);
+    return this.http.post(`${this.baseUrl}/flight/addFlight`, flight,{observe: 'response'});
   }
 
   public  updateFlight(flight: Flight){
-    return this.http.put(`${this.baseUrl}/flight/updateFlight`, flight)
+    return this.http.put(`${this.baseUrl}/flight/updateFlight`, flight,{observe: 'response'})
   }
 }
