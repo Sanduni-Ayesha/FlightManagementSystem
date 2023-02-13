@@ -2,13 +2,10 @@ package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.RouteDaoImpl;
 import com.example.Backend.exceptions.ResponseStatusCodes;
-import com.example.Backend.exceptions.RouteNotFoundException;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.AirportRepository;
 import com.example.Backend.repositories.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.Backend.exceptions.Exceptions;
@@ -51,7 +48,7 @@ public class RouteService {
 
         Route UpdatingRoute = routeRepository.findRouteById(route.getId());
         if(!UpdatingRoute.getVersion().equals(route.getVersion())){
-            //ToDo
+            throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_UPDATED_EXCEPTION);
         }
         UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
         UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
