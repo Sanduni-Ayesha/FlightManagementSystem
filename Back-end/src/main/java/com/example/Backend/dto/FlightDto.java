@@ -1,11 +1,5 @@
 package com.example.Backend.dto;
 
-import com.example.Backend.models.Flight;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Version;
-
 import java.time.LocalDateTime;
 
 public class FlightDto {
