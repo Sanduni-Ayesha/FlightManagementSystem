@@ -123,11 +123,11 @@ export class RouteScreenComponent implements OnInit {
     if (confirm("Press Ok to confirm the deletion !!!")) {
         this.routeService.deleteRoute(id) .subscribe({next:
             (response)=>{this.getRoutes("","");
-            if(response.status==200){
+            if(response.status==200){ //OK
                 alert("Route successfully deleted!")
 
             }
-            else if (response.status==233){
+            else if (response.status==233){ // ROUTE_NOT_EXISTS_EXCEPTION
                 alert("Route already deleted")
             }},error : ()=>{alert("Oops! Something went wrong.Sorry for the inconvenience")}});
     }
