@@ -68,10 +68,6 @@ public class FlightService {
         }
     }
 
-    public boolean checkVersion(int currentVersion, int newVersion){
-        return true;
-    }
-
     public boolean validateFlight(Flight flight) {
         String departureAirport = flight.getDepartureAirport();
         String arrivalAirport = flight.getArrivalAirport();

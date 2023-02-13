@@ -74,7 +74,7 @@ export class AddFlightFormComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  createNewFlight() {
     let f = this.flightForm.value
     let lastID  = this.data.flightData[(this.data.flightData.length-1)].id;
     let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
@@ -114,7 +114,7 @@ export class AddFlightFormComponent implements OnInit {
     this.flightForm.patchValue(this.data.row);
   }
 
-  update(dirty: boolean) {
+  updateFlight(dirty: boolean) {
     const updatedId = this.data.row.id;
     if (dirty) {
         if (updatedId != null) {

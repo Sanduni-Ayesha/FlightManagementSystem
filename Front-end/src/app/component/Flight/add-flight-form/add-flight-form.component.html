@@ -115,10 +115,10 @@
       <button mat-button type="button" (click)="resetRow()">
         Reset
       </button>
-      <button mat-button *ngIf="this.data['row'].id==-1" type="submit" (click)="onSubmit()" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'].id==-1" type="submit" (click)="createNewFlight()" [disabled]="!flightForm.valid">
         Submit
       </button>
-      <button mat-button *ngIf="this.data['row'].id!=-1" type="submit" (click)="update(flightForm.dirty)" [disabled]="!flightForm.valid">
+      <button mat-button *ngIf="this.data['row'].id!=-1" type="submit" (click)="updateFlight(flightForm.dirty)" [disabled]="!flightForm.valid">
         Update
       </button>
     </div>
