@@ -9,10 +9,6 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight,Integer> {
-    boolean existsByFlightNoAndArrivalTime(String flightNo, LocalDateTime arrivalTime);
-
-    boolean existsByFlightNoAndDepartureTime(String flightNo, LocalDateTime departureTime);
-
     int countByFlightNoAndDepartureTime(String flightNo, LocalDateTime departureTime);
 
     int countByFlightNoAndArrivalTime(String flightNo, LocalDateTime arrivalTime);
