@@ -9,6 +9,6 @@ public class SystemExceptionHandler {
 
     @ExceptionHandler(Exceptions.class)
     public ResponseEntity<?> handleException(Exceptions exception){
-        return  ResponseEntity.status(exception.getResponseCodeValue()).body(null);
+        return  ResponseEntity.status(exception.getResponseCodeValue()).body(exception.getResponseCode());
     }
 }

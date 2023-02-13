@@ -5,6 +5,11 @@ export class Flight {
   flightNo: string;
   departureTime: string;
   arrivalTime: string;
+  createdTime: string;
+  lastUpdatedTime:string;
+  status:string;
+  version: number;
+
 
   constructor(
     id: number,
@@ -12,7 +17,11 @@ export class Flight {
     arrivalAirport: string,
     flightNo: string,
     departureTime: string,
-    arrivalTime: string
+    arrivalTime: string,
+    createdTime: string,
+    lastUpdatedTime:string,
+    status:string,
+    version: number
   ) {
     this.id = id;
     this.departureAirport = departureAirport;
@@ -20,5 +29,9 @@ export class Flight {
     this.flightNo = flightNo;
     this.departureTime = departureTime;
     this.arrivalTime = arrivalTime;
+    this.createdTime = createdTime;
+    this.lastUpdatedTime = lastUpdatedTime;
+    this.status = status;
+    this.version = version;
   }
 }

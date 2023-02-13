@@ -4,6 +4,7 @@ import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.responseStatusCodes.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,9 @@ public class FlightService {
     }
 
     public Flight addFlight(Flight flight) {
-        boolean checkDeparture = checkFlightExistence(flight);
+        boolean checkDepartureAndArrival = checkFlightExistence(flight);
         boolean flightValidated = validateFlight(flight);
-        if (checkDeparture) {
+        if (checkDepartureAndArrival) {
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         if (!flightValidated) {
@@ -54,6 +55,7 @@ public class FlightService {
         if (!flightValidated) {
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
+
         if (fl.getVersion()==flight.getVersion()){
             flight.setDepartureAirport(fl.getDepartureAirport());
             flight.setArrivalAirport(fl.getArrivalAirport());
@@ -89,8 +91,8 @@ public class FlightService {
         String flightNo = flight.getFlightNo();
         LocalDateTime departureTime = flight.getDepartureTime();
         LocalDateTime arrivalTime = flight.getArrivalTime();
-        boolean departure = flightRepository.existsByFlightNoAndDepartureTime(flightNo,departureTime);
-        boolean arrival = flightRepository.existsByFlightNoAndArrivalTime(flightNo,arrivalTime);
-        return departure;
+        int departure = flightRepository.countByFlightNoAndDepartureTime(flightNo,departureTime);
+        int arrival = flightRepository.countByFlightNoAndArrivalTime(flightNo,arrivalTime);
+        return (departure>1||arrival>1);
     }
 }

@@ -77,7 +77,7 @@ export class AddFlightFormComponent implements OnInit {
   createNewFlight() {
     let f = this.flightForm.value
     let lastID  = this.data.flightData[(this.data.flightData.length-1)].id;
-    let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
+    let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime,"","","active",1)
     if (this.checkFlightExistence(newFlight)){
         alert("The flight is already used in the given time!\n Please use a different time.")
     }else {
@@ -105,7 +105,9 @@ export class AddFlightFormComponent implements OnInit {
       for (const flightData of this.data.flightData) {
           let departure = new Date(flightData.departureTime);
           let arrival = new Date(flightData.arrivalTime);
-
+          if (flightData.id==id){
+              continue;
+          }
           if (flightData.id!=id && flightNo==flightData.flightNo && (departure.toString() == departureTime.toString() || arrival.toString()==arrivalTime.toString())){
               return true;
           }
@@ -131,7 +133,7 @@ export class AddFlightFormComponent implements OnInit {
           let f = this.flightForm.value;
           let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; })=>airport.airport_name==f.departureAirport).airport_code;
           let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; })=>airport.airport_name==f.arrivalAirport).airport_code;
-          let newFlight = new Flight(updatedId, departureCode, arrivalCode,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime);
+          let newFlight = new Flight(updatedId, departureCode, arrivalCode,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime,this.data.row.createdTime,this.data.row.lastUpdatedTime, this.data.row.status, this.data.row.version);
           if (this.checkFlightExistence(newFlight)){
               alert("The flight is already used in the given time!\n Please use a different time.")
           }else{

@@ -149,7 +149,7 @@ export class FlightScreenComponent implements OnInit {
         }
     }
 
-    openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", ""))) {
+    openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", "","","","active",1))) {
         let rowData: Flight = flight;
         this.getFlightDetails();
         if (rowData.departureAirport != "") {
