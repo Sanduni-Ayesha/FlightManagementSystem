@@ -35,7 +35,6 @@ public class FlightService {
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
         }
         flight.setStatus(Flight.Status.inactive);
-//        flightRepository.save(flight);
         return flight;
     }
 
