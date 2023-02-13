@@ -25,7 +25,7 @@ public class FlightService {
     public void deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         if (flight.getStatus().equals(Flight.Status.inactive)){
-//            TODO already deleted exception
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
         }
         flight.setStatus(Flight.Status.inactive);
         flightRepository.save(flight);
@@ -38,8 +38,7 @@ public class FlightService {
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         if (!flightValidated) {
-//            TODO throw flight validation unsuccessful exception
-            return null;
+            throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
         return flightRepository.save(flight);
      }
@@ -49,12 +48,10 @@ public class FlightService {
         boolean checkDeparture = checkFlightExistence(fl);
         boolean flightValidated = validateFlight(fl);
         if (checkDeparture) {
-//            TODO throw flight exists exception
-            return null;
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         if (!flightValidated) {
-//            TODO throw flight validation unsuccessful exception
-            return null;
+            throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
         if (fl.getVersion()==flight.getVersion()){
             flight.setDepartureAirport(fl.getDepartureAirport());
@@ -66,10 +63,8 @@ public class FlightService {
             flight.setVersion(fl.getVersion() + 1);
             return flightRepository.save(flight);
         }else{
-//            TODO throw flight already updated exception
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
         }
-        return flight;
-
     }
 
     public boolean checkVersion(int currentVersion, int newVersion){
