@@ -29,6 +29,7 @@ public class FlightService {
     public Flight deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         if (flight.getStatus().equals(Flight.Status.inactive)){
+            logger.info("The flight with id "+id+" is already deleted.");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
         }
         flight.setStatus(Flight.Status.inactive);
@@ -40,9 +41,11 @@ public class FlightService {
         boolean checkDepartureAndArrival = checkFlightExistence(flight);
         boolean flightValidated = validateFlight(flight);
         if (checkDepartureAndArrival) {
+            logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         if (!flightValidated) {
+            logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
         return flightRepository.save(flight);
@@ -50,12 +53,14 @@ public class FlightService {
 
     public Flight updateFlight(Flight fl) {
         Flight flight = getFlightByID(fl.getId());
-        boolean checkDeparture = checkFlightExistence(fl);
+        boolean checkDepartureAndArrival = checkFlightExistence(fl);
         boolean flightValidated = validateFlight(fl);
-        if (checkDeparture) {
+        if (checkDepartureAndArrival) {
+            logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         if (!flightValidated) {
+            logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
 
@@ -69,6 +74,7 @@ public class FlightService {
             flight.setVersion(fl.getVersion() + 1);
             return flightRepository.save(flight);
         }else{
+            logger.info("The selected flight is already updated by a user at "+flight.getLastUpdatedTime()+" .");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
         }
     }
