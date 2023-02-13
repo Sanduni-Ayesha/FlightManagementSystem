@@ -51,7 +51,7 @@ export class AddRouteFormComponent implements OnInit {
     onSubmit() {
         let routeInfoData = this.routeInfo.value
         const date = new Date();
-        if(this.routeInfo.valid) {
+        if (this.routeInfo.valid) {
             let route = new Route(
                 routeInfoData.id,
                 this.getAirportCode(this.routeInfo.get('arrivalAirport')?.value),
@@ -75,8 +75,7 @@ export class AddRouteFormComponent implements OnInit {
                 }
             });
             this.dialog.closeAll();
-        }
-        else{
+        } else {
             alert("Check  again your input details")
         }
     }
@@ -95,19 +94,19 @@ export class AddRouteFormComponent implements OnInit {
             date
         )
         if (this.routeInfo.dirty) {
-            this.routeService.updateRoute(route).subscribe({next:(response)=>{
-                if (response.status==200){ //OK
-                    alert("Route successfully updated!");
-                }
-                else if(response.status==236){ //ROUTE_ALREADY_UPDATED_EXCEPTION
+            this.routeService.updateRoute(route).subscribe({
+                next: (response) => {
+                    if (response.status == 200) { //OK
+                        alert("Route successfully updated!");
+                    } else if (response.status == 236) { //ROUTE_ALREADY_UPDATED_EXCEPTION
 
+                    }
+                }, error: () => {
+                    alert("Oops! Something went wrong. Sorry for the inconvenience.");
                 }
-                }, error :()=> {
-                alert("Oops! Something went wrong. Sorry for the inconvenience.");
-            }});
+            });
             this.dialog.closeAll();
-        }
-        else {
+        } else {
             this.dialog.closeAll();
         }
     }
