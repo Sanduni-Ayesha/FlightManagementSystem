@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Route} from "../../model/Route";
 
@@ -18,10 +18,10 @@ export class RouteService{
     return this.http.delete(`${this.baseUrl}/delete-route?id=${id.toString()}`,{observe:'response'})
   }
   public updateRoute(route:Route){
-    return this.http.put<Route>(`${this.baseUrl}/update-route`,route,{observe:'response'})
+    return this.http.put<any>(`${this.baseUrl}/update-route`,route,{observe:'response'})
   }
   public addRoute(route:Route){
-    return this.http.post<Route>(`${this.baseUrl}/add-route`,route,{observe:'response'})
+    return this.http.post<any>(`${this.baseUrl}/add-route`,route,{observe:'response'})
   }
 
 }
