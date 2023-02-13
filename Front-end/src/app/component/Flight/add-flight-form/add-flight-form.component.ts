@@ -77,7 +77,9 @@ export class AddFlightFormComponent implements OnInit {
   createNewFlight() {
     let f = this.flightForm.value
     let lastID  = this.data.flightData[(this.data.flightData.length-1)].id;
-    let newFlight = new Flight((lastID+1), <string>f.departureAirport, <string>f.arrivalAirport,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime,"","","active",1)
+      let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; })=>airport.airport_name==f.departureAirport).airport_code;
+      let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; })=>airport.airport_name==f.arrivalAirport).airport_code;
+    let newFlight = new Flight((lastID+1), departureCode, arrivalCode,<string>f.flightNo,<string>f.departureTime,<string>f.arrivalTime,"","","active",1)
     if (this.checkFlightExistence(newFlight)){
         alert("The flight is already used in the given time!\n Please use a different time.")
     }else {
