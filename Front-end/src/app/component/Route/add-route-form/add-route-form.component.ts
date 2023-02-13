@@ -50,8 +50,8 @@ export class AddRouteFormComponent implements OnInit {
 
     onSubmit() {
         let routeInfoData = this.routeInfo.value
-        if (!this.isDuplicateRouteAvailable(this.routeInfo.get('arrivalAirport')?.value, this.routeInfo.get('departureAirport')?.value)) {
-            const date = new Date();
+        const date = new Date();
+        if(this.routeInfo.valid) {
             let route = new Route(
                 routeInfoData.id,
                 this.getAirportCode(this.routeInfo.get('arrivalAirport')?.value),
@@ -62,21 +62,23 @@ export class AddRouteFormComponent implements OnInit {
                 date,
                 date
             )
-            this.routeService.addRoute(route).subscribe({next:(response) => {
-                if (response.status == 200) {
-                    alert("Route successfully created! new route is now available.");
+            this.routeService.addRoute(route).subscribe({
+                next: (response) => {
+                    if (response.status == 200) {
+                        alert("Route successfully created! new route is now available.");
+                    } else if (response.status == 235) {
+                        alert("Route already exist");
+                    }
+                },
+                error: () => {
+                    alert("Oops! Something went wrong.Sorry for the inconvenience")
                 }
-                else if(response.status == 235){
-                    alert("Already exist");
-                }},
-                error: ()=> {
-                alert("Oops! Something went wrong.Sorry for the inconvenience")
-            }});
+            });
             this.dialog.closeAll();
-        } else {
-            alert('The route is already available in system.')
         }
-
+        else{
+            alert("Check  again your input details")
+        }
     }
 
     onUpdate() {
@@ -168,17 +170,6 @@ export class AddRouteFormComponent implements OnInit {
             if (this.airport[index].airport_name == airportName) {
                 return this.airport[index].airport_code;
             }
-        }
-
-    }
-
-    private isDuplicateRouteAvailable(arrivalAirport: String, departureAirport: String): boolean {
-        let duplicateRoute = this.data.allRoutes.find((route: any) => route.arrivalAirport == this.getAirportCode(arrivalAirport)
-            && route.departureAirport == this.getAirportCode(departureAirport))
-        if (duplicateRoute != undefined) {
-            return false;
-        } else {
-            return false;
         }
 
     }
