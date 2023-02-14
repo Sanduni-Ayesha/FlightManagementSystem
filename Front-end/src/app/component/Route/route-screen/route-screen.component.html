@@ -41,15 +41,15 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons" (click)="search()">
+                    <button mat-raised-button class="buttons" (click)="search()" [disabled] = "arrivalControl.invalid || departureControl.invalid">
                         <mat-icon>search</mat-icon>
                         Search route
                     </button>
 
                 </div>
                 <div class="clear">
-                    <button mat-raised-button class="buttons"
-                            (click)="clearSearch();">
+                    <button mat-raised-button class="buttons" [disabled] = "!arrivalControl.dirty && !departureControl.dirty"
+                            (click)="clearSearch()">
                         <mat-icon>clear</mat-icon>
                         Clear search
                     </button>
