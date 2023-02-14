@@ -32,10 +32,10 @@ public class RouteService {
     }
 
     public List<Route> getRoutes(String departureAirport, String arrivalAirport) {
-        if(!departureAirport.isEmpty() && !arrivalAirport.isEmpty() && departureAirport.equals(arrivalAirport)){
-                logger.error("This route with departure airport code "+departureAirport+
-                        " arrival airport " + arrivalAirport + "are same");
-                throw new Exceptions(ResponseStatusCodes.DEPARTURE_AIRPORT_AND_ARRIVAL_AIRPORT_SAME_EXCEPTION);
+        if (!departureAirport.isEmpty() && !arrivalAirport.isEmpty() && departureAirport.equals(arrivalAirport)) {
+            logger.error("This route with departure airport code " + departureAirport +
+                    " arrival airport " + arrivalAirport + "are same");
+            throw new Exceptions(ResponseStatusCodes.DEPARTURE_AIRPORT_AND_ARRIVAL_AIRPORT_SAME_EXCEPTION);
         }
         return routeDaoImpl.searchRoute(departureAirport, arrivalAirport);
     }
@@ -43,7 +43,7 @@ public class RouteService {
 
     public Route deleteRoute(int id) {
         if (routeRepository.existsRouteByIdAndStatus(id, Route.Status.inactive)) {
-            logger.error("The route with id "+ id +" is already deleted.");
+            logger.error("The route with id " + id + " is already deleted.");
             throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
         }
         Route route = this.routeRepository.findRouteById(id);
@@ -54,11 +54,11 @@ public class RouteService {
 
     public Route updateRoute(Route route) {
         if (!routeRepository.existsRouteByIdAndStatus(route.getId(), Route.Status.active)) {
-            logger.error("The the route with"+ route.getId() +"not exist");
+            logger.error("The the route with" + route.getId() + "not exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
-        if (!this.isValidRoute(route)) {
-            logger.error("This input route date with id"+route.getId()+"have invalid inputs");
+        if (!isValidRoute(route)) {
+            logger.error("This input route date with id" + route.getId() + "have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
 
@@ -80,12 +80,12 @@ public class RouteService {
     public Route addRoute(Route route) {
         if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
                 route.getArrivalAirport(), route.getDepartureAirport(), Route.Status.active)) {
-            logger.error("This input route date with departure code "+route.getDepartureAirport()+
-                    " arrival code "+route.getArrivalAirport()+" already exist");
+            logger.error("This input route date with departure code " + route.getDepartureAirport() +
+                    " arrival code " + route.getArrivalAirport() + " already exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
         }
         if (!this.isValidRoute(route)) {
-            logger.error("This input route date with id "+route.getId()+" have invalid inputs");
+            logger.error("This input route date with id " + route.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
         return routeRepository.save(route);
