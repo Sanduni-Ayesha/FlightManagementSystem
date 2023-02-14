@@ -25,6 +25,11 @@
   justify-content: flex-end;
 }
 
+.searchBtn .buttons[disabled]{
+  background-color: grey;
+  color: black;
+}
+
 .searchBtn .buttons, .addFlight .buttons, .addRoute .buttons{
   background-color: darkblue;
   color: white;

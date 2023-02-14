@@ -46,7 +46,7 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons"
+                    <button mat-raised-button class="buttons" [disabled] = "filterDepart.invalid || filterArrive.invalid"
                             (click)="filterByAirport(departure.value, arrive.value)">
                         <mat-icon>search</mat-icon>
                         Search flight
