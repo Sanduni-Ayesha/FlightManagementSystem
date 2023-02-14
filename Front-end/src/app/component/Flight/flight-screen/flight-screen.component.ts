@@ -60,9 +60,9 @@ export class FlightScreenComponent implements OnInit {
     filteredDepartures: Airport[] | undefined;
     filteredArrivals: Airport[] | undefined;
     filterDepart = new FormControl('',[
-        Validators.pattern(/^[a-zA-Z ]*$/),]);
+        Validators.pattern(/^[^0-9]*$/),]);
     filterArrive = new FormControl('',[
-        Validators.pattern(/^[a-zA-Z ]*$/),
+        Validators.pattern(/^[^0-9]*$/),
     ]);
 
     constructor(
