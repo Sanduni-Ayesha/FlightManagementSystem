@@ -25,9 +25,11 @@ export class AddFlightFormComponent implements OnInit {
         id: new FormControl(''),
         departureAirport: new FormControl('', [
           Validators.required,
+            Validators.pattern(/^[a-zA-Z ]*$/),
         ]),
         arrivalAirport: new FormControl('', [
           Validators.required,
+            Validators.pattern(/^[a-zA-Z ]*$/),
         ]),
         flightNo: new FormControl('',[
           Validators.required,

@@ -21,6 +21,10 @@
         <small *ngIf="flightForm.get('departureAirport')?.errors?.['required'] && flightForm.get('departureAirport')?.touched">
           Departure Airport cannot be empty
         </small>
+        <br>
+        <small *ngIf="flightForm.get('departureAirport')?.errors?.['pattern'] && flightForm.get('departureAirport')?.touched">
+          Departure Airport cannot be a number
+        </small>
       </div>
     </div>
 
@@ -46,6 +50,9 @@
           Arrival Airport cannot be empty
         </small>
         <br>
+        <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['pattern'] && flightForm.get('arrivalAirport')?.touched">
+          Arrival Airport cannot be a number
+        </small>
         <br>
         <small *ngIf="flightForm.errors?.['equalDestination']  && flightForm.get('arrivalAirport')?.touched">
           Departure and Arrival cannot be the same

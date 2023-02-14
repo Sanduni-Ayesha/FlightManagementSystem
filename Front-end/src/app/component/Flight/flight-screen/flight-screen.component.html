@@ -11,6 +11,7 @@
                            [formControl]="filterDepart"
                            [matAutocomplete]="departures"
                            #departure>
+                    <mat-error *ngIf="filterDepart.invalid">Cannot be a number</mat-error>
                     <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
                         <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_code">
                             {{depart.airport_name}}
@@ -18,6 +19,9 @@
                     </mat-autocomplete>
                     <mat-icon matSuffix>flight_takeoff</mat-icon>
                 </mat-form-field>
+
+
+
 
                 <mat-form-field class="arriveInput">
                     <mat-label>Arrival Airport</mat-label>
@@ -28,6 +32,7 @@
                            [formControl]="filterArrive"
                            [matAutocomplete]="arrivals"
                            #arrive>
+                    <mat-error *ngIf="filterArrive.invalid">Cannot be a number</mat-error>
                     <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
                         <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_code">
                             {{arrives.airport_name}}
@@ -35,6 +40,7 @@
                     </mat-autocomplete>
                     <mat-icon matSuffix>flight_land</mat-icon>
                 </mat-form-field>
+
             </div>
 
 

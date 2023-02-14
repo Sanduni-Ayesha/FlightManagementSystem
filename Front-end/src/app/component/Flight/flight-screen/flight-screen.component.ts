@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {map} from 'rxjs/operators';
 import {AddFlightFormComponent} from '../add-flight-form/add-flight-form.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -59,8 +59,11 @@ export class FlightScreenComponent implements OnInit {
     columnsSchema: any = COLUMNS;
     filteredDepartures: Airport[] | undefined;
     filteredArrivals: Airport[] | undefined;
-    filterDepart = new FormControl('');
-    filterArrive = new FormControl('');
+    filterDepart = new FormControl('',[
+        Validators.pattern(/^[a-zA-Z ]*$/),]);
+    filterArrive = new FormControl('',[
+        Validators.pattern(/^[a-zA-Z ]*$/),
+    ]);
 
     constructor(
         private flightService: FlightDataService,
