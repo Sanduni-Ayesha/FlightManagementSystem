@@ -77,18 +77,18 @@ export class RouteScreenComponent implements OnInit {
         }
     }
 
-    openForm(_id = -1): void {
-        this.getRoutes("", "")
-        let route: any;
+    openForm(status:string,routeId:number): void {
+        let route:any;
         let id: any;
-        let disableStatus: boolean;
-        if (_id != -1) {
-            id = _id;
-            route = this.findRoute(_id);
+        let disableStatus: boolean = false;
+        if (status == "update") {
+            id = routeId;
+            route = this.findRoute(routeId);
             route.arrivalAirport = this.getAirportNameByAirportCode(route.arrivalAirport);
             route.departureAirport = this.getAirportNameByAirportCode(route.departureAirport);
             disableStatus = true;
-        } else {
+        } else if(status == "create") {
+            this.getRoutes("", "")
             id = ''
             route = '';
             disableStatus = false;
@@ -115,14 +115,16 @@ export class RouteScreenComponent implements OnInit {
     }
 
     private getRoutes(departureAirport: string, arrivalAirport: string) {
-        this.routeService.getAllRoutes(departureAirport, arrivalAirport).subscribe((route) => {
+        this.routeService.getAllRoutes(departureAirport, arrivalAirport).subscribe({next:(route) => {
             this.routeDetails = route;
             if (this.routeDetails.length == 0) {
                 this.errorMessage = "Sorry,there are no route available that match your search criteria";
             } else {
                 this.errorMessage = '';
             }
-        })
+        },error :()=>{
+                alert("Oops! Something went wrong.Sorry for the inconvenience")
+            } })
     }
 
     removeRow(id: number) {
