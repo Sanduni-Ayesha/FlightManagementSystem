@@ -132,10 +132,7 @@ export class AddRouteFormComponent implements OnInit {
                 this.routeInfo.controls.mileage.setValue(this.data.rowData.mileage)
                 this.routeInfo.controls.duration.setValue(this.data.rowData.duration)
             } else {
-                this.routeInfo.controls.departureAirport.setValue('')
-                this.routeInfo.controls.arrivalAirport.setValue('')
-                this.routeInfo.controls.mileage.setValue('')
-                this.routeInfo.controls.duration.setValue('')
+                this.routeInfo.reset();
             }
         }
     }
