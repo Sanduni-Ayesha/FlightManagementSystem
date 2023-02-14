@@ -46,7 +46,7 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons" [disabled] = "filterDepart.invalid || filterArrive.invalid"
+                    <button mat-raised-button class="buttons" [disabled] = "filterDepart.invalid || filterArrive.invalid || filterDepart.getRawValue()==filterArrive.getRawValue()"
                             (click)="filterByAirport(departure.value, arrive.value)">
                         <mat-icon>search</mat-icon>
                         Search flight
@@ -62,6 +62,7 @@
                 </div>
 
             </div>
+
             <span class="space"></span>
             <div class="addFlight">
                 <a mat-raised-button class="buttons" (click)="openAddFlightForm('add')">
@@ -69,8 +70,10 @@
                     Add flight
                 </a>
             </div>
-
-
+            <br>
+            <div class="airportError">
+                <small *ngIf="filterDepart.getRawValue()==filterArrive.getRawValue() && filterArrive.dirty && filterDepart.dirty">Departure and arrival airports are equal</small>
+            </div>
         </form>
     </div>
     <div class="flight_table">
