@@ -174,4 +174,26 @@ export class FlightScreenComponent implements OnInit {
             }
         )
     }
+
+
+    airportEqualWarning():boolean {
+        if(this.filterDepart.getRawValue()==this.filterArrive.getRawValue() && this.filterArrive.dirty && this.filterDepart.dirty){
+            return true;
+        }
+        return false;
+    }
+
+    disableSearch():boolean {
+        if(this.filterDepart.invalid || this.filterArrive.invalid || this.filterDepart.getRawValue()==this.filterArrive.getRawValue()){
+            return true
+        }
+        return false;
+    }
+
+    disableClear():boolean {
+        if (!this.filterArrive.dirty && !this.filterDepart.dirty){
+            return true;
+        }
+        return false;
+    }
 }

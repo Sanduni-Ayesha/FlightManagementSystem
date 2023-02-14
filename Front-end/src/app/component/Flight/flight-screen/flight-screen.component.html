@@ -20,9 +20,6 @@
                     <mat-icon matSuffix>flight_takeoff</mat-icon>
                 </mat-form-field>
 
-
-
-
                 <mat-form-field class="arriveInput">
                     <mat-label>Arrival Airport</mat-label>
                     <input type="text"
@@ -46,7 +43,7 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons" [disabled] = "filterDepart.invalid || filterArrive.invalid || filterDepart.getRawValue()==filterArrive.getRawValue()"
+                    <button mat-raised-button class="buttons" [disabled] = "disableSearch()"
                             (click)="filterByAirport(departure.value, arrive.value)">
                         <mat-icon>search</mat-icon>
                         Search flight
@@ -54,7 +51,7 @@
                 </div>
 
                 <div class="clear">
-                    <button mat-raised-button class="buttons" [disabled] = "!filterArrive.dirty && !filterDepart.dirty"
+                    <button mat-raised-button class="buttons" [disabled] = "disableClear()"
                             (click)="filterByAirport('', '')">
                         <mat-icon>clear</mat-icon>
                         Clear Search
@@ -72,7 +69,7 @@
             </div>
             <br>
             <div class="airportError">
-                <small *ngIf="filterDepart.getRawValue()==filterArrive.getRawValue() && filterArrive.dirty && filterDepart.dirty">Departure and arrival airports are equal</small>
+                <small *ngIf="airportEqualWarning()">Departure and arrival airports are equal</small>
             </div>
         </form>
     </div>
