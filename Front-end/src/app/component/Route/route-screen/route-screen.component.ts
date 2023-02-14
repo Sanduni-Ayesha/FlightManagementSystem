@@ -187,8 +187,8 @@ export class RouteScreenComponent implements OnInit {
 
     public setPageDefault() {
         this.errorMessage = '';
-        this.departureControl.setValue('');
-        this.arrivalControl.setValue('')
+        this.departureControl.reset();
+        this.arrivalControl.reset();
         this.getRoutes("", "");
     }
 
