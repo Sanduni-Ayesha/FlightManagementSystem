@@ -6,6 +6,18 @@
   text-decoration: none;
   color: white;
 }
+
+.icon{
+  transform: scale(1.5);
+}
+
+.Header{
+  font-size: 25px;
+  padding: 15px;
+  text-decoration: none;
+  color: white;
+  font-family: "FreeSerif";
+}
 .mat-tab-nav-bar{
   background-color: darkblue;
   color: white;
@@ -13,6 +25,7 @@
 .icon{
   padding: 5px 15px 5px 5px;
   color: white;
+
 }
 
 .tabs a:hover, .routes, .flights{
