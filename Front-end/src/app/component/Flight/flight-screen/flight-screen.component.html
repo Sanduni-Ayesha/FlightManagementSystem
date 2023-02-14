@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="clear">
-                    <button mat-raised-button class="buttons"
+                    <button mat-raised-button class="buttons" [disabled] = "!filterArrive.dirty && !filterDepart.dirty"
                             (click)="filterByAirport('', '')">
                         <mat-icon>clear</mat-icon>
                         Clear Search
