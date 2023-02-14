@@ -57,7 +57,7 @@
             </div>
             <span class="space"></span>
             <div class="addRoute">
-                <a mat-raised-button class="buttons" (click)="openForm()">
+                <a mat-raised-button class="buttons" (click)="openForm('create',-1)">
                     <mat-icon>add</mat-icon>
                     Add route
                 </a>
@@ -80,7 +80,7 @@
                 <td>{{route.duration}}</td>
                 <td>
                     <div class="btn-edit">
-                        <button mat-button (click)="openForm(route.id)">
+                        <button mat-button (click)="openForm('update',route.id)">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </div>
