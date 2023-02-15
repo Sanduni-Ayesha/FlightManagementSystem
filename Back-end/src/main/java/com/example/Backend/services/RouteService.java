@@ -39,7 +39,6 @@ public class RouteService {
         return routeDaoImpl.searchRoute(departureAirport, arrivalAirport);
     }
 
-
     public Route deleteRoute(int id) {
         if (routeRepository.existsRouteByIdAndStatus(id, Route.Status.inactive)) {
             logger.error("The route with id " + id + " is already deleted.");
@@ -48,7 +47,6 @@ public class RouteService {
         Route route = this.routeRepository.findRouteById(id);
         route.setStatus(Route.Status.inactive);
         return routeRepository.save(route);
-
     }
 
     public RouteDto updateRoute(RouteDto routeDto) {
@@ -60,7 +58,6 @@ public class RouteService {
             logger.error("This input route date with id" + routeDto.getId() + "have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
-
         Route UpdatingRoute = routeRepository.findRouteById(routeDto.getId());
         if (!UpdatingRoute.getVersion().equals(routeDto.getVersion())) {
             logger.error("This input route detail's version is upto date");
@@ -89,8 +86,6 @@ public class RouteService {
         }
         Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
-
-
     }
 
     private Boolean isValidRoute(RouteDto route) {
@@ -100,8 +95,7 @@ public class RouteService {
         if (route.getDepartureAirport().matches(airportPattern) &&
                 route.getArrivalAirport().matches(airportPattern) &&
                 Double.toString(route.getMileage()).matches(floatPattern) &&
-                Double.toString(route.getDuration()).matches(floatPattern)
-        ) {
+                Double.toString(route.getDuration()).matches(floatPattern)) {
             return true;
         } else {
             return false;
