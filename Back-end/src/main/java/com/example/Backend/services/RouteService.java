@@ -1,8 +1,8 @@
 package com.example.Backend.services;
 
-import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.daoImpl.RouteDaoImpl;
 import com.example.Backend.dto.RouteDto;
+import com.example.Backend.dtoMapper.RouteMapper;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.AirportRepository;
@@ -51,7 +51,7 @@ public class RouteService {
 
     }
 
-    public Route updateRoute(RouteDto routeDto) {
+    public RouteDto updateRoute(RouteDto routeDto) {
         if (!routeRepository.existsRouteByIdAndStatus(routeDto.getId(), Route.Status.active)) {
             logger.error("The the route with" + routeDto.getId() + "not exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
@@ -73,10 +73,10 @@ public class RouteService {
         UpdatingRoute.setCreatedTime(routeDto.getCreatedTime());
         UpdatingRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
         Route updatedRoute = routeRepository.save(UpdatingRoute);
-        return updatedRoute;
+        return RouteMapper.routeToRouteDtoMapper(updatedRoute);
     }
 
-    public Route addRoute(RouteDto routeDto) {
+    public RouteDto addRoute(RouteDto routeDto) {
         if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
                 routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.active)) {
             logger.error("This input route date with departure code " + routeDto.getDepartureAirport() +
@@ -87,7 +87,8 @@ public class RouteService {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
-        return routeRepository.save(routeDto.routeDtoToRouteMapper());
+        Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
+        return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
 
 
     }
