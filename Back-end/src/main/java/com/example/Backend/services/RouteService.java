@@ -82,15 +82,14 @@ public class RouteService {
     }
     @Transactional
     public RouteDto addRoute(RouteDto routeDto) {
-        if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
-                routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.active)) {
-            logger.error("This input route date with departure code " + routeDto.getDepartureAirport() +
-                    " arrival code " + routeDto.getArrivalAirport() + " already exist");
-            throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
-        }
         if (!this.isValidRoute(routeDto)) {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
+        }
+        if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
+                routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.inactive)) {
+
+            return setActivateAlreadyExistRoute(routeDto);
         }
         Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
@@ -118,6 +117,15 @@ public class RouteService {
         toBeUpdatedRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
         Route updatedRoute = toBeUpdatedRoute;
         return RouteMapper.routeToRouteDtoMapper(updatedRoute);
+    }
+    private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto){
+        Route route = routeRepository.findRouteByArrivalAirportAndDepartureAirport(routeDto.getArrivalAirport(),
+                routeDto.getDepartureAirport());
+        route.setStatus(Route.Status.active);
+        route.setLastUpdatedTime(routeDto.getCreatedTime());
+        route.setMileage(routeDto.getMileage());
+        route.setDuration(routeDto.getDuration());
+        return RouteMapper.routeToRouteDtoMapper(route);
     }
 
 }
