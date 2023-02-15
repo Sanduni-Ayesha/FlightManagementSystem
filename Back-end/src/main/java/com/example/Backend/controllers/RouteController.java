@@ -1,6 +1,5 @@
 package com.example.Backend.controllers;
 
-import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.models.Route;
 import com.example.Backend.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import java.util.List;
 public class RouteController {
 
     private RouteService routeService;
+
     @Autowired
     public RouteController(RouteService routeService) {
         this.routeService = routeService;
@@ -30,20 +30,15 @@ public class RouteController {
     @DeleteMapping("/delete-route")
     public ResponseEntity<?> deleteRoute(@RequestParam("id") int id) {
         return new ResponseEntity<>(this.routeService.deleteRoute(id), HttpStatus.OK);
-
     }
 
     @PutMapping("/update-route")
     public ResponseEntity<?> updateRoute(@RequestBody Route route) {
         return new ResponseEntity<>(this.routeService.updateRoute(route), HttpStatus.OK);
-
-
     }
 
     @PostMapping("/add-route")
     public ResponseEntity<?> addRoute(@RequestBody Route route) {
         return new ResponseEntity<>(this.routeService.addRoute(route), HttpStatus.OK);
-
-
     }
 }
