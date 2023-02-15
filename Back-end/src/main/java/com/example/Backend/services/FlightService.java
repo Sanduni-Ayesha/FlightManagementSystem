@@ -48,13 +48,13 @@ public class FlightService {
 
     @Transactional
     public Flight addFlight(Flight flight) {
-        if (checkFlightExistence(flight)) {
-            logger.info("The flight cannot be added as the Flight is occupied in the given time");
-            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
-        }
         if (!validateFlight(flight)) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
+        }
+        if (checkFlightExistence(flight)) {
+            logger.info("The flight cannot be added as the Flight is occupied in the given time");
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
         return flightRepository.save(flight);
     }
@@ -62,13 +62,13 @@ public class FlightService {
     @Transactional
     public Flight updateFlight(Flight fl) {
         Flight flight = getFlightByID(fl.getId());
-        if (checkFlightExistence(fl)) {
-            logger.info("The flight cannot be added as the Flight is occupied in the given time");
-            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
-        }
         if (!validateFlight(fl)) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
+        }
+        if (checkFlightExistence(fl)) {
+            logger.info("The flight cannot be added as the Flight is occupied in the given time");
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
 
         if (fl.getVersion() == flight.getVersion()) {
