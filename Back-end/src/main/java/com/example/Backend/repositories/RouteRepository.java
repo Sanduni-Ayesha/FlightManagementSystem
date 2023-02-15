@@ -9,5 +9,6 @@ public interface RouteRepository extends JpaRepository<Route,Integer> {
     Route findRouteById(int id);
     Boolean existsRouteByArrivalAirportAndDepartureAirportAndStatus(String arrivalAirport,String departureAirport,Route.Status status);
     Boolean existsRouteByIdAndStatus(int id,Route.Status status);
+    Route findRouteByArrivalAirportAndDepartureAirport(String arrivalAirport,String departureAirport);
 
 }
