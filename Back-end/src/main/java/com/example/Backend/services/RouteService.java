@@ -58,19 +58,13 @@ public class RouteService {
             logger.error("This input route date with id" + routeDto.getId() + "have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
-        Route UpdatingRoute = routeRepository.findRouteById(routeDto.getId());
-        if (!UpdatingRoute.getVersion().equals(routeDto.getVersion())) {
+        Route toBeUpdatedRoute = routeRepository.findRouteById(routeDto.getId());
+        if (!toBeUpdatedRoute.getVersion().equals(routeDto.getVersion())) {
             logger.error("This input route detail's version is upto date");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_UPDATED_EXCEPTION);
         }
-        UpdatingRoute.setArrivalAirport(routeDto.getArrivalAirport());
-        UpdatingRoute.setDepartureAirport(routeDto.getDepartureAirport());
-        UpdatingRoute.setMileage(routeDto.getMileage());
-        UpdatingRoute.setDuration(routeDto.getDuration());
-        UpdatingRoute.setCreatedTime(routeDto.getCreatedTime());
-        UpdatingRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
-        Route updatedRoute = routeRepository.save(UpdatingRoute);
-        return RouteMapper.routeToRouteDtoMapper(updatedRoute);
+        return setUpdate(toBeUpdatedRoute,routeDto );
+
     }
 
     public RouteDto addRoute(RouteDto routeDto) {
@@ -100,6 +94,16 @@ public class RouteService {
         } else {
             return false;
         }
+    }
+    private RouteDto setUpdate(Route toBeUpdatedRoute, RouteDto routeDto ){
+        toBeUpdatedRoute.setArrivalAirport(routeDto.getArrivalAirport());
+        toBeUpdatedRoute.setDepartureAirport(routeDto.getDepartureAirport());
+        toBeUpdatedRoute.setMileage(routeDto.getMileage());
+        toBeUpdatedRoute.setDuration(routeDto.getDuration());
+        toBeUpdatedRoute.setCreatedTime(routeDto.getCreatedTime());
+        toBeUpdatedRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
+        Route updatedRoute = routeRepository.save(toBeUpdatedRoute);
+        return RouteMapper.routeToRouteDtoMapper(updatedRoute);
     }
 
 }
