@@ -31,7 +31,7 @@ public class FlightController {
 
     @GetMapping("/getFlights/{id}")
     public ResponseEntity<Flight> getFlightByID(@PathVariable("id") int id) {
-        return new ResponseEntity<>(flightService.getFlightByID(id - 1), HttpStatus.OK);
+        return new ResponseEntity<>(flightService.getFlightByID(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteFlight/{id}")
