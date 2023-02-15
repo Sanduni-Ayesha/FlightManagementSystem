@@ -118,7 +118,7 @@ export class AddFlightFormComponent implements OnInit {
             if (flightData.flightNo == flightNo &&
                 (departure <= departureTime && departureTime <= arrival ||
                     departure <= arrivalTime && arrivalTime <= arrival ||
-                    departureTime >= departure && arrival >= arrivalTime)) {
+                    departure <= departureTime  && arrivalTime<=arrival)) {
                 return true;
             }
         }

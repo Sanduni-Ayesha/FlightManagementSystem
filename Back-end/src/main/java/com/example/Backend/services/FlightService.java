@@ -107,8 +107,6 @@ public class FlightService {
         String flightNo = flight.getFlightNo();
         LocalDateTime departureTime = flight.getDepartureTime();
         LocalDateTime arrivalTime = flight.getArrivalTime();
-        int departure = flightRepository.countByFlightNoAndDepartureTime(flightNo, departureTime);
-        int arrival = flightRepository.countByFlightNoAndArrivalTime(flightNo, arrivalTime);
-        return (departure > 1 || arrival > 1);
+        return flightDaoImpl.checkDuplicate(flightNo, departureTime, arrivalTime);
     }
 }
