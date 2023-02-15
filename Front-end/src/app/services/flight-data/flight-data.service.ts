@@ -12,8 +12,11 @@ export class FlightDataService {
     constructor(private http: HttpClient) {
     }
 
-    public getAllFlights(departure = "all", arrival = "all"): Observable<Flight[]> {
-        return this.http.get<Flight[]>(`${this.baseUrl}/flight/getFlights/${departure}/${arrival}`)
+    public getAllFlights(departure:string , arrival:string): Observable<Flight[]> {
+        return this.http.post<Flight[]>(`${this.baseUrl}/flight/getFlights`, {
+            "departureAirport": departure,
+            "arrivalAirport": arrival
+        })
     }
 
     public deleteFlight(id: number) {

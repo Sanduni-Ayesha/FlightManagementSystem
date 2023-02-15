@@ -1,5 +1,6 @@
 package com.example.Backend.daoImpl;
 
+import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.models.Flight;
 import com.example.Backend.dao.FlightDao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,13 +20,13 @@ public class FlightDaoImpl implements FlightDao {
     }
 
     @Override
-    public List<Flight> searchFlights(String departure, String arrival) {
+    public List<Flight> searchFlights(SearchDTO searchDTO) {
         String sqlGetFlights = "Select * from flight where status='active'";
-        if (!departure.equals("all")) {
-            sqlGetFlights += ("and departure_airport='" + departure + "'");
+        if (!searchDTO.getDepartureAirport().equals("")) {
+            sqlGetFlights += ("and departure_airport='" + searchDTO.getDepartureAirport() + "'");
         }
-        if (!arrival.equals("all")) {
-            sqlGetFlights += (" and arrival_airport='" + arrival + "'");
+        if (!searchDTO.getArrivalAirport().equals("")) {
+            sqlGetFlights += (" and arrival_airport='" + searchDTO.getArrivalAirport() + "'");
         }
         List<Flight> flights = jdbcTemplate.query(sqlGetFlights, BeanPropertyRowMapper.newInstance(Flight.class));
         return flights;

@@ -24,12 +24,6 @@ public class FlightController {
         this.flightService = flightService;
     }
 
-//    @Validated
-//    @GetMapping("/getFlights/{departure}/{arrival}")
-//    public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival") String arrival) {
-//        return new ResponseEntity<>(flightService.searchFlights(departure, arrival), HttpStatus.OK);
-//    }
-
     @PostMapping("/getFlights")
     public ResponseEntity<List<Flight>> searchFlights(@RequestBody SearchDTO searchDTO) {
         return new ResponseEntity<>(flightService.searchFlights(searchDTO), HttpStatus.OK);

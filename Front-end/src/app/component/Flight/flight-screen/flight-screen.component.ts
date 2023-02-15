@@ -118,8 +118,8 @@ export class FlightScreenComponent implements OnInit {
             this.filterArrive.reset();
             this.getFlightDetails();
         } else {
-            if (departure == '') departure = "all";
-            if (arrival == '') arrival = "all";
+            if (departure == '') departure = "";
+            if (arrival == '') arrival = "";
             this.flightService.getAllFlights(departure, arrival).subscribe(flights => {
                 this.flightDetails = flights
             })
@@ -127,7 +127,7 @@ export class FlightScreenComponent implements OnInit {
     }
 
     getFlightDetails() {
-        this.flightService.getAllFlights().subscribe(flights => {
+        this.flightService.getAllFlights("","").subscribe(flights => {
             this.flightDetails = flights
             this.allFlightDetails = flights
         })
