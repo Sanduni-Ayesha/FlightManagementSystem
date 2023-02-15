@@ -30,7 +30,7 @@ public class RouteService {
                         FlightRepository flightRepository) {
         this.routeRepository = routeRepositoryInterface;
         this.routeDaoImpl = routeDaoImpl;
-        this.flightRepository=flightRepository;
+        this.flightRepository = flightRepository;
     }
 
     public List<Route> getRoutes(String departureAirport, String arrivalAirport) {
@@ -41,27 +41,29 @@ public class RouteService {
         }
         return routeDaoImpl.searchRoute(departureAirport, arrivalAirport);
     }
+
     @Transactional
     public int deleteRoute(int id) {
         Route route = routeRepository.findRouteById(id);
-        if(route == null){
-            logger.info("The route with id "+ id + " is not available");
+        if (route == null) {
+            logger.info("The route with id " + id + " is not available");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
         if (route.getStatus() == Route.Status.inactive) {
             logger.info("The route with id " + id + " is already in inactive state and it can not be deleted.");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_IN_INACTIVE_STATE_EXCEPTION);
         }
-        if(flightRepository.existsFlightByArrivalAirportAndDepartureAirport(
-                route.getArrivalAirport(), route.getDepartureAirport())){
-             route.setStatus(Route.Status.inactive);
-             return id;
-        }
-            routeRepository.deleteById(id);
+        if (flightRepository.existsFlightByArrivalAirportAndDepartureAirport(
+                route.getArrivalAirport(), route.getDepartureAirport())) {
+            route.setStatus(Route.Status.inactive);
             return id;
+        }
+        routeRepository.deleteById(id);
+        return id;
 
 
     }
+
     @Transactional
     public RouteDto updateRoute(RouteDto routeDto) {
         if (!isValidRoute(routeDto)) {
@@ -77,9 +79,10 @@ public class RouteService {
             logger.error("This input route detail's version is upto date");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_UPDATED_EXCEPTION);
         }
-        return setUpdate(toBeUpdatedRoute,routeDto );
+        return setUpdate(toBeUpdatedRoute, routeDto);
 
     }
+
     @Transactional
     public RouteDto addRoute(RouteDto routeDto) {
         if (!this.isValidRoute(routeDto)) {
@@ -108,7 +111,8 @@ public class RouteService {
             return false;
         }
     }
-    private RouteDto setUpdate(Route toBeUpdatedRoute, RouteDto routeDto ){
+
+    private RouteDto setUpdate(Route toBeUpdatedRoute, RouteDto routeDto) {
         toBeUpdatedRoute.setArrivalAirport(routeDto.getArrivalAirport());
         toBeUpdatedRoute.setDepartureAirport(routeDto.getDepartureAirport());
         toBeUpdatedRoute.setMileage(routeDto.getMileage());
@@ -118,7 +122,8 @@ public class RouteService {
         Route updatedRoute = toBeUpdatedRoute;
         return RouteMapper.routeToRouteDtoMapper(updatedRoute);
     }
-    private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto){
+
+    private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto) {
         Route route = routeRepository.findRouteByArrivalAirportAndDepartureAirport(routeDto.getArrivalAirport(),
                 routeDto.getDepartureAirport());
         route.setStatus(Route.Status.active);
