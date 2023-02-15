@@ -1,6 +1,8 @@
 package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.FlightDaoImpl;
+import com.example.Backend.dto.FlightDto;
+import com.example.Backend.dtoMapper.FlightMapper;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
@@ -43,51 +45,51 @@ public class FlightService {
     }
 
     @Transactional
-    public Flight addFlight(Flight flight) {
-        if (!validateFlight(flight)) {
+    public FlightDto addFlight(FlightDto flightDto) {
+        if (!validateFlight(flightDto)) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
-        if (checkFlightDuplicates(flight)) {
+        if (checkFlightDuplicates(flightDto)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
-        return flightRepository.save(flight);
+        return FlightMapper.flightToFlightDtoMapper(flightRepository.save(FlightMapper.flightDtoToFlightMapper(flightDto)));
     }
 
     @Transactional
-    public Flight updateFlight(Flight fl) {
-        Flight flight = getFlightByID(fl.getId());
-        if (!validateFlight(fl)) {
+    public FlightDto updateFlight(FlightDto flightDto) {
+        Flight flight = getFlightByID(flightDto.getId());
+        if (!validateFlight(flightDto)) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
-        if (checkFlightDuplicates(fl)) {
+        if (checkFlightDuplicates(flightDto)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
 
-        if (fl.getVersion() == flight.getVersion()) {
-            flight.setDepartureAirport(fl.getDepartureAirport());
-            flight.setArrivalAirport(fl.getArrivalAirport());
-            flight.setFlightNo(fl.getFlightNo());
-            flight.setDepartureTime(fl.getDepartureTime());
-            flight.setArrivalTime(fl.getArrivalTime());
+        if (flightDto.getVersion() == flight.getVersion()) {
+            flight.setDepartureAirport(flightDto.getDepartureAirport());
+            flight.setArrivalAirport(flightDto.getArrivalAirport());
+            flight.setFlightNo(flightDto.getFlightNo());
+            flight.setDepartureTime(flightDto.getDepartureTime());
+            flight.setArrivalTime(flightDto.getArrivalTime());
             flight.setLastUpdatedTime(LocalDateTime.now());
-            flight.setVersion(fl.getVersion() + 1);
-            return flight;
+            flight.setVersion(flightDto.getVersion() + 1);
+            return FlightMapper.flightToFlightDtoMapper(flight);
         } else {
             logger.info("The selected flight is already updated by a user at " + flight.getLastUpdatedTime() + " .");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
         }
     }
 
-    public boolean validateFlight(Flight flight) {
-        String departureAirport = flight.getDepartureAirport();
-        String arrivalAirport = flight.getArrivalAirport();
-        String flightNo = flight.getFlightNo();
-        LocalDateTime departureTime = flight.getDepartureTime();
-        LocalDateTime arrivalTime = flight.getArrivalTime();
+    public boolean validateFlight(FlightDto flightDto) {
+        String departureAirport = flightDto.getDepartureAirport();
+        String arrivalAirport = flightDto.getArrivalAirport();
+        String flightNo = flightDto.getFlightNo();
+        LocalDateTime departureTime = flightDto.getDepartureTime();
+        LocalDateTime arrivalTime = flightDto.getArrivalTime();
 
         if (departureAirport.matches("[A-Z]{3}") &&
                 arrivalAirport.matches("[A-Z]{3}") &&
@@ -99,10 +101,10 @@ public class FlightService {
         return false;
     }
 
-    public boolean checkFlightDuplicates(Flight flight) {
-        String flightNo = flight.getFlightNo();
-        LocalDateTime departureTime = flight.getDepartureTime();
-        LocalDateTime arrivalTime = flight.getArrivalTime();
+    public boolean checkFlightDuplicates(FlightDto flightDto) {
+        String flightNo = flightDto.getFlightNo();
+        LocalDateTime departureTime = flightDto.getDepartureTime();
+        LocalDateTime arrivalTime = flightDto.getArrivalTime();
         return flightDaoImpl.checkDuplicate(flightNo, departureTime, arrivalTime);
     }
 }

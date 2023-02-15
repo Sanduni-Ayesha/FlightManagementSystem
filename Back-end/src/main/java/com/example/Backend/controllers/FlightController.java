@@ -1,5 +1,6 @@
 package com.example.Backend.controllers;
 
+import com.example.Backend.dto.FlightDto;
 import com.example.Backend.models.Flight;
 import com.example.Backend.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,14 @@ public class FlightController {
     }
 
     @PostMapping("/addFlight")
-    public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
-        flight.setCreatedTime(LocalDateTime.now());
-        flight.setLastUpdatedTime(LocalDateTime.now());
-        return new ResponseEntity<>(flightService.addFlight(flight), HttpStatus.OK);
+    public ResponseEntity<FlightDto> addFlight(@RequestBody FlightDto flightDto) {
+        flightDto.setCreatedTime(LocalDateTime.now());
+        flightDto.setLastUpdatedTime(LocalDateTime.now());
+        return new ResponseEntity<>(flightService.addFlight(flightDto), HttpStatus.OK);
     }
 
     @PutMapping("/updateFlight")
-    public ResponseEntity<Flight> updateFlight(@RequestBody Flight flight) {
-        return new ResponseEntity<>(flightService.updateFlight(flight), HttpStatus.OK);
+    public ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+        return new ResponseEntity<>(flightService.updateFlight(flightDto), HttpStatus.OK);
     }
 }
