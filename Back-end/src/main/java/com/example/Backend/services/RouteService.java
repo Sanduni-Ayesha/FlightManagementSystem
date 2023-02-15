@@ -64,13 +64,13 @@ public class RouteService {
     }
     @Transactional
     public RouteDto updateRoute(RouteDto routeDto) {
-        if (!routeRepository.existsRouteByIdAndStatus(routeDto.getId(), Route.Status.active)) {
-            logger.error("The the route with" + routeDto.getId() + "not exist");
-            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
-        }
         if (!isValidRoute(routeDto)) {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
+        }
+        if (!routeRepository.existsRouteByIdAndStatus(routeDto.getId(), Route.Status.active)) {
+            logger.error("The the route with" + routeDto.getId() + "not exist");
+            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
         Route toBeUpdatedRoute = routeRepository.findRouteById(routeDto.getId());
         if (!toBeUpdatedRoute.getVersion().equals(routeDto.getVersion())) {
