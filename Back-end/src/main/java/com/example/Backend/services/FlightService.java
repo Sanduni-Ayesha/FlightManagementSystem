@@ -52,7 +52,7 @@ public class FlightService {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
-        if (checkFlightExistence(flight)) {
+        if (checkFlightDuplicates(flight)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
@@ -66,7 +66,7 @@ public class FlightService {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
-        if (checkFlightExistence(fl)) {
+        if (checkFlightDuplicates(fl)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
@@ -103,7 +103,7 @@ public class FlightService {
         return false;
     }
 
-    public boolean checkFlightExistence(Flight flight) {
+    public boolean checkFlightDuplicates(Flight flight) {
         String flightNo = flight.getFlightNo();
         LocalDateTime departureTime = flight.getDepartureTime();
         LocalDateTime arrivalTime = flight.getArrivalTime();

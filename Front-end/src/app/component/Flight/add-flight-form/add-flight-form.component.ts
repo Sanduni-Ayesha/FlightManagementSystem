@@ -83,7 +83,7 @@ export class AddFlightFormComponent implements OnInit {
         let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.departureAirport).airport_code;
         let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
         let newFlight = new Flight((lastID + 1), departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, "", "", "active", 1)
-        if (this.checkFlightExistence(newFlight)) {
+        if (this.checkFlightDuplication(newFlight)) {
             alert("The flight is already used in the given time!\n Please use a different time.")
         } else {
             this.flightService.addFlight(newFlight).subscribe({
@@ -103,7 +103,7 @@ export class AddFlightFormComponent implements OnInit {
         }
     }
 
-    checkFlightExistence(flight: Flight): boolean {
+    checkFlightDuplication(flight: Flight): boolean {
         let id = flight.id;
         let flightNo = flight.flightNo;
         let departureTime = new Date(flight.departureTime);
@@ -142,7 +142,7 @@ export class AddFlightFormComponent implements OnInit {
                 let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.departureAirport).airport_code;
                 let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
                 let newFlight = new Flight(updatedId, departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, this.data.row.createdTime, this.data.row.lastUpdatedTime, this.data.row.status, this.data.row.version);
-                if (this.checkFlightExistence(newFlight)) {
+                if (this.checkFlightDuplication(newFlight)) {
                     alert("The flight is already used in the given time!\n Please use a different time.")
                 } else {
                     this.flightService.updateFlight(newFlight).subscribe({
