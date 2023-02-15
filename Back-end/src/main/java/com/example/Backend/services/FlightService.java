@@ -38,11 +38,7 @@ public class FlightService {
     @Transactional
     public Flight deleteFlight(int id) {
         Flight flight = getFlightByID(id);
-        if (flight.getStatus().equals(Flight.Status.inactive)) {
-            logger.info("The flight with id " + id + " is already deleted.");
-            throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
-        }
-        flight.setStatus(Flight.Status.inactive);
+        flightRepository.delete(flight);
         return flight;
     }
 
