@@ -59,9 +59,9 @@ export class FlightScreenComponent implements OnInit {
     columnsSchema: any = COLUMNS;
     filteredDepartures: Airport[] | undefined;
     filteredArrivals: Airport[] | undefined;
-    filterDepart = new FormControl('',[
+    filterDepart = new FormControl('', [
         Validators.pattern(/^[^0-9]*$/),]);
-    filterArrive = new FormControl('',[
+    filterArrive = new FormControl('', [
         Validators.pattern(/^[^0-9]*$/),
     ]);
 
@@ -117,10 +117,10 @@ export class FlightScreenComponent implements OnInit {
             this.filterDepart.reset();
             this.filterArrive.reset();
             this.getFlightDetails();
-        }else{
-            if (departure=='') departure="all";
-            if (arrival=='') arrival="all";
-            this.flightService.getAllFlights(departure,arrival).subscribe(flights =>{
+        } else {
+            if (departure == '') departure = "all";
+            if (arrival == '') arrival = "all";
+            this.flightService.getAllFlights(departure, arrival).subscribe(flights => {
                 this.flightDetails = flights
             })
         }
@@ -136,23 +136,25 @@ export class FlightScreenComponent implements OnInit {
     removeFlight(id: number) {
         this.getFlightDetails();
         if (confirm('Please confirm deleting')) {
-            this.flightService.deleteFlight(id).subscribe({next:(response) => {
-                if (response.status==238){
-                    alert("Flight already deleted!")
-                }else if(response.status==237) {
-                    alert("No such flight exists")
-                }else{
-                    alert("Flight deletion successful!")
-                }
-                this.getFlightDetails()
-            },
-                error: ()=>{
+            this.flightService.deleteFlight(id).subscribe({
+                next: (response) => {
+                    if (response.status == 238) {
+                        alert("Flight already deleted!")
+                    } else if (response.status == 237) {
+                        alert("No such flight exists")
+                    } else {
+                        alert("Flight deletion successful!")
+                    }
+                    this.getFlightDetails()
+                },
+                error: () => {
                     alert("The deletion process was unsuccessful. Please try again.");
-                }});
+                }
+            });
         }
     }
 
-    openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", "","","","active",1))) {
+    openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", "", "", "", "active", 1))) {
         let rowData: Flight = flight;
         if (rowData.departureAirport != "") {
             rowData.departureAirport = this.getAirportName(flight.departureAirport).toString();
@@ -176,22 +178,22 @@ export class FlightScreenComponent implements OnInit {
     }
 
 
-    airportEqualWarning():boolean {
-        if(this.filterDepart.getRawValue()==this.filterArrive.getRawValue() && this.filterArrive.dirty && this.filterDepart.dirty){
+    airportEqualWarning(): boolean {
+        if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterArrive.dirty && this.filterDepart.dirty) {
             return true;
         }
         return false;
     }
 
-    disableSearch():boolean {
-        if(this.filterDepart.invalid || this.filterArrive.invalid || this.filterDepart.getRawValue()==this.filterArrive.getRawValue()){
+    disableSearch(): boolean {
+        if (this.filterDepart.invalid || this.filterArrive.invalid || this.filterDepart.getRawValue() == this.filterArrive.getRawValue()) {
             return true
         }
         return false;
     }
 
-    disableClear():boolean {
-        if (!this.filterArrive.dirty && !this.filterDepart.dirty){
+    disableClear(): boolean {
+        if (!this.filterArrive.dirty && !this.filterDepart.dirty) {
             return true;
         }
         return false;

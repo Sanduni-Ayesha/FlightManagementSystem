@@ -1,15 +1,16 @@
-
-.overlay{
+.overlay {
   padding: 20px;
   align-content: center;
   background-color: aliceblue;
   border-radius: 20px;
 }
-.overlay h1{
+
+.overlay h1 {
   color: black;
   text-align: center;
 }
-.overlay input[type=text] ,input[type=datetime-local]{
+
+.overlay input[type=text], input[type=datetime-local] {
   width: 100%;
   height: 100%;
   padding: 5px 5px;
@@ -18,10 +19,12 @@
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-.overlay em{
+
+.overlay em {
   color: red;
   text-align: center;
 }
+
 .btn-group button {
   border: none;
   padding: 10px 12px;
@@ -33,16 +36,20 @@
   margin: 4px 2px;
   cursor: pointer;
 }
-.btn-group button[type=reset]{
- background-color: dodgerblue;
+
+.btn-group button[type=reset] {
+  background-color: dodgerblue;
 }
+
 .btn-group button[type=submit] {
   background-color: #6363ff;
 }
-.btn-group button[type=button]{
+
+.btn-group button[type=button] {
   background-color: gray;
 }
-.overlay small{
+
+.overlay small {
   color: red;
 }
 

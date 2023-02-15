@@ -1,133 +1,135 @@
-<div class = 'overlay'>
-  <h1 *ngIf="this.data['row'].id==-1">Add new flight</h1>
-  <h1 *ngIf="this.data['row'].id!=-1">Update flight</h1>
-  <form [formGroup]="flightForm">
-      <div class="departAirport">
-      <label>
-        Departure Airport
-      </label>
-        <input type="text"
-               placeholder="Pick Airport"
-               matInput
-               [formControl]="flightForm.controls['departureAirport']"
-               [matAutocomplete]="departures"
-               #departure>
-        <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
-          <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_name">
-            {{depart.airport_name}}
-          </mat-option>
-        </mat-autocomplete>
-      <div class="error_msg">
-        <small *ngIf="flightForm.get('departureAirport')?.errors?.['required'] && flightForm.get('departureAirport')?.touched">
-          Departure Airport cannot be empty
-        </small>
+<div class='overlay'>
+    <h1 *ngIf="this.data['row'].id==-1">Add new flight</h1>
+    <h1 *ngIf="this.data['row'].id!=-1">Update flight</h1>
+    <form [formGroup]="flightForm">
+        <div class="departAirport">
+            <label>
+                Departure Airport
+            </label>
+            <input type="text"
+                   placeholder="Pick Airport"
+                   matInput
+                   [formControl]="flightForm.controls['departureAirport']"
+                   [matAutocomplete]="departures"
+                   #departure>
+            <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
+                <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_name">
+                    {{depart.airport_name}}
+                </mat-option>
+            </mat-autocomplete>
+            <div class="error_msg">
+                <small *ngIf="flightForm.get('departureAirport')?.errors?.['required'] && flightForm.get('departureAirport')?.touched">
+                    Departure Airport cannot be empty
+                </small>
+                <br>
+                <small *ngIf="flightForm.get('departureAirport')?.errors?.['pattern'] && flightForm.get('departureAirport')?.touched">
+                    Departure Airport cannot be a number
+                </small>
+            </div>
+        </div>
+
         <br>
-        <small *ngIf="flightForm.get('departureAirport')?.errors?.['pattern'] && flightForm.get('departureAirport')?.touched">
-          Departure Airport cannot be a number
-        </small>
-      </div>
-    </div>
 
-    <br>
+        <div class="arrive_airport">
+            <label>
+                Arrival Airport
+            </label>
+            <input type="text"
+                   placeholder="Pick Airport"
+                   matInput
+                   [formControl]="flightForm.controls['arrivalAirport']"
+                   [matAutocomplete]="arrivals"
+                   #arrive>
+            <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
+                <mat-option *ngFor="let arrival of filteredArrivals" [value]="arrival.airport_name">
+                    {{arrival.airport_name}}
+                </mat-option>
+            </mat-autocomplete>
+            <div class="error_msg">
+                <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['required'] && flightForm.get('arrivalAirport')?.touched">
+                    Arrival Airport cannot be empty
+                </small>
+                <br>
+                <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['pattern'] && flightForm.get('arrivalAirport')?.touched">
+                    Arrival Airport cannot be a number
+                </small>
+                <br>
+                <small *ngIf="flightForm.errors?.['equalDestination']  && flightForm.get('arrivalAirport')?.touched">
+                    Departure and Arrival cannot be the same
+                </small>
+            </div>
+        </div>
 
-    <div class="arrive_airport">
-      <label>
-        Arrival Airport
-      </label>
-      <input type="text"
-             placeholder="Pick Airport"
-             matInput
-             [formControl]="flightForm.controls['arrivalAirport']"
-             [matAutocomplete]="arrivals"
-             #arrive>
-      <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
-        <mat-option *ngFor="let arrival of filteredArrivals" [value]="arrival.airport_name">
-          {{arrival.airport_name}}
-        </mat-option>
-      </mat-autocomplete>
-      <div class="error_msg">
-        <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['required'] && flightForm.get('arrivalAirport')?.touched">
-          Arrival Airport cannot be empty
-        </small>
         <br>
-        <small *ngIf="flightForm.get('arrivalAirport')?.errors?.['pattern'] && flightForm.get('arrivalAirport')?.touched">
-          Arrival Airport cannot be a number
-        </small>
+        <div class="flightNo">
+            <label>
+                Flight No.
+            </label>
+            <input id="flightNo" type="text" formControlName="flightNo">
+            <div class="error_msg">
+                <small *ngIf="flightForm.get('flightNo')?.errors?.['required'] && flightForm.get('flightNo')?.touched">
+                    Flight number cannot be empty
+                </small>
+                <br>
+                <small *ngIf="(flightForm.get('flightNo')?.errors?.['pattern'] &&  flightForm.get('flightNo')?.errors?.['pattern'] != null && flightForm.get('flightNo')?.touched)">
+                    Flight number should be in the format of XXxxxx. X - Letters, x- numbers
+                </small>
+            </div>
+        </div>
+
         <br>
-        <small *ngIf="flightForm.errors?.['equalDestination']  && flightForm.get('arrivalAirport')?.touched">
-          Departure and Arrival cannot be the same
-        </small>
-      </div>
-  </div>
 
-    <br>
-    <div class="flightNo">
-      <label>
-        Flight No.
-      </label>
-      <input id="flightNo" type="text" formControlName="flightNo">
-      <div class="error_msg">
-        <small *ngIf="flightForm.get('flightNo')?.errors?.['required'] && flightForm.get('flightNo')?.touched">
-          Flight number cannot be empty
-        </small>
+        <div>
+            <label>
+                Departure date and time
+            </label>
+            <input id="DepartDate" type="datetime-local" formControlName="departureTime">
+            <div class="error_msg">
+                <small *ngIf="flightForm.get('departureTime')?.errors?.['required'] && flightForm.get('departureTime')?.touched">
+                    Departure time required
+                </small>
+                <br>
+                <small *ngIf="flightForm.errors?.['dateMismatch'] && flightForm.get('departureTime')?.touched">
+                    Please fill with a future date
+                </small>
+            </div>
+        </div>
+
         <br>
-        <small *ngIf="(flightForm.get('flightNo')?.errors?.['pattern'] &&  flightForm.get('flightNo')?.errors?.['pattern'] != null && flightForm.get('flightNo')?.touched)">
-          Flight number should be in the format of XXxxxx. X - Letters, x- numbers
-        </small>
-      </div>
-    </div>
 
-    <br>
+        <div>
+            <label>
+                Arrival date and time
+            </label>
+            <input id="ArriveDate" type="datetime-local" formControlName="arrivalTime">
+            <div class="error_msg">
+                <small *ngIf="flightForm.get('arrivalTime')?.errors?.['required'] && flightForm.get('arrivalTime')?.touched">
+                    Departure time required
+                </small>
+                <br>
+                <small *ngIf="flightForm.errors?.['durationError'] && flightForm.get('arrivalTime')?.touched">
+                    Arrival date should be later than departure date
+                </small>
+            </div>
+        </div>
 
-    <div>
-      <label>
-        Departure date and time
-      </label>
-      <input id="DepartDate" type="datetime-local" formControlName="departureTime">
-      <div class="error_msg">
-        <small *ngIf="flightForm.get('departureTime')?.errors?.['required'] && flightForm.get('departureTime')?.touched">
-          Departure time required
-        </small>
         <br>
-        <small *ngIf="flightForm.errors?.['dateMismatch'] && flightForm.get('departureTime')?.touched">
-          Please fill with a future date
-        </small>
-      </div>
-    </div>
 
-    <br>
-
-    <div>
-      <label>
-        Arrival date and time
-      </label>
-      <input id="ArriveDate" type="datetime-local" formControlName="arrivalTime">
-      <div class="error_msg">
-        <small *ngIf="flightForm.get('arrivalTime')?.errors?.['required'] && flightForm.get('arrivalTime')?.touched">
-          Departure time required
-        </small>
-        <br>
-        <small *ngIf="flightForm.errors?.['durationError'] && flightForm.get('arrivalTime')?.touched">
-          Arrival date should be later than departure date
-        </small>
-      </div>
-    </div>
-
-    <br>
-
-    <div class="btn-group">
-      <button mat-button type="button" (click)="close(flightForm.dirty)">
-        Cancel
-      </button>
-      <button mat-button type="button" (click)="resetRow()">
-        Reset
-      </button>
-      <button mat-button *ngIf="this.data['row'].id==-1" type="submit" (click)="createNewFlight()" [disabled]="!flightForm.valid">
-        Submit
-      </button>
-      <button mat-button *ngIf="this.data['row'].id!=-1" type="submit" (click)="updateFlight(flightForm.dirty)" [disabled]="!flightForm.valid">
-        Update
-      </button>
-    </div>
-  </form>
+        <div class="btn-group">
+            <button mat-button type="button" (click)="close(flightForm.dirty)">
+                Cancel
+            </button>
+            <button mat-button type="button" (click)="resetRow()">
+                Reset
+            </button>
+            <button mat-button *ngIf="this.data['row'].id==-1" type="submit" (click)="createNewFlight()"
+                    [disabled]="!flightForm.valid">
+                Submit
+            </button>
+            <button mat-button *ngIf="this.data['row'].id!=-1" type="submit" (click)="updateFlight(flightForm.dirty)"
+                    [disabled]="!flightForm.valid">
+                Update
+            </button>
+        </div>
+    </form>
 </div>

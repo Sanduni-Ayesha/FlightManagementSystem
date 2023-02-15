@@ -1,10 +1,10 @@
-.flight, .route{
+.flight, .route {
   width: 95%;
   align: "center";
   padding: 20px;
 }
 
-.space{
+.space {
   flex: auto;
 }
 
@@ -15,63 +15,63 @@
   flex-flow: row wrap;
 }
 
-.inputFields{
+.inputFields {
   max-width: 400px;
 }
 
-.searchBtn{
+.searchBtn {
   padding: 10px;
   display: flex;
   justify-content: flex-end;
 }
 
-.searchBtn .buttons[disabled]{
+.searchBtn .buttons[disabled] {
   background-color: grey;
   color: black;
 }
 
-.searchBtn .buttons, .addFlight .buttons, .addRoute .buttons{
+.searchBtn .buttons, .addFlight .buttons, .addRoute .buttons {
   background-color: darkblue;
   color: white;
 }
 
-.search, .clear{
+.search, .clear {
   padding: 5px;
 }
 
-.departInput, .arriveInput{
+.departInput, .arriveInput {
   padding-right: 20px;
   width: 25%;
   min-width: 180px;
   max-width: 300px;
 }
 
-.noFlightError, .airportError{
+.noFlightError, .airportError {
   color: red;
   font-style: italic;
 }
 
-.flight_table, .route_table{
+.flight_table, .route_table {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
-th{
+th {
   height: 50px;
   color: darkblue;
 }
 
-tr:nth-child(even){
+tr:nth-child(even) {
   background-color: #6363ff;
 }
 
-tr td{
+tr td {
   padding: 5px;
   text-align: center;
 }
 
-.addFlight, .addRoute{
+.addFlight, .addRoute {
   padding: 15px 10px 10px 10px;
   display: flex;
   justify-content: flex-end;

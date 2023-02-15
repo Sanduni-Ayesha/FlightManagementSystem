@@ -43,7 +43,7 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons" [disabled] = "disableSearch()"
+                    <button mat-raised-button class="buttons" [disabled]="disableSearch()"
                             (click)="filterByAirport(departure.value, arrive.value)">
                         <mat-icon>search</mat-icon>
                         Search flight
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="clear">
-                    <button mat-raised-button class="buttons" [disabled] = "disableClear()"
+                    <button mat-raised-button class="buttons" [disabled]="disableClear()"
                             (click)="filterByAirport('', '')">
                         <mat-icon>clear</mat-icon>
                         Clear Search
