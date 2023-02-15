@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RouteDao<T> {
     List<Route> searchRoute(String departureAirport,String arrivalAirport);
+
 }
