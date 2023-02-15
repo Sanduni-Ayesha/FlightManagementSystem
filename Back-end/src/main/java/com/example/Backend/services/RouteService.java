@@ -2,6 +2,7 @@ package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.daoImpl.RouteDaoImpl;
+import com.example.Backend.dto.RouteDto;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.AirportRepository;
@@ -50,48 +51,48 @@ public class RouteService {
 
     }
 
-    public Route updateRoute(Route route) {
-        if (!routeRepository.existsRouteByIdAndStatus(route.getId(), Route.Status.active)) {
-            logger.error("The the route with" + route.getId() + "not exist");
+    public Route updateRoute(RouteDto routeDto) {
+        if (!routeRepository.existsRouteByIdAndStatus(routeDto.getId(), Route.Status.active)) {
+            logger.error("The the route with" + routeDto.getId() + "not exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
-        if (!isValidRoute(route)) {
-            logger.error("This input route date with id" + route.getId() + "have invalid inputs");
+        if (!isValidRoute(routeDto)) {
+            logger.error("This input route date with id" + routeDto.getId() + "have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
 
-        Route UpdatingRoute = routeRepository.findRouteById(route.getId());
-        if (!UpdatingRoute.getVersion().equals(route.getVersion())) {
+        Route UpdatingRoute = routeRepository.findRouteById(routeDto.getId());
+        if (!UpdatingRoute.getVersion().equals(routeDto.getVersion())) {
             logger.error("This input route detail's version is upto date");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_UPDATED_EXCEPTION);
         }
-        UpdatingRoute.setArrivalAirport(route.getArrivalAirport());
-        UpdatingRoute.setDepartureAirport(route.getDepartureAirport());
-        UpdatingRoute.setMileage(route.getMileage());
-        UpdatingRoute.setDuration(route.getDuration());
-        UpdatingRoute.setCreatedTime(route.getCreatedTime());
-        UpdatingRoute.setLastUpdatedTime(route.getLastUpdatedTime());
+        UpdatingRoute.setArrivalAirport(routeDto.getArrivalAirport());
+        UpdatingRoute.setDepartureAirport(routeDto.getDepartureAirport());
+        UpdatingRoute.setMileage(routeDto.getMileage());
+        UpdatingRoute.setDuration(routeDto.getDuration());
+        UpdatingRoute.setCreatedTime(routeDto.getCreatedTime());
+        UpdatingRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
         Route updatedRoute = routeRepository.save(UpdatingRoute);
         return updatedRoute;
     }
 
-    public Route addRoute(Route route) {
+    public Route addRoute(RouteDto routeDto) {
         if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
-                route.getArrivalAirport(), route.getDepartureAirport(), Route.Status.active)) {
-            logger.error("This input route date with departure code " + route.getDepartureAirport() +
-                    " arrival code " + route.getArrivalAirport() + " already exist");
+                routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.active)) {
+            logger.error("This input route date with departure code " + routeDto.getDepartureAirport() +
+                    " arrival code " + routeDto.getArrivalAirport() + " already exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
         }
-        if (!this.isValidRoute(route)) {
-            logger.error("This input route date with id " + route.getId() + " have invalid inputs");
+        if (!this.isValidRoute(routeDto)) {
+            logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
-        return routeRepository.save(route);
+        return routeRepository.save(routeDto.routeDtoToRouteMapper());
 
 
     }
 
-    public Boolean isValidRoute(Route route) {
+    public Boolean isValidRoute(RouteDto route) {
         String airportPattern = "[A-Z]{3}";
         String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
 
