@@ -108,26 +108,31 @@ export class FlightScreenComponent implements OnInit {
         }
     }
 
-    public getAirportName(code: string): String {
-        return this.airportDetails.find(airport => airport.airport_code == code)?.airport_name!;
+    public getAirportNameByAirportCode(airportCode: string): String {
+        return this.airportDetails.find(airport => airport.airport_code == airportCode)?.airport_name!;
+    }
+    public getAirportCodeByAirportName(airportName: string): String {
+        return this.airportDetails.find(airport => airport.airport_name == airportName)?.airport_code!;
+
+    }
+    filterByAirport() {
+        let departure = this.getAirportCodeByAirportName(this.filterDepart.value!);
+        let arrival = this.getAirportCodeByAirportName(this.filterArrive.value!);
+        if (this.filterDepart.value == '') departure = "";
+        if (this.filterArrive.value == '') arrival = "";
+        this.flightService.getAllFlights(departure.toString(), arrival.toString()).subscribe(flights => {
+            this.flightDetails = flights
+        })
     }
 
-    filterByAirport(departure: string, arrival: string) {
-        if (departure == '' && arrival == '') {
-            this.filterDepart.reset();
-            this.filterArrive.reset();
-            this.getFlightDetails();
-        } else {
-            if (departure == '') departure = "";
-            if (arrival == '') arrival = "";
-            this.flightService.getAllFlights(departure, arrival).subscribe(flights => {
-                this.flightDetails = flights
-            })
-        }
+    clearSearch() {
+        this.filterDepart.setValue("");
+        this.filterArrive.setValue("");
+        this.getFlightDetails();
     }
 
     getFlightDetails() {
-        this.flightService.getAllFlights("","").subscribe(flights => {
+        this.flightService.getAllFlights("", "").subscribe(flights => {
             this.flightDetails = flights
             this.allFlightDetails = flights
         })
@@ -157,8 +162,8 @@ export class FlightScreenComponent implements OnInit {
     openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", "", "", "", "active", 1))) {
         let rowData: Flight = flight;
         if (rowData.departureAirport != "") {
-            rowData.departureAirport = this.getAirportName(flight.departureAirport).toString();
-            rowData.arrivalAirport = this.getAirportName(flight.arrivalAirport).toString();
+            rowData.departureAirport = this.getAirportNameByAirportCode(flight.departureAirport).toString();
+            rowData.arrivalAirport = this.getAirportNameByAirportCode(flight.arrivalAirport).toString();
         }
         let addFlightForm = this.dialog.open(AddFlightFormComponent, {
             disableClose: true,
@@ -179,7 +184,7 @@ export class FlightScreenComponent implements OnInit {
 
 
     airportEqualWarning(): boolean {
-        if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterArrive.dirty && this.filterDepart.dirty) {
+        if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterDepart.getRawValue()!="" && this.filterArrive.dirty && this.filterDepart.dirty) {
             return true;
         }
         return false;

@@ -10,10 +10,10 @@
                            matInput
                            [formControl]="filterDepart"
                            [matAutocomplete]="departures"
-                           #departure>
+                    >
                     <mat-error *ngIf="filterDepart.invalid">Cannot be a number</mat-error>
                     <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
-                        <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_code">
+                        <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_name">
                             {{depart.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -28,10 +28,10 @@
                            matInput
                            [formControl]="filterArrive"
                            [matAutocomplete]="arrivals"
-                           #arrive>
+                    >
                     <mat-error *ngIf="filterArrive.invalid">Cannot be a number</mat-error>
                     <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
-                        <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_code">
+                        <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_name">
                             {{arrives.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -44,7 +44,7 @@
             <div class="searchBtn">
                 <div class="search">
                     <button mat-raised-button class="buttons" [disabled]="disableSearch()"
-                            (click)="filterByAirport(departure.value, arrive.value)">
+                            (click)="filterByAirport()">
                         <mat-icon>search</mat-icon>
                         Search flight
                     </button>
@@ -52,7 +52,7 @@
 
                 <div class="clear">
                     <button mat-raised-button class="buttons" [disabled]="disableClear()"
-                            (click)="filterByAirport('', '')">
+                            (click)="clearSearch()">
                         <mat-icon>clear</mat-icon>
                         Clear Search
                     </button>
@@ -84,8 +84,8 @@
                 </th>
             </tr>
             <tr *ngFor="let flight of flightDetails">
-                <td>{{getAirportName(flight.departureAirport)}}</td>
-                <td>{{getAirportName(flight.arrivalAirport)}}</td>
+                <td>{{getAirportNameByAirportCode(flight.departureAirport)}}</td>
+                <td>{{getAirportNameByAirportCode(flight.arrivalAirport)}}</td>
                 <td>{{flight.flightNo}}</td>
                 <td>{{flight.departureTime | date: 'M/d/y, h:mm a, z' }}</td>
                 <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
