@@ -17,7 +17,6 @@ import java.util.List;
 
 @Service
 public class RouteService {
-    private AirportRepository airportRepository;
     private RouteRepository routeRepository;
     private RouteDaoImpl routeDaoImpl;
     public static Logger logger = LoggerFactory.getLogger(RouteDaoImpl.class);
@@ -27,7 +26,6 @@ public class RouteService {
                         AirportRepository airportRepository,
                         RouteDaoImpl routeDaoImpl) {
         this.routeRepository = routeRepositoryInterface;
-        this.airportRepository = airportRepository;
         this.routeDaoImpl = routeDaoImpl;
     }
 
