@@ -18,12 +18,12 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public List<Flight> getFlights(String departure, String arrival) {
-        String sqlGetFlights =  "Select * from flight where status='active'";
-        if(!departure.equals("all")){
-            sqlGetFlights+=("and departure_airport='"+departure+"'");
+        String sqlGetFlights = "Select * from flight where status='active'";
+        if (!departure.equals("all")) {
+            sqlGetFlights += ("and departure_airport='" + departure + "'");
         }
-        if(!arrival.equals("all")){
-            sqlGetFlights+=(" and arrival_airport='"+arrival+"'");
+        if (!arrival.equals("all")) {
+            sqlGetFlights += (" and arrival_airport='" + arrival + "'");
         }
         List<Flight> flights = jdbcTemplate.query(sqlGetFlights, BeanPropertyRowMapper.newInstance(Flight.class));
         return flights;

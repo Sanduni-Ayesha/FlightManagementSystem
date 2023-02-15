@@ -11,12 +11,13 @@ import java.util.List;
 @Service
 public class AirportService {
     private AirportRepository airportRepository;
+
     @Autowired
     public AirportService(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
     }
 
-    public List<Airport> getAllAirports(){
+    public List<Airport> getAllAirports() {
         List<Airport> airports = airportRepository.findAll();
         return airports;
     }

@@ -9,9 +9,9 @@ import jakarta.persistence.Table;
 @Table(name = "airport")
 public class Airport {
     @Id
-    @Column(name="airport_code", length = 3, nullable = false)
+    @Column(name = "airport_code", length = 3, nullable = false)
     String airport_code;
-    @Column(name="airport_name", nullable = false)
+    @Column(name = "airport_name", nullable = false)
     String airport_name;
 
     public Airport() {

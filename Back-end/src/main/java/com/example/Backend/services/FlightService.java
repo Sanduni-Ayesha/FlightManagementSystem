@@ -2,7 +2,7 @@ package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.exceptions.Exceptions;
-import com.example.Backend.responseStatusCodes.ResponseStatusCodes;
+import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
 import jakarta.transaction.Transactional;
@@ -18,6 +18,7 @@ public class FlightService {
 
     private FlightRepository flightRepository;
     public static Logger logger = LoggerFactory.getLogger(FlightDaoImpl.class);
+
     @Autowired
     public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
@@ -30,8 +31,8 @@ public class FlightService {
     @Transactional
     public Flight deleteFlight(int id) {
         Flight flight = getFlightByID(id);
-        if (flight.getStatus().equals(Flight.Status.inactive)){
-            logger.info("The flight with id "+id+" is already deleted.");
+        if (flight.getStatus().equals(Flight.Status.inactive)) {
+            logger.info("The flight with id " + id + " is already deleted.");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_DELETED_EXCEPTION);
         }
         flight.setStatus(Flight.Status.inactive);
@@ -49,9 +50,9 @@ public class FlightService {
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
         return flightRepository.save(flight);
-     }
+    }
 
-     @Transactional
+    @Transactional
     public Flight updateFlight(Flight fl) {
         Flight flight = getFlightByID(fl.getId());
         if (checkFlightExistence(fl)) {
@@ -63,7 +64,7 @@ public class FlightService {
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
         }
 
-        if (fl.getVersion()==flight.getVersion()){
+        if (fl.getVersion() == flight.getVersion()) {
             flight.setDepartureAirport(fl.getDepartureAirport());
             flight.setArrivalAirport(fl.getArrivalAirport());
             flight.setFlightNo(fl.getFlightNo());
@@ -72,8 +73,8 @@ public class FlightService {
             flight.setLastUpdatedTime(LocalDateTime.now());
             flight.setVersion(fl.getVersion() + 1);
             return flight;
-        }else{
-            logger.info("The selected flight is already updated by a user at "+flight.getLastUpdatedTime()+" .");
+        } else {
+            logger.info("The selected flight is already updated by a user at " + flight.getLastUpdatedTime() + " .");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
         }
     }
@@ -95,12 +96,12 @@ public class FlightService {
         return false;
     }
 
-    public boolean checkFlightExistence(Flight flight){
+    public boolean checkFlightExistence(Flight flight) {
         String flightNo = flight.getFlightNo();
         LocalDateTime departureTime = flight.getDepartureTime();
         LocalDateTime arrivalTime = flight.getArrivalTime();
-        int departure = flightRepository.countByFlightNoAndDepartureTime(flightNo,departureTime);
-        int arrival = flightRepository.countByFlightNoAndArrivalTime(flightNo,arrivalTime);
-        return (departure>1||arrival>1);
+        int departure = flightRepository.countByFlightNoAndDepartureTime(flightNo, departureTime);
+        int arrival = flightRepository.countByFlightNoAndArrivalTime(flightNo, arrivalTime);
+        return (departure > 1 || arrival > 1);
     }
 }

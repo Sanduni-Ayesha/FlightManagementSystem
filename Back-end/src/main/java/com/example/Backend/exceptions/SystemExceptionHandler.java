@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class SystemExceptionHandler {
 
     @ExceptionHandler(Exceptions.class)
-    public ResponseEntity<?> handleException(Exceptions exception){
-        return  ResponseEntity.status(exception.getResponseCodeValue()).body(exception.getResponseCode());
+    public ResponseEntity<?> handleException(Exceptions exception) {
+        return ResponseEntity.status(exception.getResponseCodeValue()).body(exception.getResponseCode());
     }
 }

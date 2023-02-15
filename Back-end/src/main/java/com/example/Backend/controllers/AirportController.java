@@ -15,12 +15,14 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class AirportController {
     private AirportService airportService;
+
     @Autowired
     public AirportController(AirportService airportService) {
         this.airportService = airportService;
     }
+
     @GetMapping("/get-airport")
-    public List<Airport> getAllAirport(){
-     return this.airportService.getAllAirports();
+    public List<Airport> getAllAirport() {
+        return this.airportService.getAllAirports();
     }
 }

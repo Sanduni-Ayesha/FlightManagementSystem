@@ -1,37 +1,38 @@
 package com.example.Backend.models;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "flight")
 public class Flight {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="departure_airport", length=3, nullable = false)
+    @Column(name = "departure_airport", length = 3, nullable = false)
     private String departureAirport;
-    @Column(name="arrival_airport", length=3,nullable = false)
+    @Column(name = "arrival_airport", length = 3, nullable = false)
     private String arrivalAirport;
-    @Column(name="flight_no", length=6,nullable = false)
+    @Column(name = "flight_no", length = 6, nullable = false)
     private String flightNo;
-    @Column(name="departure_time",nullable = false)
+    @Column(name = "departure_time", nullable = false)
     private LocalDateTime departureTime;
-    @Column(name="arrival_time", nullable = false)
+    @Column(name = "arrival_time", nullable = false)
     private LocalDateTime arrivalTime;
-    @Column(name="created_time", nullable = false)
+    @Column(name = "created_time", nullable = false)
     private LocalDateTime createdTime;
-    @Column(name="last_updated_time", nullable = false)
+    @Column(name = "last_updated_time", nullable = false)
     private LocalDateTime lastUpdatedTime;
     @Enumerated(EnumType.STRING)
     private Status status = Status.active;
     @Version
-    private int version =1;
+    private int version = 1;
 
-    public Flight(){
+    public Flight() {
     }
 
-    public enum Status{
+    public enum Status {
         active,
         inactive
     }
@@ -75,6 +76,7 @@ public class Flight {
     public LocalDateTime getArrivalTime() {
         return arrivalTime;
     }
+
     public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
     }

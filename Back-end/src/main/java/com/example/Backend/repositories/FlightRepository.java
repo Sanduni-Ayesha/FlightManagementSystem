@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 
-
 @Repository
-public interface FlightRepository extends JpaRepository<Flight,Integer> {
+public interface FlightRepository extends JpaRepository<Flight, Integer> {
     int countByFlightNoAndDepartureTime(String flightNo, LocalDateTime departureTime);
 
     int countByFlightNoAndArrivalTime(String flightNo, LocalDateTime arrivalTime);

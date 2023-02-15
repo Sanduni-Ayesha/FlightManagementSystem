@@ -27,29 +27,29 @@ public class FlightController {
 
     @Validated
     @GetMapping("/getFlights/{departure}/{arrival}")
-    public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival")String arrival){
-        return new ResponseEntity<>(flightDao.getFlights(departure,arrival), HttpStatus.OK);
+    public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival") String arrival) {
+        return new ResponseEntity<>(flightDao.getFlights(departure, arrival), HttpStatus.OK);
     }
 
     @GetMapping("/getFlights/{id}")
-    public ResponseEntity<Flight> getFlightByID(@PathVariable("id") int id){
-        return new ResponseEntity<>(flightService.getFlightByID(id-1), HttpStatus.OK);
+    public ResponseEntity<Flight> getFlightByID(@PathVariable("id") int id) {
+        return new ResponseEntity<>(flightService.getFlightByID(id - 1), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteFlight/{id}")
-    public ResponseEntity<Flight> deleteFlightByID(@PathVariable("id") int id){
+    public ResponseEntity<Flight> deleteFlightByID(@PathVariable("id") int id) {
         return new ResponseEntity<>(flightService.deleteFlight(id), HttpStatus.OK);
     }
 
     @PostMapping("/addFlight")
-    public ResponseEntity<Flight> addFlight(@RequestBody Flight flight){
+    public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
         flight.setCreatedTime(LocalDateTime.now());
         flight.setLastUpdatedTime(LocalDateTime.now());
         return new ResponseEntity<>(flightService.addFlight(flight), HttpStatus.OK);
     }
 
     @PutMapping("/updateFlight")
-    public ResponseEntity<Flight> updateFlight(@RequestBody Flight flight){
+    public ResponseEntity<Flight> updateFlight(@RequestBody Flight flight) {
         return new ResponseEntity<>(flightService.updateFlight(flight), HttpStatus.OK);
     }
 }
