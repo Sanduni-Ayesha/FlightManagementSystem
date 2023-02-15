@@ -79,16 +79,5 @@ public class RouteDto {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
-    public  Route routeDtoToRouteMapper(){
-        Route route = new Route();
-        route.setId(this.id);
-        route.setArrivalAirport(this.arrivalAirport);
-        route.setDepartureAirport(this.departureAirport);
-        route.setMileage(this.mileage);
-        route.setDuration(this.duration);
-        route.setVersion(this.version);
-        route.setCreatedTime(this.createdTime);
-        route.setLastUpdatedTime(this.lastUpdatedTime);
-        return route;
-    }
+
 }
