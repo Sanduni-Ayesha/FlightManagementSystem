@@ -38,10 +38,10 @@ public class FlightService {
     }
 
     @Transactional
-    public Flight deleteFlight(int id) {
+    public FlightDto deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         flightRepository.delete(flight);
-        return flight;
+        return FlightMapper.flightToFlightDtoMapper(flight);
     }
 
     @Transactional
