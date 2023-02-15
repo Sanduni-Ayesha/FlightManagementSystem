@@ -1,5 +1,6 @@
 package com.example.Backend.controllers;
 
+import com.example.Backend.dto.RouteDto;
 import com.example.Backend.models.Route;
 import com.example.Backend.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,12 @@ public class RouteController {
     }
 
     @PutMapping("/update-route")
-    public ResponseEntity<?> updateRoute(@RequestBody Route route) {
-        return new ResponseEntity<>(this.routeService.updateRoute(route), HttpStatus.OK);
+    public ResponseEntity<?> updateRoute(@RequestBody RouteDto routeDto) {
+        return new ResponseEntity<>(this.routeService.updateRoute(routeDto), HttpStatus.OK);
     }
 
     @PostMapping("/add-route")
-    public ResponseEntity<?> addRoute(@RequestBody Route route) {
-        return new ResponseEntity<>(this.routeService.addRoute(route), HttpStatus.OK);
+    public ResponseEntity<?> addRoute(@RequestBody RouteDto routeDto) {
+        return new ResponseEntity<>(this.routeService.addRoute(routeDto), HttpStatus.OK);
     }
 }
