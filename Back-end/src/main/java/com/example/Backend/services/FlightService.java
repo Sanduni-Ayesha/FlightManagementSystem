@@ -2,6 +2,7 @@ package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.dto.FlightDto;
+import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.dtoMapper.FlightMapper;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
@@ -29,8 +30,8 @@ public class FlightService {
         this.flightDaoImpl = flightDaoImpl;
     }
 
-    public List<Flight> searchFlights(String departure, String arrival) {
-        return flightDaoImpl.searchFlights(departure, arrival);
+    public List<Flight> searchFlights(SearchDTO searchDTO) {
+        return flightDaoImpl.searchFlights(searchDTO);
     }
 
     public Flight getFlightByID(int id) {

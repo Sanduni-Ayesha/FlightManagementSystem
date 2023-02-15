@@ -1,6 +1,7 @@
 package com.example.Backend.controllers;
 
 import com.example.Backend.dto.FlightDto;
+import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.models.Flight;
 import com.example.Backend.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,15 @@ public class FlightController {
         this.flightService = flightService;
     }
 
-    @Validated
-    @GetMapping("/getFlights/{departure}/{arrival}")
-    public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival") String arrival) {
-        return new ResponseEntity<>(flightService.searchFlights(departure, arrival), HttpStatus.OK);
+//    @Validated
+//    @GetMapping("/getFlights/{departure}/{arrival}")
+//    public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival") String arrival) {
+//        return new ResponseEntity<>(flightService.searchFlights(departure, arrival), HttpStatus.OK);
+//    }
+
+    @PostMapping("/getFlights")
+    public ResponseEntity<List<Flight>> searchFlights(@RequestBody SearchDTO searchDTO) {
+        return new ResponseEntity<>(flightService.searchFlights(searchDTO), HttpStatus.OK);
     }
 
     @GetMapping("/getFlights/{id}")
