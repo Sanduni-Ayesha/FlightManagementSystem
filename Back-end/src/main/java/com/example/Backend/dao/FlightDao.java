@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface FlightDao<T> {
-    List<Flight> getFlights(String departure, String arrival);
+    List<Flight> searchFlights(String departure, String arrival);
 }

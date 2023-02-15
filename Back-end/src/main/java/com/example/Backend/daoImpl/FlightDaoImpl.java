@@ -17,7 +17,7 @@ public class FlightDaoImpl implements FlightDao {
     }
 
     @Override
-    public List<Flight> getFlights(String departure, String arrival) {
+    public List<Flight> searchFlights(String departure, String arrival) {
         String sqlGetFlights = "Select * from flight where status='active'";
         if (!departure.equals("all")) {
             sqlGetFlights += ("and departure_airport='" + departure + "'");

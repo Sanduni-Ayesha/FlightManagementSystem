@@ -17,18 +17,16 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class FlightController {
     private FlightService flightService;
-    private FlightDao<Flight> flightDao;
 
     @Autowired
-    public FlightController(FlightService flightService, FlightDao<Flight> flightDao) {
+    public FlightController(FlightService flightService) {
         this.flightService = flightService;
-        this.flightDao = flightDao;
     }
 
     @Validated
     @GetMapping("/getFlights/{departure}/{arrival}")
     public ResponseEntity<List<Flight>> getAllFlights(@PathVariable("departure") String departure, @PathVariable("arrival") String arrival) {
-        return new ResponseEntity<>(flightDao.getFlights(departure, arrival), HttpStatus.OK);
+        return new ResponseEntity<>(flightService.searchFlights(departure, arrival), HttpStatus.OK);
     }
 
     @GetMapping("/getFlights/{id}")

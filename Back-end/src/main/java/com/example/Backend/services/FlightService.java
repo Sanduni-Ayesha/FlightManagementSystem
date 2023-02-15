@@ -12,16 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class FlightService {
 
     private FlightRepository flightRepository;
+    private FlightDaoImpl flightDaoImpl;
     public static Logger logger = LoggerFactory.getLogger(FlightDaoImpl.class);
 
     @Autowired
-    public FlightService(FlightRepository flightRepository) {
+    public FlightService(FlightRepository flightRepository, FlightDaoImpl flightDaoImpl) {
         this.flightRepository = flightRepository;
+        this.flightDaoImpl = flightDaoImpl;
+    }
+
+    public List<Flight> searchFlights(String departure, String arrival) {
+        return flightDaoImpl.searchFlights(departure, arrival);
     }
 
     public Flight getFlightByID(int id) {
