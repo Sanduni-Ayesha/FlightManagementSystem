@@ -124,8 +124,8 @@ public class RouteService {
     }
 
     private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto) {
-        Route route = routeRepository.findRouteByArrivalAirportAndDepartureAirport(routeDto.getArrivalAirport(),
-                routeDto.getDepartureAirport());
+        Route route = routeRepository.findRouteByArrivalAirportAndDepartureAirport
+                (routeDto.getArrivalAirport(),routeDto.getDepartureAirport());
         route.setStatus(Route.Status.active);
         route.setLastUpdatedTime(routeDto.getCreatedTime());
         route.setMileage(routeDto.getMileage());
