@@ -1,11 +1,12 @@
 package com.example.Backend.dto;
 
+
 import com.example.Backend.models.Route;
 
 import java.util.Date;
 
 public class RouteDto {
-    private int id ;
+    private int id;
     private String arrivalAirport;
     private String departureAirport;
     private double mileage;
@@ -13,12 +14,6 @@ public class RouteDto {
     private Long version;
     private Date createdTime;
     private Date lastUpdatedTime;
-    private RouteDto.Status status = RouteDto.Status.active;
-
-    public enum Status{
-        active,
-        inactive
-    }
 
     public int getId() {
         return id;
@@ -84,11 +79,16 @@ public class RouteDto {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    public  Route routeDtoToRouteMapper(){
+        Route route = new Route();
+        route.setId(this.id);
+        route.setArrivalAirport(this.arrivalAirport);
+        route.setDepartureAirport(this.departureAirport);
+        route.setMileage(this.mileage);
+        route.setDuration(this.duration);
+        route.setVersion(this.version);
+        route.setCreatedTime(this.createdTime);
+        route.setLastUpdatedTime(this.lastUpdatedTime);
+        return route;
     }
 }
