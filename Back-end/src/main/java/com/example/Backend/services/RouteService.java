@@ -93,7 +93,7 @@ public class RouteService {
 
     }
 
-    public Boolean isValidRoute(RouteDto route) {
+    private Boolean isValidRoute(RouteDto route) {
         String airportPattern = "[A-Z]{3}";
         String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
 
