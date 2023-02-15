@@ -5,8 +5,9 @@ import com.example.Backend.dto.RouteDto;
 import com.example.Backend.dtoMapper.RouteMapper;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Route;
-import com.example.Backend.repositories.AirportRepository;
+import com.example.Backend.repositories.FlightRepository;
 import com.example.Backend.repositories.RouteRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,16 @@ import java.util.List;
 public class RouteService {
     private RouteRepository routeRepository;
     private RouteDaoImpl routeDaoImpl;
+    private FlightRepository flightRepository;
     public static Logger logger = LoggerFactory.getLogger(RouteDaoImpl.class);
 
     @Autowired
     public RouteService(RouteRepository routeRepositoryInterface,
-                        AirportRepository airportRepository,
-                        RouteDaoImpl routeDaoImpl) {
+                        RouteDaoImpl routeDaoImpl,
+                        FlightRepository flightRepository) {
         this.routeRepository = routeRepositoryInterface;
         this.routeDaoImpl = routeDaoImpl;
+        this.flightRepository=flightRepository;
     }
 
     public List<Route> getRoutes(String departureAirport, String arrivalAirport) {
@@ -38,24 +41,35 @@ public class RouteService {
         }
         return routeDaoImpl.searchRoute(departureAirport, arrivalAirport);
     }
-
-    public Route deleteRoute(int id) {
-        if (routeRepository.existsRouteByIdAndStatus(id, Route.Status.inactive)) {
-            logger.error("The route with id " + id + " is already deleted.");
-            throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
+    @Transactional
+    public int deleteRoute(int id) {
+        Route route = routeRepository.findRouteById(id);
+        if(route == null){
+            logger.info("The route with id "+ id + " is not available");
+            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
-        Route route = this.routeRepository.findRouteById(id);
-        route.setStatus(Route.Status.inactive);
-        return routeRepository.save(route);
-    }
+        if (route.getStatus() == Route.Status.inactive) {
+            logger.info("The route with id " + id + " is already in inactive state and it can not be deleted.");
+            throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_IN_INACTIVE_STATE_EXCEPTION);
+        }
+        if(flightRepository.existsFlightByArrivalAirportAndDepartureAirport(
+                route.getArrivalAirport(), route.getDepartureAirport())){
+             route.setStatus(Route.Status.inactive);
+             return id;
+        }
+            routeRepository.deleteById(id);
+            return id;
 
+
+    }
+    @Transactional
     public RouteDto updateRoute(RouteDto routeDto) {
         if (!routeRepository.existsRouteByIdAndStatus(routeDto.getId(), Route.Status.active)) {
             logger.error("The the route with" + routeDto.getId() + "not exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
         if (!isValidRoute(routeDto)) {
-            logger.error("This input route date with id" + routeDto.getId() + "have invalid inputs");
+            logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
         Route toBeUpdatedRoute = routeRepository.findRouteById(routeDto.getId());
@@ -66,7 +80,7 @@ public class RouteService {
         return setUpdate(toBeUpdatedRoute,routeDto );
 
     }
-
+    @Transactional
     public RouteDto addRoute(RouteDto routeDto) {
         if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
                 routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.active)) {
@@ -102,7 +116,7 @@ public class RouteService {
         toBeUpdatedRoute.setDuration(routeDto.getDuration());
         toBeUpdatedRoute.setCreatedTime(routeDto.getCreatedTime());
         toBeUpdatedRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
-        Route updatedRoute = routeRepository.save(toBeUpdatedRoute);
+        Route updatedRoute = toBeUpdatedRoute;
         return RouteMapper.routeToRouteDtoMapper(updatedRoute);
     }
 
