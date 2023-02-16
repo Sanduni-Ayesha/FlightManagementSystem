@@ -35,7 +35,7 @@ public class RouteService {
     }
 
     public List<Route> getRoutes(SearchDTO searchDTO) {
-        return routeDaoImpl.searchRoute(searchDTO.getDepartureAirport(), searchDTO.getArrivalAirport());
+        return routeDaoImpl.searchRoute(searchDTO);
     }
 
     @Transactional
