@@ -75,13 +75,14 @@ public class FlightService {
         }
 
         if (flightDto.getVersion() == flight.getVersion()) {
-            flight= flight.updateFlight(flight,flightDto);
+            flight = flight.updateFlight(flight, flightDto);
             return FlightMapper.flightToFlightDtoMapper(flight);
         } else {
             logger.info("The selected flight is already updated by a user at " + flight.getLastUpdatedTime() + " .");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
         }
     }
+
     @Transactional(propagation = Propagation.MANDATORY)
     public boolean validateFlight(FlightDto flightDto) {
         if (flightDto.getDepartureAirport().matches("[A-Z]{3}") &&
@@ -96,9 +97,6 @@ public class FlightService {
 
     @Transactional(propagation = Propagation.MANDATORY)
     public boolean checkFlightDuplicates(FlightDto flightDto) {
-        String flightNo = flightDto.getFlightNo();
-        LocalDateTime departureTime = flightDto.getDepartureTime();
-        LocalDateTime arrivalTime = flightDto.getArrivalTime();
-        return flightDaoImpl.checkDuplicate(flightNo, departureTime, arrivalTime);
+        return flightDaoImpl.checkDuplicate(flightDto);
     }
 }

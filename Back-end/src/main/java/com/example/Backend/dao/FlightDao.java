@@ -1,5 +1,6 @@
 package com.example.Backend.dao;
 
+import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.models.Flight;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,5 @@ import java.util.List;
 public interface FlightDao<T> {
     List<Flight> searchFlights(SearchDTO searchDTO);
 
-    boolean checkDuplicate(String flightNo, LocalDateTime departureTime, LocalDateTime arrivalTime);
+    boolean checkDuplicate(FlightDto flightDto);
 }
