@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/airport")
-@CrossOrigin("http://localhost:4200")
 public class AirportController {
     private AirportService airportService;
 
