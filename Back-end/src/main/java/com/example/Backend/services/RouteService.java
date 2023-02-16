@@ -8,13 +8,14 @@ import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.FlightRepository;
 import com.example.Backend.repositories.RouteRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Backend.exceptions.Exceptions;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class RouteService {
         return routeDaoImpl.searchRoute(searchDTO);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exceptions.class)
     public int deleteRoute(int id) {
         Route route = routeRepository.findRouteById(id);
         if (route == null) {
@@ -60,7 +61,7 @@ public class RouteService {
 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exceptions.class)
     public RouteDto updateRoute(RouteDto routeDto) {
         if (!isValidRoute(routeDto)) {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
@@ -72,14 +73,14 @@ public class RouteService {
         }
         Route toBeUpdatedRoute = routeRepository.findRouteById(routeDto.getId());
         if (!toBeUpdatedRoute.getVersion().equals(routeDto.getVersion())) {
-            logger.error("This input route detail's version is upto date");
+            logger.error("The selected route is already updated at " + toBeUpdatedRoute.getLastUpdatedTime() + " .");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_UPDATED_EXCEPTION);
         }
         return setUpdate(toBeUpdatedRoute, routeDto);
 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exceptions.class)
     public RouteDto addRoute(RouteDto routeDto) {
         if (!this.isValidRoute(routeDto)) {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
@@ -93,8 +94,8 @@ public class RouteService {
         Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
     }
-
-    private Boolean isValidRoute(RouteDto route) {
+    @Transactional(propagation = Propagation.MANDATORY)
+   public Boolean isValidRoute(RouteDto route) {
         String airportPattern = "[A-Z]{3}";
         String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
 
