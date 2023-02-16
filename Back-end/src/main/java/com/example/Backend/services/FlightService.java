@@ -8,11 +8,13 @@ import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
 import com.example.Backend.repositories.FlightRepository;
-import jakarta.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,22 +32,24 @@ public class FlightService {
         this.flightDaoImpl = flightDaoImpl;
     }
 
+    @Transactional
     public List<Flight> searchFlights(SearchDTO searchDTO) {
         return flightDaoImpl.searchFlights(searchDTO);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Flight getFlightByID(int id) {
         return flightRepository.findById(id).orElseThrow(() -> new Exceptions(ResponseStatusCodes.FLIGHT_NOT_FOUND_EXCEPTION));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exceptions.class)
     public FlightDto deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         flightRepository.delete(flight);
         return FlightMapper.flightToFlightDtoMapper(flight);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exceptions.class)
     public FlightDto addFlight(FlightDto flightDto) {
         if (!validateFlight(flightDto)) {
             logger.info("The entered flight data is invalid.");
@@ -58,7 +62,7 @@ public class FlightService {
         return FlightMapper.flightToFlightDtoMapper(flightRepository.save(FlightMapper.flightDtoToFlightMapper(flightDto)));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exceptions.class)
     public FlightDto updateFlight(FlightDto flightDto) {
         Flight flight = getFlightByID(flightDto.getId());
         if (!validateFlight(flightDto)) {
@@ -84,7 +88,7 @@ public class FlightService {
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);
         }
     }
-
+    @Transactional(propagation = Propagation.MANDATORY)
     public boolean validateFlight(FlightDto flightDto) {
         String departureAirport = flightDto.getDepartureAirport();
         String arrivalAirport = flightDto.getArrivalAirport();
@@ -102,6 +106,7 @@ public class FlightService {
         return false;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public boolean checkFlightDuplicates(FlightDto flightDto) {
         String flightNo = flightDto.getFlightNo();
         LocalDateTime departureTime = flightDto.getDepartureTime();
