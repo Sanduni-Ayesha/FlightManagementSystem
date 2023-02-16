@@ -84,17 +84,11 @@ public class FlightService {
     }
     @Transactional(propagation = Propagation.MANDATORY)
     public boolean validateFlight(FlightDto flightDto) {
-        String departureAirport = flightDto.getDepartureAirport();
-        String arrivalAirport = flightDto.getArrivalAirport();
-        String flightNo = flightDto.getFlightNo();
-        LocalDateTime departureTime = flightDto.getDepartureTime();
-        LocalDateTime arrivalTime = flightDto.getArrivalTime();
-
-        if (departureAirport.matches("[A-Z]{3}") &&
-                arrivalAirport.matches("[A-Z]{3}") &&
-                flightNo.matches("[A-Za-z]{2}[0-9]{4}") &&
-                departureTime.isAfter(LocalDateTime.now()) &&
-                departureTime.isBefore(arrivalTime)) {
+        if (flightDto.getDepartureAirport().matches("[A-Z]{3}") &&
+                flightDto.getArrivalAirport().matches("[A-Z]{3}") &&
+                flightDto.getFlightNo().matches("[A-Za-z]{2}[0-9]{4}") &&
+                flightDto.getDepartureTime().isAfter(LocalDateTime.now()) &&
+                flightDto.getArrivalTime().isBefore(flightDto.getArrivalTime())) {
             return true;
         }
         return false;
