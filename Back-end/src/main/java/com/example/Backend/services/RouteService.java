@@ -2,6 +2,7 @@ package com.example.Backend.services;
 
 import com.example.Backend.daoImpl.RouteDaoImpl;
 import com.example.Backend.dto.RouteDto;
+import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.dtoMapper.RouteMapper;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Route;
@@ -33,13 +34,8 @@ public class RouteService {
         this.flightRepository = flightRepository;
     }
 
-    public List<Route> getRoutes(String departureAirport, String arrivalAirport) {
-        if (!departureAirport.isEmpty() && !arrivalAirport.isEmpty() && departureAirport.equals(arrivalAirport)) {
-            logger.error("This route with departure airport code " + departureAirport +
-                    " arrival airport " + arrivalAirport + "are same");
-            throw new Exceptions(ResponseStatusCodes.DEPARTURE_AIRPORT_AND_ARRIVAL_AIRPORT_SAME_EXCEPTION);
-        }
-        return routeDaoImpl.searchRoute(departureAirport, arrivalAirport);
+    public List<Route> getRoutes(SearchDTO searchDTO) {
+        return routeDaoImpl.searchRoute(searchDTO.getDepartureAirport(), searchDTO.getArrivalAirport());
     }
 
     @Transactional

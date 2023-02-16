@@ -1,6 +1,7 @@
 package com.example.Backend.controllers;
 
 import com.example.Backend.dto.RouteDto;
+import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.models.Route;
 import com.example.Backend.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,9 @@ public class RouteController {
         this.routeService = routeService;
     }
 
-    @GetMapping("/get-route")
-    public ResponseEntity<List<Route>> getRoutes(@RequestParam("departureAirport") String departureAirport,
-                                                 @RequestParam("arrivalAirport") String arrivalAirport) {
-        return new ResponseEntity<>(this.routeService.getRoutes(departureAirport, arrivalAirport), (HttpStatus.OK));
+    @PostMapping("/get-route")
+    public ResponseEntity<List<Route>> getRoutes(@RequestBody SearchDTO searchDTO) {
+        return new ResponseEntity<>(this.routeService.getRoutes(searchDTO), (HttpStatus.OK));
     }
 
     @DeleteMapping("/delete-route")
