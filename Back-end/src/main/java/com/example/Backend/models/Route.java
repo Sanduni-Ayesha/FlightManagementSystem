@@ -27,13 +27,6 @@ public class Route {
     private Date lastUpdatedTime;
     @Enumerated(EnumType.STRING)
     private Route.Status status = Route.Status.active;
-    public Route(int id, String arrivalAirport, String departureAirport, double mileage, double duration) {
-        this.id = id;
-        this.arrivalAirport = arrivalAirport;
-        this.departureAirport = departureAirport;
-        this.mileage = mileage;
-        this.duration = duration;
-    }
 
     public Route() {
 
