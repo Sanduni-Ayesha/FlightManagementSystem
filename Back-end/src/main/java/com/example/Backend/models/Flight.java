@@ -1,5 +1,6 @@
 package com.example.Backend.models;
 
+import com.example.Backend.dto.FlightDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -115,5 +116,16 @@ public class Flight {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Flight updateFlight(Flight flight, FlightDto flightDto){
+        flight.setDepartureAirport(flightDto.getDepartureAirport());
+        flight.setArrivalAirport(flightDto.getArrivalAirport());
+        flight.setFlightNo(flightDto.getFlightNo());
+        flight.setDepartureTime(flightDto.getDepartureTime());
+        flight.setArrivalTime(flightDto.getArrivalTime());
+        flight.setLastUpdatedTime(LocalDateTime.now());
+        flight.setVersion(flightDto.getVersion() + 1);
+        return flight;
     }
 }

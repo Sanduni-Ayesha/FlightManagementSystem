@@ -75,13 +75,7 @@ public class FlightService {
         }
 
         if (flightDto.getVersion() == flight.getVersion()) {
-            flight.setDepartureAirport(flightDto.getDepartureAirport());
-            flight.setArrivalAirport(flightDto.getArrivalAirport());
-            flight.setFlightNo(flightDto.getFlightNo());
-            flight.setDepartureTime(flightDto.getDepartureTime());
-            flight.setArrivalTime(flightDto.getArrivalTime());
-            flight.setLastUpdatedTime(LocalDateTime.now());
-            flight.setVersion(flightDto.getVersion() + 1);
+            flight= flight.updateFlight(flight,flightDto);
             return FlightMapper.flightToFlightDtoMapper(flight);
         } else {
             logger.info("The selected flight is already updated by a user at " + flight.getLastUpdatedTime() + " .");
