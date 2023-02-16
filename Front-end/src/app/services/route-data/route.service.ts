@@ -11,7 +11,10 @@ export class RouteService{
   constructor(private http:HttpClient) { }
 
   public getAllRoutes(departureAirport:string,arrivalAirport:string):Observable<Route[]>{
-    return this.http.get<Route[]>(`${this.baseUrl}/get-route?departureAirport=${departureAirport}&arrivalAirport=${arrivalAirport}`)
+    return this.http.post<Route[]>(`${this.baseUrl}/get-route`,{
+      "departureAirport": departureAirport,
+      "arrivalAirport": arrivalAirport
+    })
   }
 
   public deleteRoute(id:number){
