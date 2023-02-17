@@ -1,4 +1,4 @@
-<div class="overlay">
+<div class="scheduleFLights">
     <h1>Schedule flights</h1>
     <form [formGroup]="scheduleForm">
         <div>
@@ -18,7 +18,7 @@
                     </mat-autocomplete>
                     <mat-icon matSuffix>flight_takeoff</mat-icon>
                 </mat-form-field>
-                <br>
+                <span class="space"></span>
                 <mat-form-field class="arrivalAirport">
                     <mat-label>Arrival Airport</mat-label>
                     <input type="text"
@@ -58,22 +58,11 @@
                     <mat-date-range-picker #picker></mat-date-range-picker>
                 </mat-form-field>
                 <br>
-                <mat-form-field class="flightNo">
-                    <mat-label>Flight Number</mat-label>
-                    <input type="text"
-                           placeholder="Enter flight number"
-                           value=""
-                           matInput
-                           [formControl]="scheduleForm.controls['flightNo']">
-                    <mat-icon matSuffix>flight</mat-icon>
-                </mat-form-field>
-                <br>
                 <mat-form-field appearance="outline">
                     <mat-label>Departure time</mat-label>
                     <input type="time" matInput [formControl]="scheduleForm.controls['departureTime']"/>
                 </mat-form-field>
-
-                <br>
+                <span class="space"></span>
                 <mat-form-field appearance="outline">
                     <mat-label>Arrival time</mat-label>
                     <input type="time" matInput [formControl]="scheduleForm.controls['arrivalTime']"/>

@@ -9,7 +9,7 @@ import {DIALOG_DATA} from "@angular/cdk/dialog";
 @Component({
     selector: 'app-schedule-flight-form',
     templateUrl: './schedule-flight-form.component.html',
-    styleUrls: ['./schedule-flight-form.component.scss']
+    styleUrls: ['../../../styles/form-overlay.scss']
 })
 export class ScheduleFlightFormComponent implements OnInit {
     filteredDepartures: Airport[] = [];
