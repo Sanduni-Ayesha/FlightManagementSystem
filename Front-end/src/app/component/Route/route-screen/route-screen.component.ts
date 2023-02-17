@@ -11,7 +11,7 @@ import {AirportService} from "../../../services/airport-data/airport.service";
 import {Airport} from "../../../model/Airport";
 
 
-const TableHeading = ['Departure Airport', 'Arrival Airport', 'Mileage/Km', 'Duration/Hours']
+const TableHeading = ['Departure Airport', 'Arrival Airport', 'Mileage/Km', 'Duration/Hours','Edit','Delete']
 
 @Component({
     selector: 'app-route-screen',
@@ -78,6 +78,7 @@ export class RouteScreenComponent implements OnInit {
     }
 
     openForm(status:string,routeId:number): void {
+        this.setPageDefault();
         let route:any;
         let id: any;
         let disableStatus: boolean = false;
