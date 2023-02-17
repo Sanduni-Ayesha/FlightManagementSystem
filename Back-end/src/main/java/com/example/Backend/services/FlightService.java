@@ -89,7 +89,7 @@ public class FlightService {
                 flightDto.getArrivalAirport().matches("[A-Z]{3}") &&
                 flightDto.getFlightNo().matches("[A-Za-z]{2}[0-9]{4}") &&
                 flightDto.getDepartureTime().isAfter(LocalDateTime.now()) &&
-                flightDto.getArrivalTime().isBefore(flightDto.getArrivalTime())) {
+                flightDto.getDepartureTime().isBefore(flightDto.getArrivalTime())) {
             return true;
         }
         return false;
