@@ -184,7 +184,13 @@ export class FlightScreenComponent implements OnInit {
     }
 
     openScheduleFlightForm() {
-        this.dialog.open(ScheduleFlightFormComponent)
+        this.dialog.open(ScheduleFlightFormComponent,{
+            disableClose: true,
+            data:{
+                airportNames: this.airports,
+                airports: this.airportDetails
+            }
+        })
     }
 
     airportEqualWarning(): boolean {
