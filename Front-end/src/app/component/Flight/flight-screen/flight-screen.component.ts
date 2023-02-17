@@ -7,6 +7,7 @@ import {Flight} from "../../../model/Flight";
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {AirportService} from "../../../services/airport-data/airport.service";
 import {Airport} from "../../../model/Airport";
+import {ScheduleFlightFormComponent} from "../schedule-flight-form/schedule-flight-form.component";
 
 const COLUMNS = [
     {
@@ -182,6 +183,9 @@ export class FlightScreenComponent implements OnInit {
         )
     }
 
+    openScheduleFlightForm() {
+        this.dialog.open(ScheduleFlightFormComponent)
+    }
 
     airportEqualWarning(): boolean {
         if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterDepart.getRawValue()!="" && this.filterArrive.dirty && this.filterDepart.dirty) {

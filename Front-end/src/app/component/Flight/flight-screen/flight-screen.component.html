@@ -67,6 +67,12 @@
                     Add flight
                 </a>
             </div>
+            <div class="addFlight">
+                <a mat-raised-button class="buttons" (click)="openScheduleFlightForm()">
+                    <mat-icon>schedule</mat-icon>
+                    Schedule flights
+                </a>
+            </div>
             <br>
             <div class="airportError">
                 <small *ngIf="airportEqualWarning()">Departure and arrival airports are equal</small>
