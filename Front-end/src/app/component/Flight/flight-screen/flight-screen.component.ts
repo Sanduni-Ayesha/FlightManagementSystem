@@ -161,6 +161,10 @@ export class FlightScreenComponent implements OnInit {
 
     openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", "", "", "", "active", 1))) {
         let rowData: Flight = flight;
+        if (rowData.departureAirport != "") {
+            rowData.departureAirport = this.getAirportNameByAirportCode(flight.departureAirport).toString();
+            rowData.arrivalAirport = this.getAirportNameByAirportCode(flight.arrivalAirport).toString();
+        }
         let addFlightForm = this.dialog.open(AddFlightFormComponent, {
             disableClose: true,
             data: {

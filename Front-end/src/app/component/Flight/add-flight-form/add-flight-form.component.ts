@@ -53,7 +53,7 @@ export class AddFlightFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.patch();
+        this.flightForm.patchValue(this.data.row)
         this.flightForm.controls['departureAirport'].valueChanges
             .pipe(map((value) => this.filterAirports(value || '')))
             .subscribe((departures) => {
@@ -66,20 +66,6 @@ export class AddFlightFormComponent implements OnInit {
             });
     }
 
-    private patch(){
-        this.flightForm.patchValue({
-            id: this.data.row.id,
-            departureAirport: this.data.airports.find((airport: { airport_code: any; }) => {
-                return airport.airport_code == this.data.row.departureAirport;
-            }).airport_name,
-            arrivalAirport: this.data.airports.find((airport: { airport_code: any; }) => {
-                return airport.airport_code == this.data.row.arrivalAirport;
-            }).airport_name,
-            flightNo: this.data.row.flightNo,
-            departureTime: this.data.row.departureTime,
-            arrivalTime: this.data.row.arrivalTime,
-        })
-    }
     private filterAirports(value: string): Airport[] {
         const filterValue = value.toLowerCase();
         if (this.data.airports) {
