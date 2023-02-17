@@ -32,6 +32,9 @@ import {
     MatDialogRef,
 } from '@angular/material/dialog';
 import { ScheduleFlightFormComponent } from './component/Flight/schedule-flight-form/schedule-flight-form.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -61,6 +64,9 @@ import { ScheduleFlightFormComponent } from './component/Flight/schedule-flight-
         MatToolbarModule,
         MatTabsModule,
         HttpClientModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
     ],
     providers: [
         {

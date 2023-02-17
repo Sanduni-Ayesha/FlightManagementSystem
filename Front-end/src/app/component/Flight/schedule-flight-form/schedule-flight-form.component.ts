@@ -42,6 +42,13 @@ export class ScheduleFlightFormComponent implements OnInit{
         arrivalTime: new FormControl('', [
           Validators.required,
         ]),
+          monday: new FormControl(''),
+          tuesday: new FormControl(''),
+          wednesday: new FormControl(''),
+          thursday: new FormControl(''),
+          friday: new FormControl(''),
+          saturday: new FormControl(''),
+          sunday: new FormControl(''),
       },
       {validators: [airportValidator]}
   );

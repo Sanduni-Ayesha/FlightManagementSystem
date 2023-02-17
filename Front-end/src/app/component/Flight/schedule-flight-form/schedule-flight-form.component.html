@@ -1,6 +1,107 @@
 <div class="overlay">
     <h1>Schedule flights</h1>
     <form [formGroup]="scheduleForm">
+        <div>
+            <div class="searchFields">
+                <mat-form-field class="departureAirport">
+                    <mat-label>Departure Airport</mat-label>
+                    <input type="text"
+                           placeholder="Pick Airport"
+                           value=""
+                           matInput
+                           [formControl]="scheduleForm.controls['departureAirport']"
+                           [matAutocomplete]="departures">
+                    <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
+                        <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_name">
+                            {{depart.airport_name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>flight_takeoff</mat-icon>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="arrivalAirport">
+                    <mat-label>Arrival Airport</mat-label>
+                    <input type="text"
+                           placeholder="Pick Airport"
+                           value=""
+                           matInput
+                           [formControl]="scheduleForm.controls['arrivalAirport']"
+                           [matAutocomplete]="arrivals"
+                    >
+                    <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
+                        <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_name">
+                            {{arrives.airport_name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>flight_land</mat-icon>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="flightNo">
+                    <mat-label>Flight Number</mat-label>
+                    <input type="text"
+                           placeholder="Enter flight number"
+                           value=""
+                           matInput
+                           [formControl]="scheduleForm.controls['flightNo']">
+                    <mat-icon matSuffix>flight</mat-icon>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="duration">
+                    <mat-label>Duration</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Start date"
+                               [formControl]="scheduleForm.controls['startDate']">
+                        <input matEndDate placeholder="End date"
+                               [formControl]="scheduleForm.controls['endDate']">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="flightNo">
+                    <mat-label>Flight Number</mat-label>
+                    <input type="text"
+                           placeholder="Enter flight number"
+                           value=""
+                           matInput
+                           [formControl]="scheduleForm.controls['flightNo']">
+                    <mat-icon matSuffix>flight</mat-icon>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label>Departure time</mat-label>
+                    <input type="time" matInput [formControl]="scheduleForm.controls['departureTime']"/>
+                </mat-form-field>
 
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label>Arrival time</mat-label>
+                    <input type="time" matInput [formControl]="scheduleForm.controls['arrivalTime']"/>
+                </mat-form-field>
+                <br>
+                <div>
+                    <mat-checkbox [formControl]="scheduleForm.controls['monday']">Monday</mat-checkbox>
+                    <mat-checkbox [formControl]="scheduleForm.controls['tuesday']">Tuesday</mat-checkbox>
+                    <mat-checkbox [formControl]="scheduleForm.controls['wednesday']">Wednesday</mat-checkbox>
+                    <br>
+                    <mat-checkbox [formControl]="scheduleForm.controls['thursday']">Thursday</mat-checkbox>
+                    <mat-checkbox [formControl]="scheduleForm.controls['friday']">Friday</mat-checkbox>
+                    <mat-checkbox [formControl]="scheduleForm.controls['saturday']">Saturday</mat-checkbox>
+                    <mat-checkbox [formControl]="scheduleForm.controls['sunday']">Sunday</mat-checkbox>
+                </div>
+                <br>
+                <div class="btn-group">
+                    <button mat-button type="button" >
+                        Cancel
+                    </button>
+                    <button mat-button type="reset" >
+                        Reset
+                    </button>
+                    <button mat-button type="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
