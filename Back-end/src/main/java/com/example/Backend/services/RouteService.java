@@ -87,8 +87,12 @@ public class RouteService {
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
         if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
+                routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.active)) {
+            logger.info("This input route date with id " + routeDto.getId() + " have invalid inputs");
+            throw new Exceptions(ResponseStatusCodes.ROUTE_EXISTS_EXCEPTION);
+        }
+        if (routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(
                 routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.inactive)) {
-
             return setActivateAlreadyExistRoute(routeDto);
         }
         Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
