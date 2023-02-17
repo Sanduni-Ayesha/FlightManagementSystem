@@ -31,6 +31,7 @@ import {
     MatDialogModule,
     MatDialogRef,
 } from '@angular/material/dialog';
+import { ScheduleFlightFormComponent } from './component/Flight/schedule-flight-form/schedule-flight-form.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import {
         RouteScreenComponent,
         AddFlightFormComponent,
         NavBarComponent,
+        ScheduleFlightFormComponent,
     ],
     imports: [
         BrowserModule,
