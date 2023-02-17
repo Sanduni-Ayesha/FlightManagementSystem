@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name = "route")
 public class Route {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     @Column(name = "arrival_airport", nullable = false)
     private String arrivalAirport;
