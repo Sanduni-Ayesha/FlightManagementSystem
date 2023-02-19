@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Flight} from "../../model/Flight";
+import {Schedule} from "../../model/Schedule";
 
 @Injectable({
     providedIn: 'root',
@@ -29,5 +30,9 @@ export class FlightDataService {
 
     public updateFlight(flight: Flight) {
         return this.http.put(`${this.baseUrl}/flight/updateFlight`, flight, {observe: "response"})
+    }
+
+    public scheduleFlight(schedule: Schedule){
+        return this.http.post(`${this.baseUrl}/flight/scheduleFlight`, schedule, {observe: "response"})
     }
 }

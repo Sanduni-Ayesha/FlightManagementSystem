@@ -80,13 +80,13 @@
                 </div>
                 <br>
                 <div class="btn-group">
-                    <button mat-button type="button" class="cancelBtn" >
+                    <button mat-button type="button" class="cancelBtn" (click)="closeScheduleForm(scheduleForm.dirty)">
                         Cancel
                     </button>
-                    <button mat-button type="reset" >
+                    <button mat-button type="reset" [disabled] = disableReset()>
                         Reset
                     </button>
-                    <button mat-button type="submit">
+                    <button mat-button type="submit" (click)="scheduleFlights()" [disabled]="disableSubmit()">
                         Submit
                     </button>
                 </div>
