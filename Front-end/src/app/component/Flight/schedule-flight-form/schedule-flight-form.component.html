@@ -68,6 +68,7 @@
                 </mat-form-field>
                 <div class="error_msg">
                     <small *ngIf="scheduleForm.errors?.['dateMismatch']">Enter a future date.</small>
+                    <small *ngIf="scheduleForm.controls['startDate'].value?.getDate() == scheduleForm.controls['endDate'].value?.getDate()">Start and end dates cannot be similar.</small>
                 </div>
                 <br>
                 <mat-form-field appearance="outline">
@@ -79,6 +80,10 @@
                     <mat-label>Arrival time</mat-label>
                     <input type="time" matInput [formControl]="scheduleForm.controls['arrivalTime']"/>
                 </mat-form-field>
+                <br>
+                <div class="error_msg">
+                    <small *ngIf="scheduleForm.controls['departureTime'].value == scheduleForm.controls['arrivalTime'].value">Departure and arrival time cannot be equal.</small>
+                </div>
                 <br>
                 <div>
                     <mat-checkbox [formControl]="dayForm.controls['monday']">Monday</mat-checkbox>

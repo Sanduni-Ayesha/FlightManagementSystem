@@ -160,7 +160,9 @@ export class ScheduleFlightFormComponent implements OnInit {
             this.dayForm.controls['friday'].value ||
             this.dayForm.controls['saturday'].value ||
             this.dayForm.controls['sunday'].value)
-        if (this.scheduleForm.valid && day) {
+        let dateEqual = this.scheduleForm.controls['startDate'].value?.getDate()!=this.scheduleForm.controls['endDate'].value?.getDate()
+        let timeEqual = this.scheduleForm.controls['departureTime'].value!=this.scheduleForm.controls['arrivalTime'].value
+        if (this.scheduleForm.valid && day && dateEqual && timeEqual) {
             return false;
         }
         return true;
