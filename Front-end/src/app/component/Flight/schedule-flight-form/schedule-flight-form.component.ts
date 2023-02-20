@@ -84,7 +84,7 @@ export class ScheduleFlightFormComponent implements OnInit {
         }
     }
 
-    scheduleFlights(){
+    scheduleFlights() {
         let formValues = this.scheduleForm.value;
         let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == formValues.departureAirport).airport_code;
         let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == formValues.arrivalAirport).airport_code;
@@ -98,46 +98,38 @@ export class ScheduleFlightFormComponent implements OnInit {
             <Date>formValues.arrivalTime,
             new Date(),
             days)
-        if(this.checkDuplicates(schedule)){
-            alert("A flight already exists for the given range.")
-        }else{
-            this.flightService.scheduleFlight(schedule).subscribe({
-                next: (response) => {
-                    if (response.status == 245) {
-                        alert("The flight schedule data is invalid. Please retry.")
-                    }else if(response.status == 234){
-                        alert("The entered route does not exist.\nPlease use a flight with an available route.")
-                    } else if (response.status == 240) {
-                        alert("Flight details are invalid. Please enter valid details.")
-                    }else if(response.status == 239){
-                        alert("Flight already exists in the scheduled time. \nPlease use another time range.")
-                    } else {
-                        alert("Flight scheduling successful.")
-                    }
-                }, error: () => {
-                    alert("The flight scheduling process was unsuccessful. Please try again.");
+        this.flightService.scheduleFlight(schedule).subscribe({
+            next: (response) => {
+                if (response.status == 245) {
+                    alert("The flight schedule data is invalid. Please retry.")
+                } else if (response.status == 234) {
+                    alert("The entered route does not exist.\nPlease use a flight with an available route.")
+                } else if (response.status == 240) {
+                    alert("Flight details are invalid. Please enter valid details.")
+                } else if (response.status == 239) {
+                    alert("Flight already exists in the scheduled time. \nPlease use another time range.")
+                } else {
+                    alert("Flight scheduling successful.")
                 }
-            });
-            this.dialog.closeAll();
-        }
+            }, error: () => {
+                alert("The flight scheduling process was unsuccessful. Please try again.");
+            }
+        });
+        this.dialog.closeAll();
+
     }
 
     private getDays() {
         let formValues = this.scheduleForm.value;
         let days: string[] = [];
-        if (formValues.monday) days.push("mon");
-        if (formValues.tuesday) days.push("tue");
-        if (formValues.wednesday) days.push("wed");
-        if (formValues.thursday) days.push("thu");
-        if (formValues.friday) days.push("fri");
-        if (formValues.saturday) days.push("sat");
-        if (formValues.sunday) days.push("sun");
+        if (formValues.monday) days.push("MONDAY");
+        if (formValues.tuesday) days.push("TUESDAY");
+        if (formValues.wednesday) days.push("WEDNESDAY");
+        if (formValues.thursday) days.push("THURSDAY");
+        if (formValues.friday) days.push("FRIDAY");
+        if (formValues.saturday) days.push("SATURDAY");
+        if (formValues.sunday) days.push("SUNDAY");
         return days;
-    }
-
-    private checkDuplicates(schedule: Schedule) {
-        //TODO: implement validation
-        return true;
     }
 
     closeScheduleForm(dirty: boolean) {
@@ -149,14 +141,14 @@ export class ScheduleFlightFormComponent implements OnInit {
     }
 
     disableReset(): boolean {
-        if (this.scheduleForm.dirty){
+        if (this.scheduleForm.dirty) {
             return false;
         }
         return true;
     }
 
     disableSubmit(): boolean {
-        if (this.scheduleForm.valid){
+        if (this.scheduleForm.valid) {
             return false;
         }
         return true;
