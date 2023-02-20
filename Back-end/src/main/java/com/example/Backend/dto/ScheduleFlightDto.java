@@ -1,19 +1,20 @@
 package com.example.Backend.dto;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 public class ScheduleFlightDto {
     private int id;
     private String departureAirport;
     private String arrivalAirport;
     private String flightNo;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private LocalTime departureTime;
+    private LocalTime arrivalTime;
     private LocalDateTime createdTime;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private String[] weekdays;
-    private int version = 1;
+    private List<String> weekdays;
 
     public int getId() {
         return id;
@@ -47,19 +48,19 @@ public class ScheduleFlightDto {
         this.flightNo = flightNo;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public LocalTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(LocalTime departureTime) {
         this.departureTime = departureTime;
     }
 
-    public LocalDateTime getArrivalTime() {
+    public LocalTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
+    public void setArrivalTime(LocalTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
@@ -87,19 +88,12 @@ public class ScheduleFlightDto {
         this.endDate = endDate;
     }
 
-    public String[] getWeekdays() {
+    public List<String> getWeekdays() {
         return weekdays;
     }
 
-    public void setWeekdays(String[] weekdays) {
+    public void setWeekdays(List<String> weekdays) {
         this.weekdays = weekdays;
     }
 
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 }
