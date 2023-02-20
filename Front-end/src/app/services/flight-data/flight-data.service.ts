@@ -33,6 +33,6 @@ export class FlightDataService {
     }
 
     public scheduleFlight(schedule: Schedule){
-        return this.http.post(`${this.baseUrl}/flight/scheduleFlight`, schedule, {observe: "response"})
+        return this.http.post(`${this.baseUrl}/flight/schedule-flight`, schedule, {observe: "response"})
     }
 }
