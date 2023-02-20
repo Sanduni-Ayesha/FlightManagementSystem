@@ -1,5 +1,5 @@
 export class Schedule {
-    startDate?: Date;
+    startDate: Date;
     endDate: Date;
     departureAirport: string;
     arrivalAirport: string;
