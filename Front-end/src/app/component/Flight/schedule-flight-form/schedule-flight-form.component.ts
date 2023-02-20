@@ -103,14 +103,17 @@ export class ScheduleFlightFormComponent implements OnInit {
         }else{
             this.flightService.scheduleFlight(schedule).subscribe({
                 next: (response) => {
-                    // TODO: catch errors and handle
-                    // if (response.status == 239) {
-                    //     alert("The flight is already used in the given time!\n Please use a different time.")
-                    // } else if (response.status == 240) {
-                    //     alert("Flight details are invalid. Please enter valid details.")
-                    // } else {
-                    //     alert("Flight scheduling successful.")
-                    // }
+                    if (response.status == 245) {
+                        alert("The flight schedule data is invalid. Please retry.")
+                    }else if(response.status == 234){
+                        alert("The entered route does not exist.\nPlease use a flight with an available route.")
+                    } else if (response.status == 240) {
+                        alert("Flight details are invalid. Please enter valid details.")
+                    }else if(response.status == 239){
+                        alert("Flight already exists in the scheduled time. \nPlease use another time range.")
+                    } else {
+                        alert("Flight scheduling successful.")
+                    }
                 }, error: () => {
                     alert("The flight scheduling process was unsuccessful. Please try again.");
                 }
