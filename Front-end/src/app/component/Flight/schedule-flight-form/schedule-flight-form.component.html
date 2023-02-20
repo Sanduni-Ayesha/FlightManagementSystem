@@ -66,6 +66,9 @@
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-date-range-picker #picker></mat-date-range-picker>
                 </mat-form-field>
+                <div class="error_msg">
+                    <small *ngIf="scheduleForm.errors?.['dateMismatch']">Enter a future date.</small>
+                </div>
                 <br>
                 <mat-form-field appearance="outline">
                     <mat-label>Departure time</mat-label>
@@ -78,14 +81,14 @@
                 </mat-form-field>
                 <br>
                 <div>
-                    <mat-checkbox [formControl]="scheduleForm.controls['monday']">Monday</mat-checkbox>
-                    <mat-checkbox [formControl]="scheduleForm.controls['tuesday']">Tuesday</mat-checkbox>
-                    <mat-checkbox [formControl]="scheduleForm.controls['wednesday']">Wednesday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['monday']">Monday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['tuesday']">Tuesday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['wednesday']">Wednesday</mat-checkbox>
                     <br>
-                    <mat-checkbox [formControl]="scheduleForm.controls['thursday']">Thursday</mat-checkbox>
-                    <mat-checkbox [formControl]="scheduleForm.controls['friday']">Friday</mat-checkbox>
-                    <mat-checkbox [formControl]="scheduleForm.controls['saturday']">Saturday</mat-checkbox>
-                    <mat-checkbox [formControl]="scheduleForm.controls['sunday']">Sunday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['thursday']">Thursday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['friday']">Friday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['saturday']">Saturday</mat-checkbox>
+                    <mat-checkbox [formControl]="dayForm.controls['sunday']">Sunday</mat-checkbox>
                 </div>
                 <br>
                 <div class="btn-group">

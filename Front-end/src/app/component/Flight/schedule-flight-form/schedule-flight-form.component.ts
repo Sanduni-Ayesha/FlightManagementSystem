@@ -2,11 +2,13 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Airport} from "../../../model/Airport";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {airportValidator} from "../../../shared/airport.validator";
+import {checkedValidator} from "../../../shared/checked.validator";
 import {MatDialog} from "@angular/material/dialog";
 import {map} from "rxjs/operators";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {Schedule} from "../../../model/Schedule";
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
+import {futureDateValidator} from "../../../shared/futureDate.validator";
 
 @Component({
     selector: 'app-schedule-flight-form',
@@ -42,16 +44,19 @@ export class ScheduleFlightFormComponent implements OnInit {
             arrivalTime: new FormControl(new Date(), [
                 Validators.required,
             ]),
-            monday: new FormControl(false),
-            tuesday: new FormControl(false),
-            wednesday: new FormControl(false),
-            thursday: new FormControl(false),
-            friday: new FormControl(false),
-            saturday: new FormControl(false),
-            sunday: new FormControl(false),
         },
-        {validators: [airportValidator]}
+        {validators: [airportValidator, futureDateValidator]}
     );
+
+    dayForm = new FormGroup({
+        monday: new FormControl(false),
+        tuesday: new FormControl(false),
+        wednesday: new FormControl(false),
+        thursday: new FormControl(false),
+        friday: new FormControl(false),
+        saturday: new FormControl(false),
+        sunday: new FormControl(false)
+    },Validators.requiredTrue)
 
     constructor(
         public dialog: MatDialog,
@@ -120,7 +125,7 @@ export class ScheduleFlightFormComponent implements OnInit {
     }
 
     private getDays() {
-        let formValues = this.scheduleForm.value;
+        let formValues = this.dayForm.value;
         let days: string[] = [];
         if (formValues.monday) days.push("MONDAY");
         if (formValues.tuesday) days.push("TUESDAY");
