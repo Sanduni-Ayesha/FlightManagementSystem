@@ -20,7 +20,7 @@ public class ScheduleFlightController {
         this.scheduleFlightService = scheduleFlightService;
     }
 
-    @PostMapping("/schedule-flight-service")
+    @PostMapping("/schedule-flight")
     public ResponseEntity<ScheduleFlightDto> createScheduleFlight(@RequestBody ScheduleFlightDto scheduleFlightDto){
         return new ResponseEntity<>(scheduleFlightService.createSchedule(scheduleFlightDto), HttpStatus.OK);
     }
