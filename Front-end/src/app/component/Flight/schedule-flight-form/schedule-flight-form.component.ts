@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Airport} from "../../../model/Airport";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {airportValidator} from "../../../shared/airport.validator";
-import {checkedValidator} from "../../../shared/checked.validator";
 import {MatDialog} from "@angular/material/dialog";
 import {map} from "rxjs/operators";
 import {DIALOG_DATA} from "@angular/cdk/dialog";
@@ -56,7 +55,7 @@ export class ScheduleFlightFormComponent implements OnInit {
         friday: new FormControl(false),
         saturday: new FormControl(false),
         sunday: new FormControl(false)
-    },Validators.requiredTrue)
+    })
 
     constructor(
         public dialog: MatDialog,
@@ -103,25 +102,28 @@ export class ScheduleFlightFormComponent implements OnInit {
             <Date>formValues.arrivalTime,
             new Date(),
             days)
-        this.flightService.scheduleFlight(schedule).subscribe({
-            next: (response) => {
-                if (response.status == 245) {
-                    alert("The flight schedule data is invalid. Please retry.")
-                } else if (response.status == 234) {
-                    alert("The entered route does not exist.\nPlease use a flight with an available route.")
-                } else if (response.status == 240) {
-                    alert("Flight details are invalid. Please enter valid details.")
-                } else if (response.status == 239) {
-                    alert("Flight already exists in the scheduled time. \nPlease use another time range.")
-                } else {
-                    alert("Flight scheduling successful.")
+        if(days.length==0){
+            alert("Please check at least one checkbox before submitting")
+        }else{
+            this.flightService.scheduleFlight(schedule).subscribe({
+                next: (response) => {
+                    if (response.status == 245) {
+                        alert("The flight schedule data is invalid. Please retry.")
+                    } else if (response.status == 234) {
+                        alert("The entered route does not exist.\nPlease use a flight with an available route.")
+                    } else if (response.status == 240) {
+                        alert("Flight details are invalid. Please enter valid details.")
+                    } else if (response.status == 239) {
+                        alert("Flight already exists in the scheduled time. \nPlease use another time range.")
+                    } else {
+                        alert("Flight scheduling successful.")
+                    }
+                }, error: () => {
+                    alert("The flight scheduling process was unsuccessful. Please try again.");
                 }
-            }, error: () => {
-                alert("The flight scheduling process was unsuccessful. Please try again.");
-            }
-        });
-        this.dialog.closeAll();
-
+            });
+            this.dialog.closeAll();
+        }
     }
 
     private getDays() {
