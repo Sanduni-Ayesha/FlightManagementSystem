@@ -102,28 +102,26 @@ export class ScheduleFlightFormComponent implements OnInit {
             <Date>formValues.arrivalTime,
             new Date(),
             days)
-        if(days.length==0){
-            alert("Please check at least one checkbox before submitting")
-        }else{
-            this.flightService.scheduleFlight(schedule).subscribe({
-                next: (response) => {
-                    if (response.status == 245) {
-                        alert("The flight schedule data is invalid. Please retry.")
-                    } else if (response.status == 234) {
-                        alert("The entered route does not exist.\nPlease use a flight with an available route.")
-                    } else if (response.status == 240) {
-                        alert("Flight details are invalid. Please enter valid details.")
-                    } else if (response.status == 239) {
-                        alert("Flight already exists in the scheduled time. \nPlease use another time range.")
-                    } else {
-                        alert("Flight scheduling successful.")
-                    }
-                }, error: () => {
-                    alert("The flight scheduling process was unsuccessful. Please try again.");
+
+        this.flightService.scheduleFlight(schedule).subscribe({
+            next: (response) => {
+                if (response.status == 245) {
+                    alert("The flight schedule data is invalid. Please retry.")
+                } else if (response.status == 234) {
+                    alert("The entered route does not exist.\nPlease use a flight with an available route.")
+                } else if (response.status == 240) {
+                    alert("Flight details are invalid. Please enter valid details.")
+                } else if (response.status == 239) {
+                    alert("Flight already exists in the scheduled time. \nPlease use another time range.")
+                } else {
+                    alert("Flight scheduling successful.")
                 }
-            });
-            this.dialog.closeAll();
-        }
+            }, error: () => {
+                alert("The flight scheduling process was unsuccessful. Please try again.");
+            }
+        });
+        this.dialog.closeAll();
+
     }
 
     private getDays() {
@@ -155,7 +153,14 @@ export class ScheduleFlightFormComponent implements OnInit {
     }
 
     disableSubmit(): boolean {
-        if (this.scheduleForm.valid) {
+        let day = (this.dayForm.controls['monday'].value ||
+            this.dayForm.controls['tuesday'].value ||
+            this.dayForm.controls['wednesday'].value ||
+            this.dayForm.controls['thursday'].value ||
+            this.dayForm.controls['friday'].value ||
+            this.dayForm.controls['saturday'].value ||
+            this.dayForm.controls['sunday'].value)
+        if (this.scheduleForm.valid && day) {
             return false;
         }
         return true;
