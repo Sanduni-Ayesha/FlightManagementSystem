@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +48,9 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean checkDuplicate(FlightDto flightDto) {
-        String sqlCheckDuplicates = "Select * from flight where " +
-                "(departure_time<='" + flightDto.getDepartureTime() + "'and arrival_time>='" + flightDto.getDepartureTime() + "') or" +
-                "(departure_time<='" + flightDto.getArrivalTime() + "'and arrival_time>='" + flightDto.getArrivalTime() + "') or" +
-                "(departure_time>='" + flightDto.getDepartureTime() + "'and arrival_time<='" + flightDto.getArrivalTime() + "')" +
-                "and flight_no='" + flightDto.getFlightNo() + "'";
+        String sqlCheckDuplicates = "Select * from flight where flight_no='" +flightDto.getFlightNo() +"'"+"and DATE(departure_time)=DATE('"+flightDto.getDepartureTime()+"');";
         List<Flight> flights = jdbcTemplate.query(sqlCheckDuplicates, BeanPropertyRowMapper.newInstance(Flight.class));
-        if (flights.size() > 1) {
+        if (flights.size() >= 1) {
             return true;
         }
         return false;
