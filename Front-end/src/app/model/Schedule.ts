@@ -7,7 +7,7 @@ export class Schedule {
     departureTime: Date;
     arrivalTime: Date;
     createdTime: Date;
-    days: string[];
+    weekdays: string[];
 
     constructor(startDate: Date,
                 endDate: Date, 
@@ -26,6 +26,6 @@ export class Schedule {
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.createdTime = createdTime;
-        this.days = days;
+        this.weekdays = days;
     }
 }
