@@ -107,25 +107,25 @@ export class ScheduleFlightFormComponent implements OnInit {
 
         this.flightService.scheduleFlight(schedule).subscribe({
             next: (response) => {
-                if(response.body!=null){
+                if (response.body != null) {
                     this.alertService.openConfirmDialog("Duplicate Flight Detected",
-                        "The flight with following data was duplicated. \nFlight No : "
-                        +response.body.flightNo+"\nDeparture Time : "+response.body.departureTime+
-                    "\nFlight scheduling unsuccessful.");
+                        "The flight with following data was duplicated. " +
+                        "Flight No : " + response.body.flightNo +
+                        "Departure Time : " + response.body.departureTime +
+                        "Flight scheduling unsuccessful.");
                 }
                 if (response.status == 245) {
                     this.alertService.warn("The flight schedule data is invalid. Please retry.")
-                } else if (response.status == 234) {
-                    this.alertService.warn("The entered route does not exist.\nPlease use a flight with an available route.")
-                } else if(response.status==200 && response.body==null){
+                } else if (response.status == 233) {
+                    this.alertService.warn("The entered route does not exist.\nPlease use an available route.")
+                } else if (response.status == 200 && response.body == null) {
                     this.alertService.success("Flight scheduling successful.")
+                    this.dialog.closeAll();
                 }
             }, error: () => {
                 this.alertService.warn("The flight scheduling process was unsuccessful. Please try again.")
             }
         });
-        this.dialog.closeAll();
-
     }
 
     private getDays() {
@@ -144,10 +144,10 @@ export class ScheduleFlightFormComponent implements OnInit {
     closeScheduleForm(dirty: boolean) {
         if (!dirty) {
             this.dialog.closeAll();
-        }else{
+        } else {
             this.alertService.openConfirmDialog("Cancel", "Are you sure you want to cancel?")
-                .afterClosed().subscribe(res=>{
-                if(res){
+                .afterClosed().subscribe(res => {
+                if (res) {
                     this.dialog.closeAll();
                 }
             })
@@ -169,8 +169,8 @@ export class ScheduleFlightFormComponent implements OnInit {
             this.dayForm.controls['friday'].value ||
             this.dayForm.controls['saturday'].value ||
             this.dayForm.controls['sunday'].value)
-        let dateEqual = this.scheduleForm.controls['startDate'].value?.getDate()!=this.scheduleForm.controls['endDate'].value?.getDate()
-        let timeEqual = this.scheduleForm.controls['departureTime'].value!=this.scheduleForm.controls['arrivalTime'].value
+        let dateEqual = this.scheduleForm.controls['startDate'].value?.getDate() != this.scheduleForm.controls['endDate'].value?.getDate()
+        let timeEqual = this.scheduleForm.controls['departureTime'].value != this.scheduleForm.controls['arrivalTime'].value
         if (this.scheduleForm.valid && day && dateEqual && timeEqual) {
             return false;
         }
