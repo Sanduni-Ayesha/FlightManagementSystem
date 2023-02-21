@@ -8,6 +8,7 @@ import {DIALOG_DATA} from "@angular/cdk/dialog";
 import {Schedule} from "../../../model/Schedule";
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {futureDateValidator} from "../../../shared/futureDate.validator";
+import {AlertService} from "../../../services/alert/alert.service";
 
 @Component({
     selector: 'app-schedule-flight-form',
@@ -61,6 +62,7 @@ export class ScheduleFlightFormComponent implements OnInit {
         public dialog: MatDialog,
         @Inject(DIALOG_DATA) public data: any,
         private flightService: FlightDataService,
+        private alertService: AlertService,
     ) {
     }
 
@@ -106,18 +108,18 @@ export class ScheduleFlightFormComponent implements OnInit {
         this.flightService.scheduleFlight(schedule).subscribe({
             next: (response) => {
                 if (response.status == 245) {
-                    alert("The flight schedule data is invalid. Please retry.")
+                    this.alertService.warn("The flight schedule data is invalid. Please retry.")
                 } else if (response.status == 234) {
-                    alert("The entered route does not exist.\nPlease use a flight with an available route.")
+                    this.alertService.warn("The entered route does not exist.\nPlease use a flight with an available route.")
                 } else if (response.status == 240) {
-                    alert("Flight details are invalid. Please enter valid details.")
+                    this.alertService.warn("Flight details are invalid. Please enter valid details.")
                 } else if (response.status == 239) {
-                    alert("Flight already exists in the scheduled time. \nPlease use another time range.")
+                    this.alertService.warn("Flight already exists in the scheduled time. \nPlease use another time range.")
                 } else {
-                    alert("Flight scheduling successful.")
+                    this.alertService.success("Flight scheduling successful.")
                 }
             }, error: () => {
-                alert("The flight scheduling process was unsuccessful. Please try again.");
+                this.alertService.warn("The flight scheduling process was unsuccessful. Please try again.")
             }
         });
         this.dialog.closeAll();
@@ -140,8 +142,13 @@ export class ScheduleFlightFormComponent implements OnInit {
     closeScheduleForm(dirty: boolean) {
         if (!dirty) {
             this.dialog.closeAll();
-        } else if (confirm('Are you sure you want to cancel?')) {
-            this.dialog.closeAll();
+        }else{
+            this.alertService.openConfirmDialog("Cancel", "Are you sure you want to cancel?")
+                .afterClosed().subscribe(res=>{
+                if(res){
+                    this.dialog.closeAll();
+                }
+            })
         }
     }
 
