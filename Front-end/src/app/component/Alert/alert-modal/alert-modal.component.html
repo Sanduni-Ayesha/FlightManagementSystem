@@ -1,0 +1,13 @@
+<div class="alert">
+    <div class="title">
+        {{this.data.title}}
+    </div>
+    <div class="message">
+        {{this.data.message}}
+    </div>
+    <div class="buttons">
+        <button mat-raised-button [mat-dialog-close]="true">Yes</button>
+        <span class="space"></span>
+        <button mat-button [mat-dialog-close]="false">No</button>
+    </div>
+</div>

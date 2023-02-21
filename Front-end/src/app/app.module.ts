@@ -15,7 +15,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
@@ -27,7 +27,6 @@ import {NavBarComponent} from './component/nav-bar/nav-bar.component';
 
 import {RouteScreenComponent} from './component/Route/route-screen/route-screen.component';
 import {
-    MAT_DIALOG_DEFAULT_OPTIONS,
     MatDialogModule,
     MatDialogRef,
 } from '@angular/material/dialog';
@@ -35,6 +34,8 @@ import { ScheduleFlightFormComponent } from './component/Flight/schedule-flight-
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AlertModalComponent } from './component/Alert/alert-modal/alert-modal.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         AddFlightFormComponent,
         NavBarComponent,
         ScheduleFlightFormComponent,
+        AlertModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -67,6 +69,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
+        MatSnackBarModule,
     ],
     providers: [
         {
