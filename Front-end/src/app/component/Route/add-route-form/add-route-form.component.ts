@@ -131,7 +131,7 @@ export class AddRouteFormComponent implements OnInit {
     }
 
     onReset() {
-        if (this.routeInfo.dirty && confirm("Are you sure you want to reset?")) {
+        if (this.routeInfo.dirty) {
             if (this.routeInfo.controls.id.value != '') {
                 this.routeInfo.controls.id.setValue(this.data.rowData.id)
                 this.routeInfo.controls.departureAirport.setValue(this.data.rowData.departureAirport)
