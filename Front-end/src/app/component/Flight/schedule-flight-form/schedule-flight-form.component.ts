@@ -117,7 +117,7 @@ export class ScheduleFlightFormComponent implements OnInit {
                     this.alertService.warn("The flight schedule data is invalid. Please retry.")
                 } else if (response.status == 234) {
                     this.alertService.warn("The entered route does not exist.\nPlease use a flight with an available route.")
-                } else if(response.status==200){
+                } else if(response.status==200 && response.body==null){
                     this.alertService.success("Flight scheduling successful.")
                 }
             }, error: () => {
