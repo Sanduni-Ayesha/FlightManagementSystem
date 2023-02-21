@@ -1,5 +1,6 @@
 package com.example.Backend.controllers;
 
+import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.ScheduleFlightDto;
 import com.example.Backend.services.FlightService;
 import com.example.Backend.services.ScheduleFlightService;
@@ -21,7 +22,7 @@ public class ScheduleFlightController {
     }
 
     @PostMapping("/schedule-flight")
-    public ResponseEntity<ScheduleFlightDto> createScheduleFlight(@RequestBody ScheduleFlightDto scheduleFlightDto){
+    public ResponseEntity<FlightDto> createScheduleFlight(@RequestBody ScheduleFlightDto scheduleFlightDto){
         return new ResponseEntity<>(scheduleFlightService.createSchedule(scheduleFlightDto), HttpStatus.OK);
     }
 }
