@@ -94,14 +94,16 @@ export class AddFlightFormComponent implements OnInit {
                         this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.")
                     } else if (response.status == 240) {
                         this.alertService.warn("Flight details are invalid. Please enter valid details.")
+                    }else if(response.status==233){
+                        this.alertService.warn("The entered route does not exist. Please add route first.")
                     } else {
                         this.alertService.success("Flight creation successful.")
+                        this.dialog.closeAll();
                     }
                 }, error: () => {
                     this.alertService.warn("The flight creation process was unsuccessful. Please try again.")
                 }
             });
-            this.dialog.closeAll();
         }
     }
 

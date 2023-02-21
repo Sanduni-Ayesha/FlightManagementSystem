@@ -7,8 +7,10 @@ import com.example.Backend.dtoMapper.FlightMapper;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
+import com.example.Backend.models.Route;
 import com.example.Backend.repositories.FlightRepository;
 
+import com.example.Backend.repositories.RouteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ public class FlightService {
 
     private FlightRepository flightRepository;
     private FlightDaoImpl flightDaoImpl;
+    private RouteRepository routeRepository;
     public static Logger logger = LoggerFactory.getLogger(FlightDaoImpl.class);
 
     @Autowired
-    public FlightService(FlightRepository flightRepository, FlightDaoImpl flightDaoImpl) {
+    public FlightService(FlightRepository flightRepository, FlightDaoImpl flightDaoImpl, RouteRepository routeRepository) {
         this.flightRepository = flightRepository;
         this.flightDaoImpl = flightDaoImpl;
+        this.routeRepository = routeRepository;
     }
 
     @Transactional
@@ -58,6 +62,10 @@ public class FlightService {
         if (checkFlightDuplicates(flightDto)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
+        }
+        if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(flightDto.getArrivalAirport(),flightDto.getDepartureAirport(), Route.Status.active)){
+            logger.info("The flight cannot be added as the given route does not exist");
+            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
         return FlightMapper.flightToFlightDtoMapper(flightRepository.save(FlightMapper.flightDtoToFlightMapper(flightDto)));
     }
