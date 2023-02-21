@@ -10,6 +10,7 @@ import {map} from 'rxjs/operators';
 import {FlightDataService} from "../../../services/flight-data/flight-data.service";
 import {Flight} from "../../../model/Flight";
 import {Airport} from "../../../model/Airport";
+import {AlertService} from "../../../services/alert/alert.service";
 
 @Component({
     selector: 'app-add-flight-form',
@@ -49,6 +50,7 @@ export class AddFlightFormComponent implements OnInit {
         public dialog: MatDialog,
         @Inject(DIALOG_DATA) public data: any,
         private flightService: FlightDataService,
+        private alertService: AlertService
     ) {
     }
 
@@ -84,19 +86,19 @@ export class AddFlightFormComponent implements OnInit {
         let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
         let newFlight = new Flight((lastID + 1), departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, "", "", "active", 1)
         if (this.checkFlightDuplication(newFlight)) {
-            alert("The flight is already used in the given time!\n Please use a different time.")
+            this.alertService.warn("The flight is already used in the given time!\n Please use a different time.");
         } else {
             this.flightService.addFlight(newFlight).subscribe({
                 next: (response) => {
                     if (response.status == 239) {
-                        alert("The flight is already used in the given time!\n Please use a different time.")
+                        this.alertService.warn("The flight is already used in the given time!\n Please use a different time.")
                     } else if (response.status == 240) {
-                        alert("Flight details are invalid. Please enter valid details.")
+                        this.alertService.warn("Flight details are invalid. Please enter valid details.")
                     } else {
-                        alert("Flight creation successful.")
+                        this.alertService.success("Flight creation successful.")
                     }
                 }, error: () => {
-                    alert("The flight creation process was unsuccessful. Please try again.");
+                    this.alertService.warn("The flight creation process was unsuccessful. Please try again.")
                 }
             });
             this.dialog.closeAll();
@@ -128,8 +130,13 @@ export class AddFlightFormComponent implements OnInit {
     close(dirty: boolean) {
         if (!dirty) {
             this.dialog.closeAll();
-        } else if (confirm('Are you sure you want to cancel?')) {
-            this.dialog.closeAll();
+        } else{
+            this.alertService.openConfirmDialog("Cancel", "Are you sure you want to cancel?")
+                .afterClosed().subscribe(res=>{
+                if(res){
+                    this.dialog.closeAll();
+                }
+            })
         }
     }
 
@@ -146,25 +153,25 @@ export class AddFlightFormComponent implements OnInit {
                 let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
                 let newFlight = new Flight(updatedId, departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, this.data.row.createdTime, this.data.row.lastUpdatedTime, this.data.row.status, this.data.row.version);
                 if (this.checkFlightDuplication(newFlight)) {
-                    alert("The flight is already used in the given time!\n Please use a different time.")
+                    this.alertService.warn("The flight is already used in the given time!\n Please use a different time.")
                 } else {
                     this.flightService.updateFlight(newFlight).subscribe({
                         next: (response) => {
                             if (response.status == 241) {
-                                alert("Flight is already updated by another user.")
+                                this.alertService.warn("Flight is already updated by another user.")
                                 this.resetRow()
                             } else if (response.status == 239) {
-                                alert("The flight is already used in the given time!\n Please use a different time.")
+                                this.alertService.warn("The flight is already used in the given time!\n Please use a different time.")
                             } else if (response.status == 240) {
-                                alert("Flight details are invalid. Please enter valid details.")
+                                this.alertService.warn("Flight details are invalid. Please enter valid details.")
                             } else if (response.status == 237) {
-                                alert("Flight does not exist to be updated.")
+                                this.alertService.warn("Flight does not exist to be updated.")
                             } else {
-                                alert("Flight update successful.")
+                                this.alertService.success("Flight update successful.")
                             }
                         },
                         error: () => {
-                            alert("The flight updating process was unsuccessful. Please try again.");
+                            this.alertService.warn("The flight updating process was unsuccessful. Please try again.")
                         }
                     });
                     this.dialog.closeAll();
