@@ -9,6 +9,7 @@ import {Route} from "../../../model/Route";
 import {RouteService} from "../../../services/route-data/route.service";
 import {AirportService} from "../../../services/airport-data/airport.service";
 import {Airport} from "../../../model/Airport";
+import {AlertService} from "../../../services/alert/alert.service";
 
 
 const TableHeading = ['Departure Airport', 'Arrival Airport', 'Mileage/Km', 'Duration/Hours','Edit','Delete']
@@ -29,7 +30,11 @@ export class RouteScreenComponent implements OnInit {
     public routeDetails: Route[] = [];
     public airportDetails: Airport[] = []
 
-    constructor(private airportService: AirportService, private routeService: RouteService, public dialog: MatDialog, private http: HttpClient) {
+    constructor(private airportService: AirportService,
+                private routeService: RouteService,
+                public dialog: MatDialog,
+                private http: HttpClient,
+                private alertService: AlertService) {
     }
 
     ngOnInit() {
@@ -124,27 +129,29 @@ export class RouteScreenComponent implements OnInit {
                 this.errorMessage = '';
             }
         },error :()=>{
-                alert("Oops! Something went wrong.Sorry for the inconvenience")
+            this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
             } })
     }
 
     removeRow(id: number) {
-        if (confirm("Press Ok to confirm the deletion !!!")) {
-            this.routeService.deleteRoute(id).subscribe({
-                next:
-                    (response) => {
-                        this.getRoutes("", "");
-                        if (response.status == 200) { //OK
-                            alert("Route successfully deleted!")
-
-                        } else if (response.status == 233) { // ROUTE_NOT_EXISTS_EXCEPTION
-                            alert("Route already deleted")
-                        }
-                    }, error: () => {
-                    alert("Oops! Something went wrong.Sorry for the inconvenience")
-                }
-            });
-        }
+        this.alertService.openConfirmDialog('Confirm', "Press Yes to confirm the deletion !!!")
+            .afterClosed().subscribe(res=>{
+            if(res){
+                this.routeService.deleteRoute(id).subscribe({
+                    next:
+                        (response) => {
+                            this.getRoutes("", "");
+                            if (response.status == 200) { //OK
+                                this.alertService.success("Route successfully deleted!")
+                            } else if (response.status == 233) { // ROUTE_NOT_EXISTS_EXCEPTION
+                                this.alertService.warn("Route already deleted")
+                            }
+                        }, error: () => {
+                        this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
+                    }
+                });
+            }
+            })
     }
 
     search() {
