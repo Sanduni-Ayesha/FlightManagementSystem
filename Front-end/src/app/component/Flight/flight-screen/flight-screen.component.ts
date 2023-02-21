@@ -8,6 +8,7 @@ import {FlightDataService} from "../../../services/flight-data/flight-data.servi
 import {AirportService} from "../../../services/airport-data/airport.service";
 import {Airport} from "../../../model/Airport";
 import {ScheduleFlightFormComponent} from "../schedule-flight-form/schedule-flight-form.component";
+import {AlertService} from "../../../services/alert/alert.service";
 
 const COLUMNS = [
     {
@@ -69,7 +70,8 @@ export class FlightScreenComponent implements OnInit {
     constructor(
         private flightService: FlightDataService,
         public dialog: MatDialog,
-        private airportService: AirportService
+        private airportService: AirportService,
+        private alertService: AlertService,
     ) {
     }
 
@@ -141,23 +143,26 @@ export class FlightScreenComponent implements OnInit {
 
     removeFlight(id: number) {
         this.getFlightDetails();
-        if (confirm('Please confirm deleting')) {
-            this.flightService.deleteFlight(id).subscribe({
-                next: (response) => {
-                    if (response.status == 238) {
-                        alert("Flight already deleted!")
-                    } else if (response.status == 237) {
-                        alert("No such flight exists")
-                    } else {
-                        alert("Flight deletion successful!")
+        this.alertService.openConfirmDialog('Confirm', 'Please confirm deleting flight.')
+            .afterClosed().subscribe(res=>{
+            if(res){
+                this.flightService.deleteFlight(id).subscribe({
+                    next: (response) => {
+                        if (response.status == 238) {
+                            this.alertService.warn("Flight already deleted!")
+                        } else if (response.status == 237) {
+                            this.alertService.warn("No such flight exists")
+                        } else {
+                            this.alertService.success("Flight deletion successful");
+                        }
+                        this.getFlightDetails()
+                    },
+                    error: () => {
+                        this.alertService.warn("The deletion process was unsuccessful. Please try again.")
                     }
-                    this.getFlightDetails()
-                },
-                error: () => {
-                    alert("The deletion process was unsuccessful. Please try again.");
-                }
-            });
-        }
+                });
+            }
+        })
     }
 
     openAddFlightForm(type: string, flight = (new Flight(-1, "", "", "", "", "", "", "", "active", 1))) {
