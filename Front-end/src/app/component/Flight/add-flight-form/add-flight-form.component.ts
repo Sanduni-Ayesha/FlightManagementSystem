@@ -86,12 +86,12 @@ export class AddFlightFormComponent implements OnInit {
         let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
         let newFlight = new Flight((lastID + 1), departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, "", "", "active", 1)
         if (this.checkFlightDuplication(newFlight)) {
-            this.alertService.warn("The flight is already used in the given time!\n Please use a different time.");
+            this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.");
         } else {
             this.flightService.addFlight(newFlight).subscribe({
                 next: (response) => {
                     if (response.status == 239) {
-                        this.alertService.warn("The flight is already used in the given time!\n Please use a different time.")
+                        this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.")
                     } else if (response.status == 240) {
                         this.alertService.warn("Flight details are invalid. Please enter valid details.")
                     } else {
@@ -108,19 +108,14 @@ export class AddFlightFormComponent implements OnInit {
     checkFlightDuplication(flight: Flight): boolean {
         let id = flight.id;
         let flightNo = flight.flightNo;
-        let departureTime = new Date(flight.departureTime);
-        let arrivalTime = new Date(flight.arrivalTime);
+        let departureTime = new Date(flight.departureTime).getDate();
 
         for (const flightData of this.data.flightData) {
-            let departure = new Date(flightData.departureTime);
-            let arrival = new Date(flightData.arrivalTime);
+            let departure = new Date(flightData.departureTime).getDate();
             if (flightData.id == id) {
                 continue;
             }
-            if (flightData.flightNo == flightNo &&
-                (departure <= departureTime && departureTime <= arrival ||
-                    departure <= arrivalTime && arrivalTime <= arrival ||
-                    departure <= departureTime  && arrivalTime<=arrival)) {
+            if (flightData.flightNo == flightNo && departure == departureTime ) {
                 return true;
             }
         }
@@ -153,7 +148,7 @@ export class AddFlightFormComponent implements OnInit {
                 let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
                 let newFlight = new Flight(updatedId, departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, this.data.row.createdTime, this.data.row.lastUpdatedTime, this.data.row.status, this.data.row.version);
                 if (this.checkFlightDuplication(newFlight)) {
-                    this.alertService.warn("The flight is already used in the given time!\n Please use a different time.")
+                    this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.")
                 } else {
                     this.flightService.updateFlight(newFlight).subscribe({
                         next: (response) => {
@@ -161,7 +156,7 @@ export class AddFlightFormComponent implements OnInit {
                                 this.alertService.warn("Flight is already updated by another user.")
                                 this.resetRow()
                             } else if (response.status == 239) {
-                                this.alertService.warn("The flight is already used in the given time!\n Please use a different time.")
+                                this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.")
                             } else if (response.status == 240) {
                                 this.alertService.warn("Flight details are invalid. Please enter valid details.")
                             } else if (response.status == 237) {
