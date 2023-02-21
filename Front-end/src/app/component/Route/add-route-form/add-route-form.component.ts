@@ -8,6 +8,7 @@ import {Route} from "../../../model/Route";
 import {Airport} from "../../../model/Airport";
 import {AirportService} from "../../../services/airport-data/airport.service";
 import {map} from "rxjs/operators";
+import {AlertService} from "../../../services/alert/alert.service";
 
 @Component({
     selector: 'app-add-route-form',
@@ -37,15 +38,18 @@ export class AddRouteFormComponent implements OnInit {
     )
 
 
-    constructor(private airportService: AirportService, private routeService: RouteService, private fb: FormBuilder, private dialog: MatDialog, @Inject(DIALOG_DATA) public data: any) {
+    constructor(private airportService: AirportService,
+                private routeService: RouteService,
+                private fb: FormBuilder,
+                private dialog: MatDialog,
+                @Inject(DIALOG_DATA) public data: any,
+                private alertService: AlertService) {
     }
 
     ngOnInit(): void {
         this.airport = this.data.airportsDetails;
         this.setFilteredDepartureAirport();
         this.setFilteredArrivalAirport();
-
-
     }
 
     onSubmit() {
@@ -65,18 +69,18 @@ export class AddRouteFormComponent implements OnInit {
             this.routeService.addRoute(route).subscribe({
                 next: (response) => {
                     if (response.status == 200) { //OK
-                        alert("Route successfully created! new route is now available.");
+                        this.alertService.success("Route successfully created! new route is now available.")
                     } else if (response.status == 235) { //ROUTE_EXISTS_EXCEPTION
-                        alert("Route already exist");
+                        this.alertService.warn("Route already exist")
                     }
                 },
                 error: () => {
-                    alert("Oops! Something went wrong.Sorry for the inconvenience")
+                    this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
                 }
             });
             this.dialog.closeAll();
         } else {
-            alert("Check  again your input details")
+            this.alertService.warn("Check your input details again")
         }
     }
 
@@ -97,12 +101,12 @@ export class AddRouteFormComponent implements OnInit {
             this.routeService.updateRoute(route).subscribe({
                 next: (response) => {
                     if (response.status == 200) { //OK
-                        alert("Route successfully updated!");
+                        this.alertService.success("Route successfully updated!")
                     } else if (response.status == 236) { //ROUTE_ALREADY_UPDATED_EXCEPTION
-
+                        this.alertService.warn("Route is already updated by another user.")
                     }
                 }, error: () => {
-                    alert("Oops! Something went wrong. Sorry for the inconvenience.");
+                    this.alertService.warn("Oops! Something went wrong. Sorry for the inconvenience.")
                 }
             });
             this.dialog.closeAll();
@@ -114,9 +118,12 @@ export class AddRouteFormComponent implements OnInit {
 
     onCancel() {
         if (this.routeInfo.dirty) {
-            if (confirm('Are you sure you want to cancel?')) {
-                this.dialog.closeAll();
-            }
+            this.alertService.openConfirmDialog("Cancel", "Are you sure you want to cancel?")
+                .afterClosed().subscribe(res=>{
+                if(res){
+                    this.dialog.closeAll();
+                }
+            })
         } else {
             this.dialog.closeAll();
         }
