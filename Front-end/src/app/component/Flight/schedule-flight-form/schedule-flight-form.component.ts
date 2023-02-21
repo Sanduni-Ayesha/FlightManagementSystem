@@ -107,15 +107,17 @@ export class ScheduleFlightFormComponent implements OnInit {
 
         this.flightService.scheduleFlight(schedule).subscribe({
             next: (response) => {
+                if(response.body!=null){
+                    this.alertService.openConfirmDialog("Duplicate Flight Detected",
+                        "The flight with following data was duplicated. \nFlight No : "
+                        +response.body.flightNo+"\nDeparture Time : "+response.body.departureTime+
+                    "\nFlight scheduling unsuccessful.");
+                }
                 if (response.status == 245) {
                     this.alertService.warn("The flight schedule data is invalid. Please retry.")
                 } else if (response.status == 234) {
                     this.alertService.warn("The entered route does not exist.\nPlease use a flight with an available route.")
-                } else if (response.status == 240) {
-                    this.alertService.warn("Flight details are invalid. Please enter valid details.")
-                } else if (response.status == 239) {
-                    this.alertService.warn("Flight already exists in the scheduled time. \nPlease use another time range.")
-                } else {
+                } else if(response.status==200){
                     this.alertService.success("Flight scheduling successful.")
                 }
             }, error: () => {

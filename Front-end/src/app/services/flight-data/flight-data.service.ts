@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Flight} from "../../model/Flight";
 import {Schedule} from "../../model/Schedule";
@@ -20,7 +20,7 @@ export class FlightDataService {
         })
     }
 
-    public deleteFlight(id: number) {
+    public deleteFlight(id: number){
         return this.http.delete(`${this.baseUrl}/flight/deleteFlight/${id}`, {observe: "response"})
     }
 
@@ -32,7 +32,7 @@ export class FlightDataService {
         return this.http.put(`${this.baseUrl}/flight/updateFlight`, flight, {observe: "response"})
     }
 
-    public scheduleFlight(schedule: Schedule){
-        return this.http.post(`${this.baseUrl}/flight/schedule-flight`, schedule, {observe: "response"})
+    public scheduleFlight(schedule: Schedule):Observable<HttpResponse<Flight>> {
+        return this.http.post<Flight>(`${this.baseUrl}/flight/schedule-flight`, schedule, {observe: "response"})
     }
 }
