@@ -25,9 +25,10 @@ public class FlightDaoImpl implements FlightDao {
     @Override
     public List<Flight> searchFlights(SearchDTO searchDTO) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Select * from flight where status='active'");
+        stringBuilder.append("Select * from flight ");
         stringBuilder.append(createQueryForSearch(searchDTO));
-        List<Flight> flights = jdbcTemplate.query(stringBuilder.toString(), BeanPropertyRowMapper.newInstance(Flight.class));
+        String sql = stringBuilder.toString()+ " order by departure_time";
+        List<Flight> flights = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Flight.class));
         return flights;
     }
 
@@ -41,7 +42,7 @@ public class FlightDaoImpl implements FlightDao {
         }
         String finalString = String.join(" AND ", queryList);
         if (!queryList.isEmpty()) {
-            return (" AND " + finalString);
+            return (" WHERE " + finalString);
         }
         return "";
     }
