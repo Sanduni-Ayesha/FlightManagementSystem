@@ -134,17 +134,22 @@ export class RouteScreenComponent implements OnInit {
     }
 
     removeRow(id: number) {
-        this.alertService.openConfirmDialog('Confirm', "Press Yes to confirm the deletion !!!")
+        this.alertService.openConfirmDialog('Confirm', "Are you sure you want to delete this route?")
             .afterClosed().subscribe(res=>{
             if(res){
                 this.routeService.deleteRoute(id).subscribe({
                     next:
                         (response) => {
                             this.getRoutes("", "");
-                            if (response.status == 200) { //OK
-                                this.alertService.success("Route successfully deleted!")
-                            } else if (response.status == 233) { // ROUTE_NOT_EXISTS_EXCEPTION
+                            if(response.status == 239){// FLIGHT_EXISTS_EXCEPTION
+                                this.alertService.warn("Unable to delete route.There existing" +
+                                    " flight associated with this route")
+                            }
+                            else if (response.status == 233) { // ROUTE_NOT_EXISTS_EXCEPTION
                                 this.alertService.warn("Route already deleted")
+                            }
+                            else if (response.status == 200) { //OK
+                                this.alertService.success("Route successfully deleted!")
                             }
                         }, error: () => {
                         this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
