@@ -34,7 +34,7 @@ public class ScheduleFlightService {
 
     @Transactional(rollbackFor = Exceptions.class)
     public FlightDto createSchedule(ScheduleFlightDto scheduleFlightDto) {
-        if (!validateScheduleFlight(scheduleFlightDto)) {
+        if (!scheduleFlightDto.validateScheduleFlight()) {
             throw new Exceptions(ResponseStatusCodes.SCHEDULE_DATA_INVALID);
         }
         if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus
@@ -61,18 +61,6 @@ public class ScheduleFlightService {
         } else {
             return duplicateFlight;
         }
-    }
-
-    @Transactional(propagation = Propagation.MANDATORY)
-    public boolean validateScheduleFlight(ScheduleFlightDto scheduleFlightDto) {
-        if (scheduleFlightDto.getDepartureAirport().matches("[A-Z]{3}") &&
-                scheduleFlightDto.getArrivalAirport().matches("[A-Z]{3}") &&
-                scheduleFlightDto.getFlightNo().matches("[A-Za-z]{2}[0-9]{4}") &&
-                scheduleFlightDto.getArrivalTime() != scheduleFlightDto.getDepartureTime()
-        ) {
-            return true;
-        }
-        return false;
     }
 
 }
