@@ -55,10 +55,6 @@ public class FlightService {
     @Transactional
     public FlightDto addFlight(FlightDto flightDto) {
         flightValidations(flightDto);
-        if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(flightDto.getArrivalAirport(),flightDto.getDepartureAirport(), Route.Status.active)){
-            logger.info("The flight cannot be added as the given route does not exist");
-            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
-        }
         return FlightMapper.flightToFlightDtoMapper(flightRepository.save(FlightMapper.flightDtoToFlightMapper(flightDto)));
     }
 
@@ -89,6 +85,10 @@ public class FlightService {
         if (checkFlightDuplicates(flightDto)) {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
+        }
+        if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(flightDto.getArrivalAirport(),flightDto.getDepartureAirport(), Route.Status.active)){
+            logger.info("The flight cannot be added as the given route does not exist");
+            throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
     }
 }
