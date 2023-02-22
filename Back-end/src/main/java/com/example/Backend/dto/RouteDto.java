@@ -79,5 +79,19 @@ public class RouteDto {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
+    public Boolean isValidRoute() {
+        String airportPattern = "[A-Z]{3}";
+        String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
+
+        if (getDepartureAirport().matches(airportPattern) &&
+                getArrivalAirport().matches(airportPattern) &&
+                Double.toString(getMileage()).matches(floatPattern) &&
+                Double.toString(getDuration()).matches(floatPattern)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
