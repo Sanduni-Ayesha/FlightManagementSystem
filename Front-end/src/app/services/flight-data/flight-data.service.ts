@@ -13,14 +13,14 @@ export class FlightDataService {
     constructor(private http: HttpClient) {
     }
 
-    public getAllFlights(departure:string , arrival:string): Observable<Flight[]> {
+    public getAllFlights(departure: string, arrival: string): Observable<Flight[]> {
         return this.http.post<Flight[]>(`${this.baseUrl}/flight/getFlights`, {
             "departureAirport": departure,
             "arrivalAirport": arrival
         })
     }
 
-    public deleteFlight(id: number){
+    public deleteFlight(id: number) {
         return this.http.delete(`${this.baseUrl}/flight/deleteFlight/${id}`, {observe: "response"})
     }
 
@@ -32,7 +32,7 @@ export class FlightDataService {
         return this.http.put(`${this.baseUrl}/flight/updateFlight`, flight, {observe: "response"})
     }
 
-    public scheduleFlight(schedule: Schedule):Observable<HttpResponse<Flight>> {
+    public scheduleFlight(schedule: Schedule): Observable<HttpResponse<Flight>> {
         return this.http.post<Flight>(`${this.baseUrl}/flight/schedule-flight`, schedule, {observe: "response"})
     }
 }
