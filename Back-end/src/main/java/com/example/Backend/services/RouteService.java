@@ -73,7 +73,8 @@ public class RouteService {
             logger.error("The selected route is already updated at " + toBeUpdatedRoute.getLastUpdatedTime() + " .");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_UPDATED_EXCEPTION);
         }
-        return setUpdate(toBeUpdatedRoute, routeDto);
+        toBeUpdatedRoute.routeUpdate(routeDto);
+        return new RouteDto(toBeUpdatedRoute);
 
     }
 
@@ -94,17 +95,6 @@ public class RouteService {
         }
         Route route = new Route(routeDto);
         return new RouteDto(routeRepository.save(route));
-    }
-
-    private RouteDto setUpdate(Route toBeUpdatedRoute, RouteDto routeDto) {
-        toBeUpdatedRoute.setArrivalAirport(routeDto.getArrivalAirport());
-        toBeUpdatedRoute.setDepartureAirport(routeDto.getDepartureAirport());
-        toBeUpdatedRoute.setMileage(routeDto.getMileage());
-        toBeUpdatedRoute.setDuration(routeDto.getDuration());
-        toBeUpdatedRoute.setCreatedTime(routeDto.getCreatedTime());
-        toBeUpdatedRoute.setLastUpdatedTime(routeDto.getLastUpdatedTime());
-        Route updatedRoute = toBeUpdatedRoute;
-        return RouteMapper.routeToRouteDtoMapper(updatedRoute);
     }
 
     private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto) {
