@@ -68,7 +68,7 @@
                 </mat-form-field>
                 <div class="error_msg">
                     <small *ngIf="scheduleForm.errors?.['dateMismatch']">Enter a future date.</small>
-                    <small *ngIf="scheduleForm.controls['startDate'].value?.getDate() == scheduleForm.controls['endDate'].value?.getDate()">Start
+                    <small *ngIf="scheduleForm.controls['startDate'].value?.toLocaleDateString() == scheduleForm.controls['endDate'].value?.toLocaleDateString()">Start
                         and end dates cannot be similar.</small>
                 </div>
                 <br>
