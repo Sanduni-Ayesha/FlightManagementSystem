@@ -119,6 +119,8 @@ export class ScheduleFlightFormComponent implements OnInit {
                     this.alertService.warn("The flight schedule data is invalid. Please retry.")
                 } else if (response.status == 233) {
                     this.alertService.warn("The entered route does not exist.\nPlease use an available route.")
+                } else if (response.status == 246) {
+                    this.alertService.warn("Day not found within given range. Please select a different range.")
                 } else if (response.status == 200 && response.body == null) {
                     this.alertService.success("Flight scheduling successful.")
                     this.dialog.closeAll();
