@@ -46,12 +46,6 @@ public class RouteService {
             logger.info("The route with id " + id + " is not available");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
-        if(flightRepository.existsFlightByArrivalAirportAndDepartureAirport(route.getArrivalAirport(),
-                route.getDepartureAirport())){
-            logger.info("The route with id "+id+" can not delete.Flights are already available " +
-                    "from departure airport "+route.getDepartureAirport()+" to arrival airport "+route.getArrivalAirport());
-            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
-        }
         if (route.getStatus() == Route.Status.inactive) {
             logger.info("The route with id " + id + " is already in inactive state and it can not be deleted.");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_IN_INACTIVE_STATE_EXCEPTION);
@@ -63,10 +57,7 @@ public class RouteService {
         }
         routeRepository.deleteById(id);
         return id;
-
-
     }
-
     @Transactional(rollbackFor = Exceptions.class)
     public RouteDto updateRoute(RouteDto routeDto) {
         if (!isValidRoute(routeDto)) {
@@ -105,7 +96,7 @@ public class RouteService {
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
     }
     @Transactional(propagation = Propagation.MANDATORY)
-   public Boolean isValidRoute(RouteDto route) {
+    public Boolean isValidRoute(RouteDto route) {
         String airportPattern = "[A-Z]{3}";
         String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
 
