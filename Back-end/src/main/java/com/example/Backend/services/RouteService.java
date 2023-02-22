@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Backend.exceptions.Exceptions;
-import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 
@@ -93,7 +92,7 @@ public class RouteService {
                 routeDto.getArrivalAirport(), routeDto.getDepartureAirport(), Route.Status.inactive)) {
             return setActivateAlreadyExistRoute(routeDto);
         }
-        Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
+        Route route = new Route(routeDto);
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
     }
 
