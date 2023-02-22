@@ -3,7 +3,6 @@ package com.example.Backend.services;
 import com.example.Backend.daoImpl.RouteDaoImpl;
 import com.example.Backend.dto.RouteDto;
 import com.example.Backend.dto.SearchDTO;
-import com.example.Backend.dtoMapper.RouteMapper;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Route;
 import com.example.Backend.repositories.FlightRepository;
@@ -97,14 +96,14 @@ public class RouteService {
         return new RouteDto(routeRepository.save(route));
     }
 
-    private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto) {
+    public RouteDto setActivateAlreadyExistRoute(RouteDto routeDto) {
         Route route = routeRepository.findRouteByArrivalAirportAndDepartureAirport
                 (routeDto.getArrivalAirport(), routeDto.getDepartureAirport());
         route.setStatus(Route.Status.active);
         route.setLastUpdatedTime(routeDto.getCreatedTime());
         route.setMileage(routeDto.getMileage());
         route.setDuration(routeDto.getDuration());
-        return RouteMapper.routeToRouteDtoMapper(route);
+        return new RouteDto(route);
     }
 
 }
