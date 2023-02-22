@@ -44,6 +44,16 @@ public class Route {
         setLastUpdatedTime(routeDto.getLastUpdatedTime());
     }
 
+    public void routeUpdate(RouteDto routeDto) {
+        setArrivalAirport(routeDto.getArrivalAirport());
+        setDepartureAirport(routeDto.getDepartureAirport());
+        setMileage(routeDto.getMileage());
+        setDuration(routeDto.getDuration());
+        setCreatedTime(routeDto.getCreatedTime());
+        setLastUpdatedTime(routeDto.getLastUpdatedTime());
+
+    }
+
     public enum Status {
         active,
         inactive
