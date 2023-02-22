@@ -1,5 +1,6 @@
 package com.example.Backend.models;
 
+import com.example.Backend.dto.RouteDto;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -30,6 +31,17 @@ public class Route {
 
     public Route() {
 
+    }
+
+    public Route(RouteDto routeDto) {
+        setId(routeDto.getId());
+        setArrivalAirport(routeDto.getArrivalAirport());
+        setDepartureAirport(routeDto.getDepartureAirport());
+        setMileage(routeDto.getMileage());
+        setDuration(routeDto.getDuration());
+        setVersion(routeDto.getVersion());
+        setCreatedTime(routeDto.getCreatedTime());
+        setLastUpdatedTime(routeDto.getLastUpdatedTime());
     }
 
     public enum Status {
