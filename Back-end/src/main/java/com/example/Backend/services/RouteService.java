@@ -97,21 +97,6 @@ public class RouteService {
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
     }
 
-    @Transactional(propagation = Propagation.MANDATORY)
-    public Boolean isValidRoute(RouteDto route) {
-        String airportPattern = "[A-Z]{3}";
-        String floatPattern = "^[1-9]\\d*(\\.\\d+)?$";
-
-        if (route.getDepartureAirport().matches(airportPattern) &&
-                route.getArrivalAirport().matches(airportPattern) &&
-                Double.toString(route.getMileage()).matches(floatPattern) &&
-                Double.toString(route.getDuration()).matches(floatPattern)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private RouteDto setUpdate(Route toBeUpdatedRoute, RouteDto routeDto) {
         toBeUpdatedRoute.setArrivalAirport(routeDto.getArrivalAirport());
         toBeUpdatedRoute.setDepartureAirport(routeDto.getDepartureAirport());
