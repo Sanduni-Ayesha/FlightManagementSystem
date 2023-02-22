@@ -94,7 +94,7 @@ export class AddFlightFormComponent implements OnInit {
                         this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.")
                     } else if (response.status == 240) {
                         this.alertService.warn("Flight details are invalid. Please enter valid details.")
-                    }else if(response.status==233){
+                    } else if (response.status == 233) {
                         this.alertService.warn("The entered route does not exist. Please add route first.")
                     } else {
                         this.alertService.success("Flight creation successful.")
@@ -117,7 +117,7 @@ export class AddFlightFormComponent implements OnInit {
             if (flightData.id == id) {
                 continue;
             }
-            if (flightData.flightNo == flightNo && departure == departureTime ) {
+            if (flightData.flightNo == flightNo && departure == departureTime) {
                 return true;
             }
         }
@@ -127,10 +127,10 @@ export class AddFlightFormComponent implements OnInit {
     close(dirty: boolean) {
         if (!dirty) {
             this.dialog.closeAll();
-        } else{
+        } else {
             this.alertService.openConfirmDialog("Cancel", "Are you sure you want to cancel?")
-                .afterClosed().subscribe(res=>{
-                if(res){
+                .afterClosed().subscribe(res => {
+                if (res) {
                     this.dialog.closeAll();
                 }
             })
