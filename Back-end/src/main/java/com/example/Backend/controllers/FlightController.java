@@ -2,6 +2,7 @@ package com.example.Backend.controllers;
 
 import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.SearchDTO;
+import com.example.Backend.dto.SearchFlightDto;
 import com.example.Backend.models.Flight;
 import com.example.Backend.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class FlightController {
     }
 
     @PostMapping("/getFlights")
-    public ResponseEntity<List<Flight>> searchFlights(@RequestBody SearchDTO searchDTO) {
-        return new ResponseEntity<>(flightService.searchFlights(searchDTO), HttpStatus.OK);
+    public ResponseEntity<List<Flight>> searchFlights(@RequestBody SearchFlightDto searchFlightDto) {
+        return new ResponseEntity<>(flightService.searchFlights(searchFlightDto), HttpStatus.OK);
     }
 
     @GetMapping("/getFlights/{id}")

@@ -3,6 +3,7 @@ package com.example.Backend.daoImpl;
 import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.ScheduleFlightDto;
 import com.example.Backend.dto.SearchDTO;
+import com.example.Backend.dto.SearchFlightDto;
 import com.example.Backend.models.Flight;
 import com.example.Backend.dao.FlightDao;
 import com.example.Backend.queryBuilder.ScheduleFlightQueryBuilder;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FlightDaoImpl implements FlightDao {
@@ -23,22 +25,41 @@ public class FlightDaoImpl implements FlightDao {
     }
 
     @Override
-    public List<Flight> searchFlights(SearchDTO searchDTO) {
+    public List<Flight> searchFlights(SearchFlightDto searchFlightDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Select * from flight ");
-        stringBuilder.append(createQueryForSearch(searchDTO));
-        String sql = stringBuilder.toString() + " order by departure_time";
+        stringBuilder.append(createQueryForSearch(searchFlightDto));
+        String sql = stringBuilder + " order by departure_time";
         List<Flight> flights = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Flight.class));
         return flights;
     }
 
-    private String createQueryForSearch(SearchDTO searchDTO) {
+    private String createQueryForSearch(SearchFlightDto searchFlightDto) {
         List<String> queryList = new ArrayList<>();
-        if (!searchDTO.getDepartureAirport().equals("")) {
-            queryList.add("departure_airport='" + searchDTO.getDepartureAirport() + "'");
+        if (searchFlightDto.getDepartureAirport() != null) {
+            if (!searchFlightDto.getDepartureAirport().equals("")) {
+                queryList.add("departure_airport='" + searchFlightDto.getDepartureAirport() + "'");
+            }
         }
-        if (!searchDTO.getArrivalAirport().equals("")) {
-            queryList.add("arrival_airport='" + searchDTO.getArrivalAirport() + "'");
+        if (searchFlightDto.getArrivalAirport() != null) {
+            if (!searchFlightDto.getArrivalAirport().equals("")) {
+                queryList.add("arrival_airport='" + searchFlightDto.getArrivalAirport() + "'");
+            }
+        }
+        if (searchFlightDto.getFlightNo() != null) {
+            if (!searchFlightDto.getFlightNo().equals("")) {
+                queryList.add("flight_no='" + searchFlightDto.getFlightNo() + "'");
+            }
+        }
+        if (searchFlightDto.getDepartureTime() != null) {
+            if (!searchFlightDto.getDepartureTime().equals("")) {
+                queryList.add("departure_time='" + searchFlightDto.getDepartureTime() + "'");
+            }
+        }
+        if (searchFlightDto.getArrivalTime() != null) {
+            if (!searchFlightDto.getArrivalTime().equals("")) {
+                queryList.add("arrival_time='" + searchFlightDto.getArrivalTime() + "'");
+            }
         }
         String finalString = String.join(" AND ", queryList);
         if (!queryList.isEmpty()) {
@@ -49,7 +70,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean checkDuplicate(FlightDto flightDto) {
-        String sqlCheckDuplicates = "Select * from flight where flight_no='" + flightDto.getFlightNo() + "'" + "and DATE(departure_time)=DATE('" + flightDto.getDepartureTime() + "') and not (id='"+flightDto.getId()+"');";
+        String sqlCheckDuplicates = "Select * from flight where flight_no='" + flightDto.getFlightNo() + "'" + "and DATE(departure_time)=DATE('" + flightDto.getDepartureTime() + "') and not (id='" + flightDto.getId() + "');";
         List<Flight> flights = jdbcTemplate.query(sqlCheckDuplicates, BeanPropertyRowMapper.newInstance(Flight.class));
         if (flights.size() >= 1) {
             return true;

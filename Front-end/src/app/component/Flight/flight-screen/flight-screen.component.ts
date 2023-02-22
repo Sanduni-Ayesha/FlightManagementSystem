@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {Component, OnInit, Optional} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {map} from 'rxjs/operators';
 import {AddFlightFormComponent} from '../add-flight-form/add-flight-form.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -9,6 +9,8 @@ import {AirportService} from "../../../services/airport-data/airport.service";
 import {Airport} from "../../../model/Airport";
 import {ScheduleFlightFormComponent} from "../schedule-flight-form/schedule-flight-form.component";
 import {AlertService} from "../../../services/alert/alert.service";
+import {SearchFlight} from "../../../model/SearchFlight";
+import * as path from "path";
 
 const COLUMNS = [
     {
@@ -61,16 +63,20 @@ export class FlightScreenComponent implements OnInit {
     columnsSchema: any = COLUMNS;
     filteredDepartures: Airport[] | undefined;
     filteredArrivals: Airport[] | undefined;
-    filterDepart = new FormControl('', [
-        Validators.pattern(/^[^0-9]*$/),]);
-    filterArrive = new FormControl('', [
-        Validators.pattern(/^[^0-9]*$/),
-    ]);
-    flightNo = new FormControl('', [
-        Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
-    ]);
-    departureTime = new FormControl('');
-    arrivalTime = new FormControl('');
+
+    searchForm = new FormGroup({
+        filterDepart: new FormControl('', [
+            Validators.pattern(/^[^0-9]*$/),]),
+        filterArrive: new FormControl('', [
+            Validators.pattern(/^[^0-9]*$/),
+        ]),
+        flightNo: new FormControl('', [
+            Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
+        ]),
+        departureTime: new FormControl(''),
+        arrivalTime: new FormControl('')
+    })
+
 
     constructor(
         private flightService: FlightDataService,
@@ -82,13 +88,13 @@ export class FlightScreenComponent implements OnInit {
 
     ngOnInit() {
         this.getAllAirports();
-        this.filterDepart.valueChanges
+        this.searchForm.controls.filterDepart.valueChanges
             .pipe(map((value) => this.filterAirports(value || '')))
             .subscribe((departures) => {
                 this.filteredDepartures = departures;
             });
 
-        this.filterArrive.valueChanges
+        this.searchForm.controls.filterArrive.valueChanges
             .pipe(map((value) => this.filterAirports(value || '')))
             .subscribe((arrivals) => {
                 this.filteredArrivals = arrivals;
@@ -126,23 +132,30 @@ export class FlightScreenComponent implements OnInit {
     }
 
     filterByAirport() {
-        let departure = this.getAirportCodeByAirportName(this.filterDepart.value!);
-        let arrival = this.getAirportCodeByAirportName(this.filterArrive.value!);
-        if (this.filterDepart.value == '') departure = "";
-        if (this.filterArrive.value == '') arrival = "";
-        this.flightService.getAllFlights(departure.toString(), arrival.toString()).subscribe(flights => {
+        let departure = this.searchForm.controls.filterDepart.value
+        if (departure == null) departure = ""
+        let arrival = this.searchForm.controls.filterArrive.value
+        if (arrival == null) arrival = ""
+        if (departure != "") {
+            departure = this.getAirportCodeByAirportName(departure!).toString();
+        }
+        if (arrival != "") {
+            arrival = this.getAirportCodeByAirportName(arrival!).toString();
+        }
+        let searchFlight = new SearchFlight(this.searchForm.value, departure, arrival)
+        this.flightService.getAllFlights(searchFlight).subscribe(flights => {
             this.flightDetails = flights
         })
     }
 
     clearSearch() {
-        this.filterDepart.setValue("");
-        this.filterArrive.setValue("");
+        this.searchForm.reset();
         this.getFlightDetails();
     }
 
     getFlightDetails() {
-        this.flightService.getAllFlights("", "").subscribe(flights => {
+        let searchAll = new SearchFlight(this.searchForm.value, "", "")
+        this.flightService.getAllFlights(searchAll).subscribe(flights => {
             this.flightDetails = flights
             this.allFlightDetails = flights
         })
@@ -189,8 +202,8 @@ export class FlightScreenComponent implements OnInit {
         });
         addFlightForm.afterClosed().subscribe(() => {
                 this.getFlightDetails();
-                this.filterDepart.reset();
-                this.filterArrive.reset();
+                this.searchForm.controls.filterDepart.reset();
+                this.searchForm.controls.filterArrive.reset();
             }
         )
     }
@@ -205,28 +218,28 @@ export class FlightScreenComponent implements OnInit {
         });
         scheduleFlightForm.afterClosed().subscribe(() => {
                 this.getFlightDetails();
-                this.filterDepart.reset();
-                this.filterArrive.reset();
+                this.searchForm.controls.filterDepart.reset();
+                this.searchForm.controls.filterArrive.reset();
             }
         )
     }
 
     airportEqualWarning(): boolean {
-        if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterDepart.getRawValue() != "" && this.filterArrive.dirty && this.filterDepart.dirty) {
+        if (this.searchForm.controls.filterDepart.getRawValue() == this.searchForm.controls.filterArrive.getRawValue() && this.searchForm.controls.filterDepart.getRawValue() != "" && this.searchForm.controls.filterArrive.dirty && this.searchForm.controls.filterDepart.dirty) {
             return true;
         }
         return false;
     }
 
     disableSearch(): boolean {
-        if (this.filterDepart.invalid || this.filterArrive.invalid || this.filterDepart.getRawValue() == this.filterArrive.getRawValue()) {
+        if (this.searchForm.invalid) {
             return true
         }
         return false;
     }
 
     disableClear(): boolean {
-        if (!this.filterArrive.dirty && !this.filterDepart.dirty) {
+        if (!this.searchForm.dirty) {
             return true;
         }
         return false;

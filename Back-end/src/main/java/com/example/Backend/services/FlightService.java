@@ -3,6 +3,7 @@ package com.example.Backend.services;
 import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.SearchDTO;
+import com.example.Backend.dto.SearchFlightDto;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
@@ -34,8 +35,8 @@ public class FlightService {
         this.routeRepository = routeRepository;
     }
 
-    public List<Flight> searchFlights(SearchDTO searchDTO) {
-        return flightDaoImpl.searchFlights(searchDTO);
+    public List<Flight> searchFlights(SearchFlightDto searchFlightDto) {
+        return flightDaoImpl.searchFlights(searchFlightDto);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

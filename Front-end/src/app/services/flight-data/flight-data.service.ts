@@ -3,6 +3,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Flight} from "../../model/Flight";
 import {Schedule} from "../../model/Schedule";
+import {SearchFlight} from "../../model/SearchFlight";
 
 @Injectable({
     providedIn: 'root',
@@ -13,11 +14,8 @@ export class FlightDataService {
     constructor(private http: HttpClient) {
     }
 
-    public getAllFlights(departure: string, arrival: string): Observable<Flight[]> {
-        return this.http.post<Flight[]>(`${this.baseUrl}/flight/getFlights`, {
-            "departureAirport": departure,
-            "arrivalAirport": arrival
-        })
+    public getAllFlights(searchFlight: SearchFlight): Observable<Flight[]> {
+        return this.http.post<Flight[]>(`${this.baseUrl}/flight/getFlights`, searchFlight)
     }
 
     public deleteFlight(id: number) {

@@ -1,6 +1,6 @@
 <div class="flight">
     <div class="flightSearch">
-        <form class="searchFilter">
+        <form class="searchFilter" [formGroup]="searchForm">
             <div class="inputFields">
                 <mat-form-field class="departInput" appearance="fill">
                     <mat-label>Departure Airport</mat-label>
@@ -8,10 +8,10 @@
                            placeholder="Pick Airport"
                            value=""
                            matInput
-                           [formControl]="filterDepart"
+                           [formControl]="searchForm.controls['filterDepart']"
                            [matAutocomplete]="departures"
                     >
-                    <mat-error *ngIf="filterDepart.invalid">Cannot be a number</mat-error>
+                    <mat-error *ngIf="searchForm.controls['filterDepart'].invalid">Cannot be a number</mat-error>
                     <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
                         <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_name">
                             {{depart.airport_name}}
@@ -26,10 +26,10 @@
                            placeholder="Pick Airport"
                            value=""
                            matInput
-                           [formControl]="filterArrive"
+                           [formControl]="searchForm.controls['filterArrive']"
                            [matAutocomplete]="arrivals"
                     >
-                    <mat-error *ngIf="filterArrive.invalid">Cannot be a number</mat-error>
+                    <mat-error *ngIf="searchForm.controls['filterArrive'].invalid">Cannot be a number</mat-error>
                     <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
                         <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_name">
                             {{arrives.airport_name}}
@@ -40,19 +40,22 @@
 
                 <mat-form-field class="flightNoInput">
                     <mat-label>Flight No</mat-label>
-                    <input type="text" matInput placeholder="Enter flight No" [formControl]="flightNo">
+                    <input type="text" matInput placeholder="Enter flight No"
+                           [formControl]="searchForm.controls['flightNo']">
                     <mat-icon matSuffix>flight</mat-icon>
-                    <mat-error *ngIf="flightNo.invalid">XX1234 format only</mat-error>
+                    <mat-error *ngIf="searchForm.controls['flightNo'].invalid">XX1234 format only</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="departureTimeInput">
                     <mat-label>Departure Time</mat-label>
-                    <input type="datetime-local" matInput placeholder="Departure time" [formControl]="departureTime">
+                    <input type="datetime-local" matInput placeholder="Departure time"
+                           [formControl]="searchForm.controls['departureTime']">
                 </mat-form-field>
 
                 <mat-form-field class="arrivalTimeInput">
                     <mat-label>Arrival Time</mat-label>
-                    <input type="datetime-local" matInput placeholder="Arrival Time" [formControl]="arrivalTime">
+                    <input type="datetime-local" matInput placeholder="Arrival Time"
+                           [formControl]="searchForm.controls['arrivalTime']">
                 </mat-form-field>
             </div>
         </form>
