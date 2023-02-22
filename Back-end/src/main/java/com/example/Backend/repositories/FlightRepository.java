@@ -12,7 +12,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     int countByFlightNoAndArrivalTime(String flightNo, LocalDateTime arrivalTime);
 
-    boolean import java.time.LocalDateTime;existsFlightByArrivalAirportAndDepartureAirport(String arrivalAirport, String departureAirport);
+    boolean existsFlightByArrivalAirportAndDepartureAirport(String arrivalAirport, String departureAirport);
 
 }
 
