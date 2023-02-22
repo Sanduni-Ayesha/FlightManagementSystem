@@ -118,7 +118,7 @@ public class Flight {
         this.version = version;
     }
 
-    public Flight updateFlight(Flight flight, FlightDto flightDto){
+    public Flight updateFlight(Flight flight, FlightDto flightDto) {
         flight.setDepartureAirport(flightDto.getDepartureAirport());
         flight.setArrivalAirport(flightDto.getArrivalAirport());
         flight.setFlightNo(flightDto.getFlightNo());

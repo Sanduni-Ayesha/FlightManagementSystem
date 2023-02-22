@@ -4,7 +4,7 @@ import com.example.Backend.dto.FlightDto;
 import com.example.Backend.models.Flight;
 
 public class FlightMapper {
-    public static Flight flightDtoToFlightMapper(FlightDto flightDto){
+    public static Flight flightDtoToFlightMapper(FlightDto flightDto) {
         Flight flight = new Flight();
         flight.setId(flightDto.getId());
         flight.setDepartureAirport(flightDto.getDepartureAirport());
@@ -18,7 +18,7 @@ public class FlightMapper {
         return flight;
     }
 
-    public static FlightDto flightToFlightDtoMapper(Flight flight){
+    public static FlightDto flightToFlightDtoMapper(Flight flight) {
         FlightDto flightDto = new FlightDto();
         flightDto.setId(flightDto.getId());
         flightDto.setDepartureAirport(flight.getDepartureAirport());

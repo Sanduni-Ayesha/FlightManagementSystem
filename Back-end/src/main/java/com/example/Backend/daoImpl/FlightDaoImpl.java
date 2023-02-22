@@ -26,7 +26,7 @@ public class FlightDaoImpl implements FlightDao {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Select * from flight ");
         stringBuilder.append(createQueryForSearch(searchDTO));
-        String sql = stringBuilder.toString()+ " order by departure_time";
+        String sql = stringBuilder.toString() + " order by departure_time";
         List<Flight> flights = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Flight.class));
         return flights;
     }
@@ -48,13 +48,14 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean checkDuplicate(FlightDto flightDto) {
-        String sqlCheckDuplicates = "Select * from flight where flight_no='" +flightDto.getFlightNo() +"'"+"and DATE(departure_time)=DATE('"+flightDto.getDepartureTime()+"');";
+        String sqlCheckDuplicates = "Select * from flight where flight_no='" + flightDto.getFlightNo() + "'" + "and DATE(departure_time)=DATE('" + flightDto.getDepartureTime() + "');";
         List<Flight> flights = jdbcTemplate.query(sqlCheckDuplicates, BeanPropertyRowMapper.newInstance(Flight.class));
         if (flights.size() >= 1) {
             return true;
         }
         return false;
     }
+
     @Override
     public Flight checkDuplicateByAllScheduleFlights(ScheduleFlightDto scheduleFlightDto) {
         String query = " SELECT * FROM flight WHERE flight_no='" + scheduleFlightDto.getFlightNo() + "' AND" + " departure_time between '" +
