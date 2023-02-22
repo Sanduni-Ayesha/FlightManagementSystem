@@ -11,7 +11,6 @@ public class ScheduleFlightDto {
     private String flightNo;
     private LocalTime departureTime;
     private LocalTime arrivalTime;
-    private LocalDateTime createdTime;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private List<String> weekdays;
@@ -64,14 +63,6 @@ public class ScheduleFlightDto {
         this.arrivalTime = arrivalTime;
     }
 
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
     public LocalDateTime getStartDate() {
         return startDate;
     }
@@ -95,6 +86,7 @@ public class ScheduleFlightDto {
     public void setWeekdays(List<String> weekdays) {
         this.weekdays = weekdays;
     }
+
     public boolean validateScheduleFlight() {
         if (getDepartureAirport().matches("[A-Z]{3}") &&
                 getArrivalAirport().matches("[A-Z]{3}") &&
