@@ -11,7 +11,7 @@
                            matInput
                            [formControl]="scheduleForm.controls['departureAirport']"
                            [matAutocomplete]="departures">
-                    <mat-error *ngIf="scheduleForm.controls['departureAirport'].invalid">Invalid input</mat-error>
+                    <mat-error *ngIf="departureAirportIsValid()">Invalid input</mat-error>
                     <mat-autocomplete autoActiveFirstOption #departures="matAutocomplete">
                         <mat-option *ngFor="let depart of filteredDepartures" [value]="depart.airport_name">
                             {{depart.airport_name}}
@@ -29,7 +29,7 @@
                            [formControl]="scheduleForm.controls['arrivalAirport']"
                            [matAutocomplete]="arrivals"
                     >
-                    <mat-error *ngIf="scheduleForm.controls['arrivalAirport'].invalid">Invalid input</mat-error>
+                    <mat-error *ngIf="arrivalAirportIsValid()">Invalid input</mat-error>
                     <mat-autocomplete autoActiveFirstOption #arrivals="matAutocomplete">
                         <mat-option *ngFor="let arrives of filteredArrivals" [value]="arrives.airport_name">
                             {{arrives.airport_name}}
@@ -38,7 +38,7 @@
                     <mat-icon matSuffix>flight_land</mat-icon>
                 </mat-form-field>
                 <div class="error_msg">
-                    <small *ngIf="scheduleForm.errors?.['equalDestination']  && scheduleForm.get('arrivalAirport')?.touched">
+                    <small *ngIf="departureArrivalSimilarError()">
                         Departure and Arrival cannot be the same
                     </small>
                 </div>
@@ -51,7 +51,7 @@
                            value=""
                            matInput
                            [formControl]="scheduleForm.controls['flightNo']">
-                    <mat-error *ngIf="scheduleForm.controls['flightNo'].invalid">Use format XX1234</mat-error>
+                    <mat-error *ngIf="flightNoIsValid()">Use format XX1234</mat-error>
                     <mat-icon matSuffix>flight</mat-icon>
                 </mat-form-field>
                 <br>
@@ -67,8 +67,8 @@
                     <mat-date-range-picker #picker></mat-date-range-picker>
                 </mat-form-field>
                 <div class="error_msg">
-                    <small *ngIf="scheduleForm.errors?.['dateMismatch']">Enter a future date.</small>
-                    <small *ngIf="scheduleForm.controls['startDate'].value?.toLocaleDateString() == scheduleForm.controls['endDate'].value?.toLocaleDateString()">Start
+                    <small *ngIf="futureDateError()">Enter a future date.</small>
+                    <small *ngIf="dateSimilarError()">Start
                         and end dates cannot be similar.</small>
                 </div>
                 <br>
@@ -83,7 +83,7 @@
                 </mat-form-field>
                 <br>
                 <div class="error_msg">
-                    <small *ngIf="scheduleForm.controls['departureTime'].value == scheduleForm.controls['arrivalTime'].value">Departure
+                    <small *ngIf="timeSimilarError()">Departure
                         and arrival time cannot be equal.</small>
                 </div>
                 <br>

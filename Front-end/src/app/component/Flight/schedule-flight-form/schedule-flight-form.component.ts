@@ -174,4 +174,32 @@ export class ScheduleFlightFormComponent implements OnInit {
         }
         return true;
     }
+
+    departureAirportIsValid(): boolean {
+        return this.scheduleForm.controls['departureAirport'].invalid;
+    }
+
+    arrivalAirportIsValid(): boolean {
+        return this.scheduleForm.controls['arrivalAirport'].invalid;
+    }
+
+    departureArrivalSimilarError(): boolean {
+        return this.scheduleForm.errors?.['equalDestination'] && this.scheduleForm.get('arrivalAirport')?.touched
+    }
+
+    flightNoIsValid(): boolean {
+        return this.scheduleForm.controls['flightNo'].invalid;
+    }
+
+    futureDateError(): boolean {
+        return this.scheduleForm.errors?.['dateMismatch']
+    }
+
+    dateSimilarError(): boolean {
+        return this.scheduleForm.controls['startDate'].value?.toLocaleDateString() == this.scheduleForm.controls['endDate'].value?.toLocaleDateString()
+    }
+
+    timeSimilarError(): boolean {
+        return this.scheduleForm.controls['departureTime'].value == this.scheduleForm.controls['arrivalTime'].value
+    }
 }
