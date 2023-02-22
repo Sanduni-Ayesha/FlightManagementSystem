@@ -84,4 +84,16 @@ public class FlightDto {
     public void setVersion(int version) {
         this.version = version;
     }
+
+    public boolean validateFlight() {
+        if (this.getDepartureAirport().matches("[A-Z]{3}") &&
+                this.getArrivalAirport().matches("[A-Z]{3}") &&
+                this.getFlightNo().matches("[A-Za-z]{2}[0-9]{4}") &&
+                this.getDepartureTime().isAfter(LocalDateTime.now()) &&
+                this.getDepartureTime().isBefore(this.getArrivalTime())) {
+            return true;
+        }
+        return false;
+    }
+
 }

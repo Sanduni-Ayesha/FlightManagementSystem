@@ -54,14 +54,7 @@ public class FlightService {
 
     @Transactional
     public FlightDto addFlight(FlightDto flightDto) {
-        if (!validateFlight(flightDto)) {
-            logger.info("The entered flight data is invalid.");
-            throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
-        }
-        if (checkFlightDuplicates(flightDto)) {
-            logger.info("The flight cannot be added as the Flight is occupied in the given time");
-            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
-        }
+        flightValidations(flightDto);
         if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(flightDto.getArrivalAirport(),flightDto.getDepartureAirport(), Route.Status.active)){
             logger.info("The flight cannot be added as the given route does not exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
@@ -72,15 +65,7 @@ public class FlightService {
     @Transactional
     public FlightDto updateFlight(FlightDto flightDto) {
         Flight flight = getFlightByID(flightDto.getId());
-        if (!validateFlight(flightDto)) {
-            logger.info("The entered flight data is invalid.");
-            throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
-        }
-        if (checkFlightDuplicates(flightDto)) {
-            logger.info("The flight cannot be added as the Flight is occupied in the given time");
-            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
-        }
-
+        flightValidations(flightDto);
         if (flightDto.getVersion() == flight.getVersion()) {
             flight = flight.updateFlight(flightDto);
             return FlightMapper.flightToFlightDtoMapper(flight);
@@ -91,19 +76,19 @@ public class FlightService {
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public boolean validateFlight(FlightDto flightDto) {
-        if (flightDto.getDepartureAirport().matches("[A-Z]{3}") &&
-                flightDto.getArrivalAirport().matches("[A-Z]{3}") &&
-                flightDto.getFlightNo().matches("[A-Za-z]{2}[0-9]{4}") &&
-                flightDto.getDepartureTime().isAfter(LocalDateTime.now()) &&
-                flightDto.getDepartureTime().isBefore(flightDto.getArrivalTime())) {
-            return true;
-        }
-        return false;
+    public boolean checkFlightDuplicates(FlightDto flightDto) {
+        return flightDaoImpl.checkDuplicate(flightDto);
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public boolean checkFlightDuplicates(FlightDto flightDto) {
-        return flightDaoImpl.checkDuplicate(flightDto);
+    public void flightValidations(FlightDto flightDto){
+        if (!flightDto.validateFlight()) {
+            logger.info("The entered flight data is invalid.");
+            throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
+        }
+        if (checkFlightDuplicates(flightDto)) {
+            logger.info("The flight cannot be added as the Flight is occupied in the given time");
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
+        }
     }
 }
