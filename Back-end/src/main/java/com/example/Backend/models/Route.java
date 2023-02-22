@@ -9,7 +9,7 @@ import java.util.Date;
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private int id;
     @Column(name = "arrival_airport", nullable = false)
     private String arrivalAirport;
     @Column(name = "departure_airport", nullable = false)
@@ -31,7 +31,8 @@ public class Route {
     public Route() {
 
     }
-    public enum Status{
+
+    public enum Status {
         active,
         inactive
     }
