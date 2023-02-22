@@ -33,6 +33,18 @@ public class Flight {
     public Flight() {
     }
 
+    public Flight(FlightDto flightDto) {
+        setId(flightDto.getId());
+        setDepartureAirport(flightDto.getDepartureAirport());
+        setArrivalAirport(flightDto.getArrivalAirport());
+        setFlightNo(flightDto.getFlightNo());
+        setDepartureTime(flightDto.getDepartureTime());
+        setArrivalTime(flightDto.getArrivalTime());
+        setCreatedTime(flightDto.getCreatedTime());
+        setLastUpdatedTime(flightDto.getLastUpdatedTime());
+        setVersion(flightDto.getVersion());
+    }
+
     public enum Status {
         active,
         inactive

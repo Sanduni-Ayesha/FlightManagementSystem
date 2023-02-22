@@ -3,7 +3,6 @@ package com.example.Backend.services;
 import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.SearchDTO;
-import com.example.Backend.dtoMapper.FlightMapper;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
 import com.example.Backend.models.Flight;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -49,13 +47,13 @@ public class FlightService {
     public FlightDto deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         flightRepository.delete(flight);
-        return FlightMapper.flightToFlightDtoMapper(flight);
+        return new FlightDto(flight);
     }
 
     @Transactional
     public FlightDto addFlight(FlightDto flightDto) {
         flightValidations(flightDto);
-        return FlightMapper.flightToFlightDtoMapper(flightRepository.save(FlightMapper.flightDtoToFlightMapper(flightDto)));
+        return new FlightDto(flightRepository.save(new Flight(flightDto)));
     }
 
     @Transactional
@@ -64,7 +62,7 @@ public class FlightService {
         flightValidations(flightDto);
         if (flightDto.getVersion() == flight.getVersion()) {
             flight = flight.updateFlight(flightDto);
-            return FlightMapper.flightToFlightDtoMapper(flight);
+            return new FlightDto(flight);
         } else {
             logger.info("The selected flight is already updated by a user at " + flight.getLastUpdatedTime() + " .");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_ALREADY_UPDATED_EXCEPTION);

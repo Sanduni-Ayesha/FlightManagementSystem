@@ -1,5 +1,7 @@
 package com.example.Backend.dto;
 
+import com.example.Backend.models.Flight;
+
 import java.time.LocalDateTime;
 
 public class FlightDto {
@@ -12,6 +14,21 @@ public class FlightDto {
     private LocalDateTime createdTime;
     private LocalDateTime lastUpdatedTime;
     private int version = 1;
+
+    public FlightDto(Flight flight) {
+        setId(flight.getId());
+        setDepartureAirport(flight.getDepartureAirport());
+        setArrivalAirport(flight.getArrivalAirport());
+        setFlightNo(flight.getFlightNo());
+        setDepartureTime(flight.getDepartureTime());
+        setArrivalTime(flight.getArrivalTime());
+        setCreatedTime(flight.getCreatedTime());
+        setLastUpdatedTime(flight.getLastUpdatedTime());
+        setVersion(flight.getVersion());
+    }
+
+    public FlightDto() {
+    }
 
     public int getId() {
         return id;
