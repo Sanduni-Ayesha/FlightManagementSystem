@@ -3,7 +3,6 @@ package com.example.Backend.services;
 import com.example.Backend.daoImpl.FlightDaoImpl;
 import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.ScheduleFlightDto;
-import com.example.Backend.dtoMapper.FlightMapper;
 import com.example.Backend.dtoMapper.FlightSchedulerMapper;
 import com.example.Backend.exceptions.Exceptions;
 import com.example.Backend.exceptions.ResponseStatusCodes;
@@ -43,7 +42,7 @@ public class ScheduleFlightService {
         }
         Flight dulicateFlight = checkFlightDuplicates(scheduleFlightDto);
         if (dulicateFlight != null) {
-            return FlightMapper.flightToFlightDtoMapper(dulicateFlight);
+            return new FlightDto(dulicateFlight);
         }
         List<Flight> flights = new FlightSchedulerMapper().convertScheduleFlightDtoToFlight(scheduleFlightDto);
         if(flights.size()==0){
