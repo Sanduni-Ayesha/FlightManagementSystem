@@ -90,21 +90,16 @@ export class ScheduleFlightFormComponent implements OnInit {
         }
     }
 
-    scheduleFlights() {
+    scheduleFlightsOnClick() {
         let formValues = this.scheduleForm.value;
         let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == formValues.departureAirport).airport_code;
         let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == formValues.arrivalAirport).airport_code;
         let days = this.getDays();
-        let schedule = new Schedule(<Date>formValues.startDate,
-            <Date>formValues.endDate,
-            departureCode,
-            arrivalCode,
-            <string>formValues.flightNo,
-            <Date>formValues.departureTime,
-            <Date>formValues.arrivalTime,
-            new Date(),
-            days)
+        let schedule = new Schedule(formValues, departureCode, arrivalCode, days);
+        this.scheduleFlights(schedule);
+    }
 
+    private scheduleFlights(schedule: Schedule) {
         this.flightService.scheduleFlight(schedule).subscribe({
             next: (response) => {
                 if (response.body != null) {

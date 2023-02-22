@@ -6,7 +6,7 @@ export function futureDateValidator(
     if (control.get('startDate')?.value) {
         const depart = new Date(control.get('startDate')?.value);
         const today = new Date();
-        return depart && depart.getDate() >= today.getDate() ? null : {dateMismatch: true};
+        return depart && depart.toLocaleDateString() >= today.toLocaleDateString() ? null : {dateMismatch: true};
     }
     const depart = new Date(control.get('departureTime')?.value);
     const today = new Date();

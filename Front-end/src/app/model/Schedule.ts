@@ -6,26 +6,16 @@ export class Schedule {
     flightNo: string;
     departureTime: Date;
     arrivalTime: Date;
-    createdTime: Date;
     weekdays: string[];
 
-    constructor(startDate: Date,
-                endDate: Date,
-                departureAirport: string,
-                arrivalAirport: string,
-                flightNo: string,
-                departureTime: Date,
-                arrivalTime: Date,
-                createdTime: Date,
-                days: string[]) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
-        this.flightNo = flightNo;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.createdTime = createdTime;
+    constructor(formValues: Partial<any>, departure: string, arrival: string, days: string[]) {
+        this.startDate = formValues['startDate'];
+        this.endDate = formValues['endDate'];
+        this.departureAirport = departure;
+        this.arrivalAirport = arrival;
+        this.flightNo = formValues['flightNo'];
+        this.departureTime = formValues['departureTime'];
+        this.arrivalTime = formValues['arrivalTime'];
         this.weekdays = days;
     }
 }
