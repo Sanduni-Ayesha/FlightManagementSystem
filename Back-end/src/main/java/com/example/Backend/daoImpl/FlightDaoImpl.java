@@ -49,7 +49,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean checkDuplicate(FlightDto flightDto) {
-        String sqlCheckDuplicates = "Select * from flight where flight_no='" + flightDto.getFlightNo() + "'" + "and DATE(departure_time)=DATE('" + flightDto.getDepartureTime() + "');";
+        String sqlCheckDuplicates = "Select * from flight where flight_no='" + flightDto.getFlightNo() + "'" + "and DATE(departure_time)=DATE('" + flightDto.getDepartureTime() + "') and not (id='"+flightDto.getId()+"');";
         List<Flight> flights = jdbcTemplate.query(sqlCheckDuplicates, BeanPropertyRowMapper.newInstance(Flight.class));
         if (flights.size() >= 1) {
             return true;

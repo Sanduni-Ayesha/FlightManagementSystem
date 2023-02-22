@@ -110,14 +110,14 @@ export class AddFlightFormComponent implements OnInit {
     checkFlightDuplication(flight: Flight): boolean {
         let id = flight.id;
         let flightNo = flight.flightNo;
-        let departureTime = new Date(flight.departureTime).getDate();
+        let departureTime = new Date(flight.departureTime).toLocaleDateString();
 
-        for (const flightData of this.data.flightData) {
-            let departure = new Date(flightData.departureTime).getDate();
-            if (flightData.id == id) {
+        for (let i = 0; i < this.data.flightData.length; i++) {
+            let departure = new Date(this.data.flightData[i].departureTime).toLocaleDateString();
+            if (this.data.flightData[i].id == id) {
                 continue;
             }
-            if (flightData.flightNo == flightNo && departure == departureTime) {
+            if ((this.data.flightData[i].flightNo == flightNo) && (departure == departureTime)) {
                 return true;
             }
         }
@@ -163,15 +163,17 @@ export class AddFlightFormComponent implements OnInit {
                                 this.alertService.warn("Flight details are invalid. Please enter valid details.")
                             } else if (response.status == 237) {
                                 this.alertService.warn("Flight does not exist to be updated.")
+                            } else if (response.status == 233) {
+                                this.alertService.warn("The updated route does not exist. Please update with an existing route.")
                             } else {
                                 this.alertService.success("Flight update successful.")
+                                this.dialog.closeAll();
                             }
                         },
                         error: () => {
                             this.alertService.warn("The flight updating process was unsuccessful. Please try again.")
                         }
                     });
-                    this.dialog.closeAll();
                 }
             }
         }
