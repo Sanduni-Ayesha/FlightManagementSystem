@@ -114,10 +114,12 @@ export class FlightScreenComponent implements OnInit {
     public getAirportNameByAirportCode(airportCode: string): String {
         return this.airportDetails.find(airport => airport.airport_code == airportCode)?.airport_name!;
     }
+
     public getAirportCodeByAirportName(airportName: string): String {
         return this.airportDetails.find(airport => airport.airport_name == airportName)?.airport_code!;
 
     }
+
     filterByAirport() {
         let departure = this.getAirportCodeByAirportName(this.filterDepart.value!);
         let arrival = this.getAirportCodeByAirportName(this.filterArrive.value!);
@@ -144,8 +146,8 @@ export class FlightScreenComponent implements OnInit {
     removeFlight(id: number) {
         this.getFlightDetails();
         this.alertService.openConfirmDialog('Confirm', 'Please confirm deleting flight.')
-            .afterClosed().subscribe(res=>{
-            if(res){
+            .afterClosed().subscribe(res => {
+            if (res) {
                 this.flightService.deleteFlight(id).subscribe({
                     next: (response) => {
                         if (response.status == 238) {
@@ -189,9 +191,9 @@ export class FlightScreenComponent implements OnInit {
     }
 
     openScheduleFlightForm() {
-        let scheduleFlightForm = this.dialog.open(ScheduleFlightFormComponent,{
+        let scheduleFlightForm = this.dialog.open(ScheduleFlightFormComponent, {
             disableClose: true,
-            data:{
+            data: {
                 airportNames: this.airports,
                 airports: this.airportDetails
             }
@@ -205,7 +207,7 @@ export class FlightScreenComponent implements OnInit {
     }
 
     airportEqualWarning(): boolean {
-        if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterDepart.getRawValue()!="" && this.filterArrive.dirty && this.filterDepart.dirty) {
+        if (this.filterDepart.getRawValue() == this.filterArrive.getRawValue() && this.filterDepart.getRawValue() != "" && this.filterArrive.dirty && this.filterDepart.dirty) {
             return true;
         }
         return false;
