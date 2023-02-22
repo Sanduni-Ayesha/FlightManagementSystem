@@ -93,7 +93,7 @@ public class RouteService {
             return setActivateAlreadyExistRoute(routeDto);
         }
         Route route = new Route(routeDto);
-        return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
+        return new RouteDto(routeRepository.save(route));
     }
 
     private RouteDto setUpdate(Route toBeUpdatedRoute, RouteDto routeDto) {
