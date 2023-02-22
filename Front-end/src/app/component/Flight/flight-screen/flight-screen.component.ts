@@ -66,6 +66,11 @@ export class FlightScreenComponent implements OnInit {
     filterArrive = new FormControl('', [
         Validators.pattern(/^[^0-9]*$/),
     ]);
+    flightNo = new FormControl('', [
+        Validators.pattern(/^[a-zA-Z]{2}[0-9]{4}$/),
+    ]);
+    departureTime = new FormControl('');
+    arrivalTime = new FormControl('');
 
     constructor(
         private flightService: FlightDataService,

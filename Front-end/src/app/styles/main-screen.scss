@@ -16,10 +16,21 @@
 }
 
 .inputFields {
-  max-width: 400px;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .searchBtn {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.addButtons {
   padding: 10px;
   display: flex;
   justify-content: flex-end;
@@ -39,7 +50,7 @@
   padding: 5px;
 }
 
-.departInput, .arriveInput {
+.departInput, .arriveInput, .arrivalTimeInput, .departureTimeInput, .flightNoInput {
   padding-right: 20px;
   width: 25%;
   min-width: 180px;

@@ -38,9 +38,25 @@
                     <mat-icon matSuffix>flight_land</mat-icon>
                 </mat-form-field>
 
+                <mat-form-field class="flightNoInput">
+                    <mat-label>Flight No</mat-label>
+                    <input type="text" matInput placeholder="Enter flight No" [formControl]="flightNo">
+                    <mat-icon matSuffix>flight</mat-icon>
+                    <mat-error *ngIf="flightNo.invalid">XX1234 format only</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="departureTimeInput">
+                    <mat-label>Departure Time</mat-label>
+                    <input type="datetime-local" matInput placeholder="Departure time" [formControl]="departureTime">
+                </mat-form-field>
+
+                <mat-form-field class="arrivalTimeInput">
+                    <mat-label>Arrival Time</mat-label>
+                    <input type="datetime-local" matInput placeholder="Arrival Time" [formControl]="arrivalTime">
+                </mat-form-field>
             </div>
-
-
+        </form>
+        <div class="buttons">
             <div class="searchBtn">
                 <div class="search">
                     <button mat-raised-button class="buttons" [disabled]="disableSearch()"
@@ -57,27 +73,30 @@
                         Clear Search
                     </button>
                 </div>
-
             </div>
-
             <span class="space"></span>
-            <div class="addFlight">
-                <a mat-raised-button class="buttons" (click)="openAddFlightForm('add')">
-                    <mat-icon>add</mat-icon>
-                    Add flight
-                </a>
+            <div class="addButtons">
+                <div class="addFlight">
+                    <a mat-raised-button class="buttons" (click)="openAddFlightForm('add')">
+                        <mat-icon>add</mat-icon>
+                        Add flight
+                    </a>
+                </div>
+                <div class="addFlight">
+                    <a mat-raised-button class="buttons" (click)="openScheduleFlightForm()">
+                        <mat-icon>schedule</mat-icon>
+                        Schedule flights
+                    </a>
+                </div>
             </div>
-            <div class="addFlight">
-                <a mat-raised-button class="buttons" (click)="openScheduleFlightForm()">
-                    <mat-icon>schedule</mat-icon>
-                    Schedule flights
-                </a>
-            </div>
-            <br>
-            <div class="airportError">
-                <small *ngIf="airportEqualWarning()">Departure and arrival airports are equal</small>
-            </div>
-        </form>
+
+        </div>
+
+        <br>
+        <div class="airportError">
+            <small *ngIf="airportEqualWarning()">Departure and arrival airports are equal</small>
+        </div>
+
     </div>
     <div class="flight_table">
         <div *ngIf="flightDetails.length==0" class="noFlights">
