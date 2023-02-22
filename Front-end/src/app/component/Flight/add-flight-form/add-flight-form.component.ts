@@ -176,4 +176,11 @@ export class AddFlightFormComponent implements OnInit {
             }
         }
     }
+
+    disableReset(): boolean {
+        if (this.flightForm.dirty) {
+            return false;
+        }
+        return true;
+    }
 }

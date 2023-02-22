@@ -119,7 +119,7 @@
             <button mat-button type="button" class="cancelBtn" (click)="close(flightForm.dirty)">
                 Cancel
             </button>
-            <button mat-button type="button" (click)="resetRow()">
+            <button mat-button type="button" (click)="resetRow()" [disabled]="disableReset()">
                 Reset
             </button>
             <button mat-button *ngIf="this.data['row'].id==-1" type="submit" (click)="createNewFlight()"
