@@ -36,7 +36,6 @@ public class FlightService {
         this.routeRepository = routeRepository;
     }
 
-    @Transactional
     public List<Flight> searchFlights(SearchDTO searchDTO) {
         return flightDaoImpl.searchFlights(searchDTO);
     }
@@ -46,14 +45,14 @@ public class FlightService {
         return flightRepository.findById(id).orElseThrow(() -> new Exceptions(ResponseStatusCodes.FLIGHT_NOT_FOUND_EXCEPTION));
     }
 
-    @Transactional(rollbackFor = Exceptions.class)
+    @Transactional
     public FlightDto deleteFlight(int id) {
         Flight flight = getFlightByID(id);
         flightRepository.delete(flight);
         return FlightMapper.flightToFlightDtoMapper(flight);
     }
 
-    @Transactional(rollbackFor = Exceptions.class)
+    @Transactional
     public FlightDto addFlight(FlightDto flightDto) {
         if (!validateFlight(flightDto)) {
             logger.info("The entered flight data is invalid.");
@@ -70,7 +69,7 @@ public class FlightService {
         return FlightMapper.flightToFlightDtoMapper(flightRepository.save(FlightMapper.flightDtoToFlightMapper(flightDto)));
     }
 
-    @Transactional(rollbackFor = Exceptions.class)
+    @Transactional
     public FlightDto updateFlight(FlightDto flightDto) {
         Flight flight = getFlightByID(flightDto.getId());
         if (!validateFlight(flightDto)) {
