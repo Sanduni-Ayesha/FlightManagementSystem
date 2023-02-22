@@ -1,5 +1,7 @@
 package com.example.Backend.dto;
 
+import com.example.Backend.models.Route;
+
 import java.util.Date;
 
 public class RouteDto {
@@ -11,6 +13,16 @@ public class RouteDto {
     private Long version;
     private Date createdTime;
     private Date lastUpdatedTime;
+    public RouteDto(Route route){
+        setId(route.getId());
+        setArrivalAirport(route.getArrivalAirport());
+        setDepartureAirport(route.getDepartureAirport());
+        setMileage(route.getMileage());
+        setDuration(route.getDuration());
+        setVersion(route.getVersion());
+        setCreatedTime(route.getCreatedTime());
+        setLastUpdatedTime(route.getLastUpdatedTime());
+    }
 
     public int getId() {
         return id;
