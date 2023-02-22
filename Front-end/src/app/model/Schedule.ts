@@ -10,13 +10,13 @@ export class Schedule {
     weekdays: string[];
 
     constructor(startDate: Date,
-                endDate: Date, 
-                departureAirport: string, 
-                arrivalAirport: string, 
-                flightNo: string, 
-                departureTime: Date, 
-                arrivalTime: Date, 
-                createdTime: Date, 
+                endDate: Date,
+                departureAirport: string,
+                arrivalAirport: string,
+                flightNo: string,
+                departureTime: Date,
+                arrivalTime: Date,
+                createdTime: Date,
                 days: string[]) {
         this.startDate = startDate;
         this.endDate = endDate;
