@@ -58,6 +58,7 @@ public class RouteService {
         routeRepository.deleteById(id);
         return id;
     }
+
     @Transactional(rollbackFor = Exceptions.class)
     public RouteDto updateRoute(RouteDto routeDto) {
         if (!isValidRoute(routeDto)) {
@@ -95,6 +96,7 @@ public class RouteService {
         Route route = RouteMapper.routeDtoToRouteMapper(routeDto);
         return RouteMapper.routeToRouteDtoMapper(routeRepository.save(route));
     }
+
     @Transactional(propagation = Propagation.MANDATORY)
     public Boolean isValidRoute(RouteDto route) {
         String airportPattern = "[A-Z]{3}";
@@ -123,7 +125,7 @@ public class RouteService {
 
     private RouteDto setActivateAlreadyExistRoute(RouteDto routeDto) {
         Route route = routeRepository.findRouteByArrivalAirportAndDepartureAirport
-                (routeDto.getArrivalAirport(),routeDto.getDepartureAirport());
+                (routeDto.getArrivalAirport(), routeDto.getDepartureAirport());
         route.setStatus(Route.Status.active);
         route.setLastUpdatedTime(routeDto.getCreatedTime());
         route.setMileage(routeDto.getMileage());
