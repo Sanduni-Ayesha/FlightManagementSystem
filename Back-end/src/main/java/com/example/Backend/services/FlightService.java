@@ -77,7 +77,7 @@ public class FlightService {
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void flightValidations(FlightDto flightDto){
+    public void flightValidations(FlightDto flightDto) {
         if (!flightDto.validateFlight()) {
             logger.info("The entered flight data is invalid.");
             throw new Exceptions(ResponseStatusCodes.INVALID_FLIGHT_EXCEPTION);
@@ -86,7 +86,7 @@ public class FlightService {
             logger.info("The flight cannot be added as the Flight is occupied in the given time");
             throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
         }
-        if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(flightDto.getArrivalAirport(),flightDto.getDepartureAirport(), Route.Status.active)){
+        if (!routeRepository.existsRouteByArrivalAirportAndDepartureAirportAndStatus(flightDto.getArrivalAirport(), flightDto.getDepartureAirport(), Route.Status.active)) {
             logger.info("The flight cannot be added as the given route does not exist");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
