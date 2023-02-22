@@ -46,6 +46,12 @@ public class RouteService {
             logger.info("The route with id " + id + " is not available");
             throw new Exceptions(ResponseStatusCodes.ROUTE_NOT_EXISTS_EXCEPTION);
         }
+        if(flightRepository.existsFlightByArrivalAirportAndDepartureAirport(route.getArrivalAirport(),
+                route.getDepartureAirport())){
+            logger.info("The route with id "+id+" can not delete.Flights are already available " +
+                    "from departure airport "+route.getDepartureAirport()+" to arrival airport "+route.getArrivalAirport());
+            throw new Exceptions(ResponseStatusCodes.FLIGHT_EXISTS_EXCEPTION);
+        }
         if (route.getStatus() == Route.Status.inactive) {
             logger.info("The route with id " + id + " is already in inactive state and it can not be deleted.");
             throw new Exceptions(ResponseStatusCodes.ROUTE_ALREADY_IN_INACTIVE_STATE_EXCEPTION);
