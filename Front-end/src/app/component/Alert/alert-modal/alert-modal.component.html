@@ -5,13 +5,13 @@
     <div class="message">
         {{this.data.message}}
     </div>
-    <div class="buttons" *ngIf="this.data.title!='Duplicate Flight Detected'" >
+    <div class="buttons" *ngIf="this.data.title!='Duplicate Flight Detected'">
         <button mat-raised-button [mat-dialog-close]="true">Yes</button>
         <span class="space"></span>
         <button mat-button [mat-dialog-close]="false">No</button>
     </div>
 
-    <div class="buttons" *ngIf="this.data.title=='Duplicate Flight Detected'" >
+    <div class="buttons" *ngIf="this.data.title=='Duplicate Flight Detected'">
         <button mat-button [mat-dialog-close]="false">OK</button>
     </div>
 </div>
