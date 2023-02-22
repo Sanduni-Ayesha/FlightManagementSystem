@@ -5,6 +5,7 @@ import com.example.Backend.dto.ScheduleFlightDto;
 import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.models.Flight;
 import com.example.Backend.dao.FlightDao;
+import com.example.Backend.queryBuilder.ScheduleFlightQueryBuilder;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -58,13 +59,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Flight checkDuplicateByAllScheduleFlights(ScheduleFlightDto scheduleFlightDto) {
-        String query = " SELECT * FROM flight WHERE flight_no='" + scheduleFlightDto.getFlightNo() + "' AND" + " departure_time between '" +
-                scheduleFlightDto.getStartDate() + "' AND '" + scheduleFlightDto.getEndDate() + "' AND (";
-        for (int index = 0; index < scheduleFlightDto.getWeekdays().size() - 1; index++) {
-            query += "UPPER(dayname(departure_time)) = '" + scheduleFlightDto.getWeekdays().get(index) + "' OR ";
-        }
-        query += "UPPER(dayname(departure_time)) = '" + scheduleFlightDto.getWeekdays().get(scheduleFlightDto.getWeekdays().size() - 1) + "')"
-                + "ORDER BY departure_time limit 1";
+        String query = ScheduleFlightQueryBuilder.availableFlightCheckerQuery(scheduleFlightDto);
         List<Flight> flights = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(Flight.class));
         if (flights.size() == 0) {
             return null;
