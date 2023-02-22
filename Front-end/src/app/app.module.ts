@@ -30,12 +30,12 @@ import {
     MatDialogModule,
     MatDialogRef,
 } from '@angular/material/dialog';
-import { ScheduleFlightFormComponent } from './component/Flight/schedule-flight-form/schedule-flight-form.component';
+import {ScheduleFlightFormComponent} from './component/Flight/schedule-flight-form/schedule-flight-form.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { AlertModalComponent } from './component/Alert/alert-modal/alert-modal.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {AlertModalComponent} from './component/Alert/alert-modal/alert-modal.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
