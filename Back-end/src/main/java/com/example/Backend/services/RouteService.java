@@ -61,7 +61,7 @@ public class RouteService {
 
     @Transactional(rollbackFor = Exceptions.class)
     public RouteDto updateRoute(RouteDto routeDto) {
-        if (!isValidRoute(routeDto)) {
+        if (!routeDto.isValidRoute()) {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
@@ -80,7 +80,7 @@ public class RouteService {
 
     @Transactional(rollbackFor = Exceptions.class)
     public RouteDto addRoute(RouteDto routeDto) {
-        if (!this.isValidRoute(routeDto)) {
+        if (!routeDto.isValidRoute()) {
             logger.error("This input route date with id " + routeDto.getId() + " have invalid inputs");
             throw new Exceptions(ResponseStatusCodes.INVALID_ROUTE_EXCEPTION);
         }
