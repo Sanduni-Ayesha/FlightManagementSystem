@@ -118,14 +118,14 @@ public class Flight {
         this.version = version;
     }
 
-    public Flight updateFlight(Flight flight, FlightDto flightDto) {
-        flight.setDepartureAirport(flightDto.getDepartureAirport());
-        flight.setArrivalAirport(flightDto.getArrivalAirport());
-        flight.setFlightNo(flightDto.getFlightNo());
-        flight.setDepartureTime(flightDto.getDepartureTime());
-        flight.setArrivalTime(flightDto.getArrivalTime());
-        flight.setLastUpdatedTime(LocalDateTime.now());
-        flight.setVersion(flightDto.getVersion() + 1);
-        return flight;
+    public Flight updateFlight(FlightDto flightDto) {
+        this.setDepartureAirport(flightDto.getDepartureAirport());
+        this.setArrivalAirport(flightDto.getArrivalAirport());
+        this.setFlightNo(flightDto.getFlightNo());
+        this.setDepartureTime(flightDto.getDepartureTime());
+        this.setArrivalTime(flightDto.getArrivalTime());
+        this.setLastUpdatedTime(LocalDateTime.now());
+        this.setVersion(flightDto.getVersion() + 1);
+        return this;
     }
 }

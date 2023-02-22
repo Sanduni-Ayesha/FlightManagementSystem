@@ -82,7 +82,7 @@ public class FlightService {
         }
 
         if (flightDto.getVersion() == flight.getVersion()) {
-            flight = flight.updateFlight(flight, flightDto);
+            flight = flight.updateFlight(flightDto);
             return FlightMapper.flightToFlightDtoMapper(flight);
         } else {
             logger.info("The selected flight is already updated by a user at " + flight.getLastUpdatedTime() + " .");
