@@ -19,8 +19,9 @@ public class FlightSchedulerMapper {
                 Flight flight = new Flight();
                 flight.setDepartureAirport(scheduleFlightDto.getDepartureAirport());
                 flight.setArrivalAirport(scheduleFlightDto.getArrivalAirport());
-                flight.setCreatedTime(scheduleFlightDto.getCreatedTime());
-                flight.setLastUpdatedTime(scheduleFlightDto.getCreatedTime());
+                LocalDateTime currentDateTime  = LocalDateTime.now();
+                flight.setCreatedTime(currentDateTime);
+                flight.setLastUpdatedTime(currentDateTime);
                 flight.setFlightNo(scheduleFlightDto.getFlightNo());
                 flight.setDepartureTime(scheduleFlightDto.getDepartureTime().atDate(date.toLocalDate()));
                 if (scheduleFlightDto.getArrivalTime().isBefore(scheduleFlightDto.getDepartureTime())) {
