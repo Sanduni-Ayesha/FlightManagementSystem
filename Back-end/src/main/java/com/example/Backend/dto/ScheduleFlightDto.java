@@ -95,5 +95,15 @@ public class ScheduleFlightDto {
     public void setWeekdays(List<String> weekdays) {
         this.weekdays = weekdays;
     }
+    public boolean validateScheduleFlight() {
+        if (getDepartureAirport().matches("[A-Z]{3}") &&
+                getArrivalAirport().matches("[A-Z]{3}") &&
+                getFlightNo().matches("[A-Za-z]{2}[0-9]{4}") &&
+                getArrivalTime() != getDepartureTime()
+        ) {
+            return true;
+        }
+        return false;
+    }
 
 }
