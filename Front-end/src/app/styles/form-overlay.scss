@@ -1,11 +1,11 @@
-.overlay, .scheduleFLights{
+.overlay, .scheduleFLights {
   padding: 20px;
   align-content: center;
   background-color: aliceblue;
   border-radius: 20px;
 }
 
-.overlay h1 , .scheduleFLights h1{
+.overlay h1, .scheduleFLights h1 {
   color: black;
   text-align: center;
 }
@@ -29,7 +29,7 @@
   flex: auto;
 }
 
-mat-form-field{
+mat-form-field {
   padding-right: 10px;
   padding-left: 10px;
 }
@@ -46,11 +46,11 @@ mat-form-field{
   cursor: pointer;
 }
 
-.btn-group button{
+.btn-group button {
   background-color: darkblue;
 }
 
-.btn-group button[disabled], .btn-group .cancelBtn{
+.btn-group button[disabled], .btn-group .cancelBtn {
   background-color: grey;
 }
 
@@ -58,7 +58,7 @@ mat-form-field{
   color: red;
 }
 
-.error_msg small{
+.error_msg small {
   color: red;
 }
 
