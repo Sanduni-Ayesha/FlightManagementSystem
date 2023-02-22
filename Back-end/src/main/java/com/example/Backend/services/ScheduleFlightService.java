@@ -46,6 +46,9 @@ public class ScheduleFlightService {
             return FlightMapper.flightToFlightDtoMapper(dulicateFlight);
         }
         List<Flight> flights = new FlightSchedulerMapper().convertScheduleFlightDtoToFlight(scheduleFlightDto);
+        if(flights.size()==0){
+            throw new Exceptions(ResponseStatusCodes.DATE_NOT_IN_RANGE_EXCEPTION);
+        }
         flightRepository.saveAll(flights);
         return null;
     }
@@ -71,4 +74,5 @@ public class ScheduleFlightService {
         }
         return false;
     }
+
 }
