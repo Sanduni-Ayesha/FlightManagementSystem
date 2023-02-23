@@ -23,7 +23,7 @@ public class RouteDto {
         setCreatedTime(route.getCreatedTime());
         setLastUpdatedTime(route.getLastUpdatedTime());
     }
-
+    public RouteDto(){}
     public int getId() {
         return id;
     }
