@@ -23,7 +23,7 @@ export class AddFlightFormComponent implements OnInit {
     filteredArrivals: Airport[] = [];
     flightForm = new FormGroup(
         {
-            id: new FormControl(''),
+            id: new FormControl(),
             departureAirport: new FormControl('', [
                 Validators.required,
                 Validators.pattern(/^[^0-9]*$/),
@@ -84,7 +84,7 @@ export class AddFlightFormComponent implements OnInit {
         let lastID = this.data.flightData[(this.data.flightData.length - 1)].id;
         let departureCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.departureAirport).airport_code;
         let arrivalCode = this.data.airports.find((airport: { airport_name: string | null | undefined; }) => airport.airport_name == f.arrivalAirport).airport_code;
-        let newFlight = new Flight((lastID + 1), departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, "", "", "active", 1)
+        let newFlight = new Flight(<number>f.id, departureCode, arrivalCode, <string>f.flightNo, <string>f.departureTime, <string>f.arrivalTime, "", "", "active", 1)
         if (this.checkFlightDuplication(newFlight)) {
             this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.");
         } else {
@@ -156,6 +156,7 @@ export class AddFlightFormComponent implements OnInit {
                         next: (response) => {
                             if (response.status == 241) {
                                 this.alertService.warn("Flight is already updated by another user.")
+                                this.dialog.closeAll();
                                 this.resetRow()
                             } else if (response.status == 239) {
                                 this.alertService.warn("The flight is already reserved for the day!\n Please use a different flight designator.")

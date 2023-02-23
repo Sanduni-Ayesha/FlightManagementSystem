@@ -70,6 +70,7 @@ export class AddRouteFormComponent implements OnInit {
                 next: (response) => {
                     if (response.status == 200) { //OK
                         this.alertService.success("Route successfully created! new route is now available.")
+                        this.dialog.closeAll();
                     } else if (response.status == 235) { //ROUTE_EXISTS_EXCEPTION
                         this.alertService.warn("Route already exist")
                     }
@@ -78,7 +79,7 @@ export class AddRouteFormComponent implements OnInit {
                     this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
                 }
             });
-            this.dialog.closeAll();
+
         } else {
             this.alertService.warn("Check your input details again")
         }

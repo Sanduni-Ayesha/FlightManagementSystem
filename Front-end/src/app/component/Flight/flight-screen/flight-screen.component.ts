@@ -171,7 +171,7 @@ export class FlightScreenComponent implements OnInit {
                         if (response.status == 238) {
                             this.alertService.warn("Flight already deleted!")
                         } else if (response.status == 237) {
-                            this.alertService.warn("No such flight exists")
+                            this.alertService.warn("No such flight exists. Already deleted by a user.")
                         } else {
                             this.alertService.success("Flight deletion successful");
                         }
