@@ -41,7 +41,7 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons" (click)="search()" [disabled] = "arrivalControl.invalid || departureControl.invalid">
+                    <button mat-raised-button class="buttons" (click)="search()" [disabled] = "arrivalControl.invalid || departureControl.invalid || !arrivalControl.dirty && !departureControl.dirty">
                         <mat-icon>search</mat-icon>
                         Search route
                     </button>
@@ -67,12 +67,12 @@
     </div>
     <div class="route_table">
         <table class="route_table">
-            <thead>
+
             <tr>
                 <th *ngFor="let heading of routeTableHeading "> {{heading}}</th>
             </tr>
-            </thead>
-            <tbody>
+
+
             <tr *ngFor="let route of routeDetails">
                 <td>{{getAirportNameByAirportCode(route.departureAirport)}}</td>
                 <td>{{getAirportNameByAirportCode(route.arrivalAirport)}}</td>
@@ -93,7 +93,7 @@
                     </div>
                 </td>
             </tr>
-            </tbody>
+
         </table>
     </div>
 

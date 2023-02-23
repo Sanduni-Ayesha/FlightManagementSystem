@@ -115,8 +115,8 @@
                 <td>{{getAirportNameByAirportCode(flight.departureAirport)}}</td>
                 <td>{{getAirportNameByAirportCode(flight.arrivalAirport)}}</td>
                 <td>{{flight.flightNo}}</td>
-                <td>{{flight.departureTime | date: 'M/d/y, h:mm a, z' }}</td>
-                <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a, z' }}</td>
+                <td>{{flight.departureTime | date: 'M/d/y, h:mm a' }}</td>
+                <td>{{flight.arrivalTime | date: 'M/d/y, h:mm a' }}</td>
                 <td>
                     <div class="btn-edit">
                         <button mat-button (click)="openAddFlightForm('edit', flight)">
