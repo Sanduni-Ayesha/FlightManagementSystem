@@ -13,7 +13,8 @@
                            [matAutocomplete]="auto1" #departure_Airport>
                     <mat-error *ngIf="departureControl.invalid">Invalid input</mat-error>
                     <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
-                        <mat-option *ngFor="let departureAirport of filteredDepartureAirport" [value]="departureAirport.airport_name">
+                        <mat-option *ngFor="let departureAirport of filteredDepartureAirport"
+                                    [value]="departureAirport.airport_name">
                             {{departureAirport.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -31,7 +32,8 @@
                            [matAutocomplete]="auto2" #arrival_Airport>
                     <mat-error *ngIf="arrivalControl.invalid">Invalid input</mat-error>
                     <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
-                        <mat-option *ngFor="let arrivalAirport of filteredArrivalAirport" [value]="arrivalAirport.airport_name">
+                        <mat-option *ngFor="let arrivalAirport of filteredArrivalAirport"
+                                    [value]="arrivalAirport.airport_name">
                             {{arrivalAirport.airport_name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -41,14 +43,16 @@
 
             <div class="searchBtn">
                 <div class="search">
-                    <button mat-raised-button class="buttons" (click)="search()" [disabled] = "arrivalControl.invalid || departureControl.invalid || !arrivalControl.dirty && !departureControl.dirty">
+                    <button mat-raised-button class="buttons" (click)="search()"
+                            [disabled]="arrivalControl.invalid || departureControl.invalid || !arrivalControl.dirty && !departureControl.dirty">
                         <mat-icon>search</mat-icon>
                         Search route
                     </button>
 
                 </div>
                 <div class="clear">
-                    <button mat-raised-button class="buttons" [disabled] = "!arrivalControl.dirty && !departureControl.dirty"
+                    <button mat-raised-button class="buttons"
+                            [disabled]="!arrivalControl.dirty && !departureControl.dirty"
                             (click)="clearSearch()">
                         <mat-icon>clear</mat-icon>
                         Clear search
@@ -65,7 +69,7 @@
         </form>
         <h4 style="color: red">{{errorMessage}}</h4>
     </div>
-    <div class="route_table">
+    <div class="route_table" *ngIf="routeDetails.length!=0">
         <table class="route_table">
 
             <tr>
