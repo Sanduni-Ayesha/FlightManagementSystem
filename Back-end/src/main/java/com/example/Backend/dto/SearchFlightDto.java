@@ -1,13 +1,13 @@
 package com.example.Backend.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class SearchFlightDto {
     private String departureAirport;
     private String arrivalAirport;
     private String flightNo;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private LocalDate departureTime;
+    private LocalDate arrivalTime;
 
     public String getDepartureAirport() {
         return departureAirport;
@@ -33,19 +33,19 @@ public class SearchFlightDto {
         this.flightNo = flightNo;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public LocalDate getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(LocalDate departureTime) {
         this.departureTime = departureTime;
     }
 
-    public LocalDateTime getArrivalTime() {
+    public LocalDate getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
+    public void setArrivalTime(LocalDate arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 }

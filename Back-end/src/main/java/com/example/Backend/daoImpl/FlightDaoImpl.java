@@ -2,7 +2,6 @@ package com.example.Backend.daoImpl;
 
 import com.example.Backend.dto.FlightDto;
 import com.example.Backend.dto.ScheduleFlightDto;
-import com.example.Backend.dto.SearchDTO;
 import com.example.Backend.dto.SearchFlightDto;
 import com.example.Backend.models.Flight;
 import com.example.Backend.dao.FlightDao;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class FlightDaoImpl implements FlightDao {
@@ -53,12 +51,12 @@ public class FlightDaoImpl implements FlightDao {
         }
         if (searchFlightDto.getDepartureTime() != null) {
             if (!searchFlightDto.getDepartureTime().equals("")) {
-                queryList.add("departure_time='" + searchFlightDto.getDepartureTime() + "'");
+                queryList.add("CAST(departure_time AS DATE)='" + searchFlightDto.getDepartureTime() + "'");
             }
         }
         if (searchFlightDto.getArrivalTime() != null) {
             if (!searchFlightDto.getArrivalTime().equals("")) {
-                queryList.add("arrival_time='" + searchFlightDto.getArrivalTime() + "'");
+                queryList.add("CAST(arrival_time AS DATE)='" + searchFlightDto.getArrivalTime() + "'");
             }
         }
         String finalString = String.join(" AND ", queryList);
