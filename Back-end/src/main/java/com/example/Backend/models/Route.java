@@ -44,13 +44,14 @@ public class Route {
         setLastUpdatedTime(routeDto.getLastUpdatedTime());
     }
 
-    public void routeUpdate(RouteDto routeDto) {
+    public Route routeUpdate(RouteDto routeDto) {
         setArrivalAirport(routeDto.getArrivalAirport());
         setDepartureAirport(routeDto.getDepartureAirport());
         setMileage(routeDto.getMileage());
         setDuration(routeDto.getDuration());
         setCreatedTime(routeDto.getCreatedTime());
         setLastUpdatedTime(routeDto.getLastUpdatedTime());
+        return this;
 
     }
 
