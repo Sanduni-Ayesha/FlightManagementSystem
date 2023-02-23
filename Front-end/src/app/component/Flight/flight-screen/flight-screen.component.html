@@ -103,9 +103,9 @@
     </div>
     <div class="flight_table">
         <div *ngIf="flightDetails.length==0" class="noFlights">
-            <h4 class="noFlightError">Sorry, no flights available from the selected departure to destination</h4>
+            <h4 class="noFlightError">Sorry, no flights available for the provided search criteria</h4>
         </div>
-        <table class="flight_table">
+        <table class="flight_table" *ngIf="flightDetails.length!=0">
             <tr>
                 <th *ngFor="let col of columnsSchema">
                     {{col.label}}
