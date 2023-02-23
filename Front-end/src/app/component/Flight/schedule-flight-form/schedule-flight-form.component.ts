@@ -196,7 +196,7 @@ export class ScheduleFlightFormComponent implements OnInit {
     }
 
     dateSimilarError(): boolean {
-        return this.scheduleForm.controls['startDate'].value?.toLocaleDateString() == this.scheduleForm.controls['endDate'].value?.toLocaleDateString()
+        return this.scheduleForm.controls['startDate'].value?.toLocaleDateString() == this.scheduleForm.controls['endDate'].value?.toLocaleDateString() && this.scheduleForm.controls['startDate'].touched
     }
 
     timeSimilarError(): boolean {
