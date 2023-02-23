@@ -232,7 +232,7 @@ export class FlightScreenComponent implements OnInit {
     }
 
     disableSearch(): boolean {
-        if (this.searchForm.invalid) {
+        if (this.searchForm.invalid || !this.searchForm.dirty) {
             return true
         }
         return false;
