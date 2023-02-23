@@ -12,7 +12,7 @@ import {Airport} from "../../../model/Airport";
 import {AlertService} from "../../../services/alert/alert.service";
 
 
-const TableHeading = ['Departure Airport', 'Arrival Airport', 'Mileage/Km', 'Duration/Hours','Edit','Delete']
+const TableHeading = ['Departure Airport', 'Arrival Airport', 'Mileage/Km', 'Duration/Hours', 'Edit', 'Delete']
 
 @Component({
     selector: 'app-route-screen',
@@ -21,8 +21,8 @@ const TableHeading = ['Departure Airport', 'Arrival Airport', 'Mileage/Km', 'Dur
 })
 export class RouteScreenComponent implements OnInit {
     routeTableHeading: any = TableHeading;
-    arrivalControl = new FormControl('', [Validators.pattern('^$|[a-zA-Z]+')]);
-    departureControl = new FormControl('', [Validators.pattern('^$|[a-zA-Z]+')]);
+    arrivalControl = new FormControl('', [Validators.pattern(/^[^0-9]*$/)]);
+    departureControl = new FormControl('', [Validators.pattern(/^[^0-9]*$/)]);
     filteredArrivalAirport: Airport[] = [];
     filteredDepartureAirport: Airport[] = [];
     errorMessage: string | undefined;
@@ -82,9 +82,9 @@ export class RouteScreenComponent implements OnInit {
         }
     }
 
-    openForm(status:string,routeId:number): void {
+    openForm(status: string, routeId: number): void {
         this.setPageDefault();
-        let route:any;
+        let route: any;
         let id: any;
         let disableStatus: boolean = false;
         if (status == "update") {
@@ -93,7 +93,7 @@ export class RouteScreenComponent implements OnInit {
             route.arrivalAirport = this.getAirportNameByAirportCode(route.arrivalAirport);
             route.departureAirport = this.getAirportNameByAirportCode(route.departureAirport);
             disableStatus = true;
-        } else if(status == "create") {
+        } else if (status == "create") {
             this.getRoutes("", "")
             id = ''
             route = '';
@@ -121,34 +121,34 @@ export class RouteScreenComponent implements OnInit {
     }
 
     private getRoutes(departureAirport: string, arrivalAirport: string) {
-        this.routeService.getAllRoutes(departureAirport, arrivalAirport).subscribe({next:(route) => {
-            this.routeDetails = route;
-            if (this.routeDetails.length == 0) {
-                this.errorMessage = "Sorry,there are no route available that match your search criteria";
-            } else {
-                this.errorMessage = '';
+        this.routeService.getAllRoutes(departureAirport, arrivalAirport).subscribe({
+            next: (route) => {
+                this.routeDetails = route;
+                if (this.routeDetails.length == 0) {
+                    this.errorMessage = "Sorry,there are no route available that match your search criteria";
+                } else {
+                    this.errorMessage = '';
+                }
+            }, error: () => {
+                this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
             }
-        },error :()=>{
-            this.alertService.warn("Oops! Something went wrong.Sorry for the inconvenience")
-            } })
+        })
     }
 
     removeRow(id: number) {
         this.alertService.openConfirmDialog('Confirm', "Are you sure you want to delete this route?")
-            .afterClosed().subscribe(res=>{
-            if(res){
+            .afterClosed().subscribe(res => {
+            if (res) {
                 this.routeService.deleteRoute(id).subscribe({
                     next:
                         (response) => {
                             this.getRoutes("", "");
-                            if(response.status == 239){// FLIGHT_EXISTS_EXCEPTION
+                            if (response.status == 239) {// FLIGHT_EXISTS_EXCEPTION
                                 this.alertService.warn("Unable to delete route.There existing" +
                                     " flight associated with this route")
-                            }
-                            else if (response.status == 233) { // ROUTE_NOT_EXISTS_EXCEPTION
+                            } else if (response.status == 233) { // ROUTE_NOT_EXISTS_EXCEPTION
                                 this.alertService.warn("Route already deleted")
-                            }
-                            else if (response.status == 200) { //OK
+                            } else if (response.status == 200) { //OK
                                 this.alertService.success("Route successfully deleted!")
                             }
                         }, error: () => {
@@ -156,7 +156,7 @@ export class RouteScreenComponent implements OnInit {
                     }
                 });
             }
-            })
+        })
     }
 
     search() {
