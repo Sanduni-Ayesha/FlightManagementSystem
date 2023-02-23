@@ -25,11 +25,11 @@ export class AddRouteFormComponent implements OnInit {
             departureAirport: new FormControl({
                 value: this.data.rowData.departureAirport,
                 disabled: this.data.disable
-            }, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+            }, [Validators.required, Validators.pattern(/^[^0-9]*$/)]),
             arrivalAirport: new FormControl({
                 value: this.data.rowData.arrivalAirport,
                 disabled: this.data.disable
-            }, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+            }, [Validators.required, Validators.pattern(/^[^0-9]*$/)]),
             mileage: new FormControl(this.data.rowData.mileage, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')]),
             duration: new FormControl(this.data.rowData.duration, [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')])
         }, {
