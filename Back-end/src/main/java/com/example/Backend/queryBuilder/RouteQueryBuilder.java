@@ -11,6 +11,6 @@ public class RouteQueryBuilder {
         if (searchDTO.getArrivalAirport()!=null && !searchDTO.getArrivalAirport().equals("")) {
             query+=" and arrival_airport ='" + searchDTO.getArrivalAirport()+"'";
         }
-        return query;
+        return query+" ORDER BY last_updated_time DESC";
     }
 }
